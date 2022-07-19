@@ -39,7 +39,7 @@ namespace PewPewMeshStudio.Core
 
             UIController.Update(this, (float)Event.Time);
 
-            GL.ClearColor(new Color4(0, 32, 48, 255));
+            GL.ClearColor(new Color4(0, 32, 90, 235));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
             ImGui.Begin("Testing");
