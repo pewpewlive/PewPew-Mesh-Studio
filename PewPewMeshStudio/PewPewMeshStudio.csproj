@@ -3,15 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>PewPew_Mesh_Studio</RootNamespace>
+    <RootNamespace>PewPewMeshStudio</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.87.3" />
     <PackageReference Include="NLua" Version="1.6.0" />
-    <PackageReference Include="SFML.Net" Version="2.5.0" />
+    <PackageReference Include="OpenTK" Version="4.7.4" />
   </ItemGroup>
 
 </Project>
