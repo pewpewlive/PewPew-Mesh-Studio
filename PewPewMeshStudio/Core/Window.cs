@@ -11,9 +11,11 @@ namespace PewPewMeshStudio.Core
         private const int WIDTH = 800;
         private const int HEIGHT = 600;
 
-        ImGuiController? UIController;
+        ImGuiController UIController;
 
+        #pragma warning disable CS8618
         public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
+        #pragma warning restore CS8618
         {
             Size = new Vector2i(WIDTH, HEIGHT),
             APIVersion = new Version(3, 3),
