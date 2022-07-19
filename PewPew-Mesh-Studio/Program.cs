@@ -1,10 +1,21 @@
 ﻿using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
+using NLua;
 
-Console.WriteLine("Hello, JF!");
+Console.WriteLine("Printing from C#!");
 
-using(RenderWindow RendererWindow = new RenderWindow(new VideoMode(800, 600), "Mesh renderer", Styles.Titlebar | Styles.Close))
+using (Lua lua = new Lua())
+{
+    lua.DoString("print('Printing from Lua!')");
+    /*
+    lua.DoString("meshes = 'your mom'");
+    string res = (string)lua["meshes"];
+    Console.WriteLine(res);
+    */
+}
+
+using (RenderWindow RendererWindow = new RenderWindow(new VideoMode(800, 600), "Mesh renderer", Styles.Titlebar | Styles.Close))
 {
     RendererWindow.SetFramerateLimit(60);
     RendererWindow.Closed += (s,e) => RendererWindow.Close();
