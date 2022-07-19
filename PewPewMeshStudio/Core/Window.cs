@@ -19,7 +19,6 @@ namespace PewPewMeshStudio.Core
         {
             Size = new Vector2i(WIDTH, HEIGHT),
             APIVersion = new Version(3, 3),
-            WindowBorder = WindowBorder.Fixed,
             Title = "PewPew Mesh Studio"
         })
         { }
