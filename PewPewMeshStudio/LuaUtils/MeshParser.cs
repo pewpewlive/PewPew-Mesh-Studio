@@ -2,18 +2,14 @@
 
 namespace PewPewMeshStudio.LuaUtils
 {
-    internal class MeshParser
+    public class MeshParser
     {
-
+        public static object ReturnMesh(string filepath)
+        {
+            using Lua lua = new();
+            lua.DoFile(filepath);
+            object meshes = lua["meshes"];
+            return meshes;
+        }
     }
 }
-
-//using (Lua lua = new Lua())
-//{
-//    lua.DoString("print('Printing from Lua!')");
-//    
-//    lua.DoString("meshes = 'your mom'");
-//    string res = (string)lua["meshes"];
-//    Console.WriteLine(res);
-//    
-//} Example for reference

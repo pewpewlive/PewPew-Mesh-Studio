@@ -46,11 +46,13 @@ namespace PewPewMeshStudio.Core
             GL.ClearColor(new Color4(0, 32, 90, 235));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
+            //ImGui.ShowDemoWindow();
+            
             ImGui.Begin("Testing");
             if (ImGui.Button("Press me!"))
                 Console.WriteLine("I was pressed!");
             ImGui.End();
-
+            
             UIController.Render();
 
             ImGuiController.CheckGLError("End of frame");
