@@ -12,7 +12,7 @@ namespace PewPewMeshStudio.Core
 
         public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
         {
-            Size = new Vector2i(1280, 720),
+            Size = new Vector2i(800, 600),
             APIVersion = new Version(3, 3),
             WindowBorder = WindowBorder.Fixed,
             Title = "PewPew Mesh Studio"
@@ -23,7 +23,7 @@ namespace PewPewMeshStudio.Core
         {
             base.OnLoad();
             Console.WriteLine("Welcome to PewPewMeshStudio!");
-            UIController = new(1280, 720);
+            UIController = new(800, 600);
         }
 
         protected override void OnResize(ResizeEventArgs Event)
