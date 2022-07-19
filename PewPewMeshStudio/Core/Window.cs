@@ -7,12 +7,15 @@ using OpenTK.Windowing.Desktop;
 namespace PewPewMeshStudio.Core
 {
     public class Window : GameWindow
-    {
-        ImGuiController UIController;
+    {   
+        private const int WIDTH = 800;
+        private const int HEIGHT = 600;
+
+        ImGuiController? UIController;
 
         public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
         {
-            Size = new Vector2i(800, 600),
+            Size = new Vector2i(WIDTH, HEIGHT),
             APIVersion = new Version(3, 3),
             WindowBorder = WindowBorder.Fixed,
             Title = "PewPew Mesh Studio"
@@ -23,7 +26,7 @@ namespace PewPewMeshStudio.Core
         {
             base.OnLoad();
             Console.WriteLine("Welcome to PewPewMeshStudio!");
-            UIController = new(800, 600);
+            UIController = new(WIDTH, HEIGHT);
         }
 
         protected override void OnResize(ResizeEventArgs Event)
