@@ -7,8 +7,7 @@ namespace PewPewMeshStudio
     {
         static void Main()
         {
-            //object mesh = MeshParser.ReturnMesh("mesh.lua");
-            //Console.WriteLine(mesh);
+            MeshParser.ReturnMeshDict("mesh.lua", 0);
 
             Window MainWindow = new();
             MainWindow.Run();
