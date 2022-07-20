@@ -15,8 +15,10 @@ public class Window : GameWindow
     ImGuiController UIController;
 
     InspectorTAB inspectorTAB = new InspectorTAB();
+    ToolsTAB toolsTAB = new ToolsTAB();
+    ProgramMenu progMenu = new ProgramMenu();
 
-    #pragma warning disable CS8618
+#pragma warning disable CS8618
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     #pragma warning restore CS8618
     {
@@ -48,13 +50,11 @@ public class Window : GameWindow
 
         GL.ClearColor(new Color4(0, 32, 90, 235));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        
+        progMenu.Initialize();
 
-        ImGui.Begin("Testing");
-        if (ImGui.Button("Press me!"))
-            Console.WriteLine("I was pressed!");
-        ImGui.End();
-
-        inspectorTAB.InitializeTab();
+        inspectorTAB.Initialize();
+        toolsTAB.Initialize();
 
         UIController.Render();
 
