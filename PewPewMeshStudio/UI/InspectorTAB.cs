@@ -1,5 +1,4 @@
 ﻿using ImGuiNET;
-using PewPewMeshStudio.Core;
 using System.Numerics;
 
 namespace PewPewMeshStudio.UI;
@@ -15,30 +14,27 @@ public class InspectorTAB
 
     int meshesIndex = 0;
     int vertexesIndex = 0;
+
     public void Initialize()
     {
         ImGui.Begin("Inspector");
 
-        if (ImGui.CollapsingHeader("Object: *selected object name*"))
-        {
-            ImGui.InputFloat3("Object Position", ref objectPos);
+        ImGui.Text("Object: *selected object name*");
+        ImGui.InputFloat3("Object Position", ref objectPos);
 
-            ImGui.Text("\nMeshes");
-            ImGui.ListBox("Meshes", ref meshesIndex, new string[] { "yes", "xd", "e" }, 3);
+        ImGui.Text("\nMeshes");
+        ImGui.ListBox("Meshes", ref meshesIndex, new string[] { "yes", "xd", "e" }, 3);
 
-            ImGui.InputFloat3("Mesh Position", ref meshPos);
+        ImGui.InputFloat3("Mesh Position", ref meshPos);
 
-            ImGui.Separator();
+        ImGui.Separator();
 
-            ImGui.Text("Vertex");
-            ImGui.InputFloat3("Position", ref vertexPos);
+        ImGui.Text("Vertex");
+        ImGui.InputFloat3("Position", ref vertexPos);
 
-            ImGui.Text("");
+        ImGui.NewLine();
 
-            ImGui.ColorEdit4("Color", ref vertexCol);
-        }
-
-        ImGui.ShowDemoWindow();
+        ImGui.ColorEdit4("Color", ref vertexCol);
 
         ImGui.End();
     }

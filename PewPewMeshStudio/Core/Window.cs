@@ -16,23 +16,25 @@ public class Window : GameWindow
 
     InspectorTAB inspectorTAB = new InspectorTAB();
     ToolsTAB toolsTAB = new ToolsTAB();
+    FileDialogTAB filedTab = new FileDialogTAB();
     ProgramMenu progMenu = new ProgramMenu();
+    ProgramPOPUPS progPops = new ProgramPOPUPS();
 
-#pragma warning disable CS8618
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
-    #pragma warning restore CS8618
     {
         Size = new Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),
         APIVersion = new Version(3, 3),
         Title = "PewPew Mesh Studio"
     })
-    { }
+    {
+        VSync = VSyncMode.On;
+        UIController = new(WINDOW_WIDTH, WINDOW_HEIGHT);
+    }
 
     protected override void OnLoad()
     {
         base.OnLoad();
         Console.WriteLine("Welcome to PewPewMeshStudio!");
-        UIController = new(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     protected override void OnResize(ResizeEventArgs Event)
@@ -50,11 +52,20 @@ public class Window : GameWindow
 
         GL.ClearColor(new Color4(0, 32, 90, 235));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-        
+
+        ImGui.ShowDemoWindow();
+
         progMenu.Initialize();
+        progPops.Initialize();
 
         inspectorTAB.Initialize();
         toolsTAB.Initialize();
+
+        if (progMenu.openFileDialog)
+        {
+            filedTab.open = true;
+            filedTab.Initialize(ref progMenu.openFileDialog);
+        }
 
         UIController.Render();
 

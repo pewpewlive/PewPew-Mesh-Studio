@@ -4,6 +4,8 @@ namespace PewPewMeshStudio.UI;
 
 public class ProgramMenu
 {
+    public bool openFileDialog;
+
     public void Initialize()
     {
         ImGui.BeginMainMenuBar();
@@ -21,7 +23,7 @@ public class ProgramMenu
 
         if (ImGui.MenuItem("New"))
         {
-            Console.WriteLine("New button");
+            openFileDialog = true;
         }
         ImGui.MenuItem("Open");
 

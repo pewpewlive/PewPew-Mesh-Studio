@@ -12,16 +12,16 @@ public class ToolsTAB
 
         ImGui.Text("View");
 
-        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(50, 0, 0, 255));
-        ImGui.Button("X");
+        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(180f / 255f, 20f / 255f, 20f / 255f, 1f));
+        ImGui.Button(" X ");
 
         ImGui.SameLine();
-        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 1, 0, 255));
-        ImGui.Button("Y");
+        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(20f / 255f, 180f / 255f, 20f / 255f, 1f));
+        ImGui.Button(" Y ");
 
         ImGui.SameLine();
-        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 50, 255));
-        ImGui.Button("X");
+        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(20f / 255f, 20f / 255f, 180f / 255f, 1f));
+        ImGui.Button(" Z ");
 
         ImGui.Checkbox("Isometric", ref perspective);
 
