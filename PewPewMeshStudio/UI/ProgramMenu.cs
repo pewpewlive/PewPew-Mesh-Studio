@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using System;
 
 namespace PewPewMeshStudio.UI;
 
@@ -10,13 +11,14 @@ public class ProgramMenu
     {
         ImGui.BeginMainMenuBar();
 
-        FileMENU();
-        EditMENU();
+        FileMenu();
+        EditMenu();
+        DebugMenu();
 
         ImGui.EndMainMenuBar();
     }
 
-    private void FileMENU()
+    private void FileMenu()
     {
         if (!ImGui.BeginMenu("File"))
             return;
@@ -25,39 +27,68 @@ public class ProgramMenu
         {
             openFileDialog = true;
         }
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Create a new project.");
         ImGui.MenuItem("Open");
-
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Open a project file.");
         ImGui.MenuItem("Save", "Ctrl+S");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Saves the current project file.");
         ImGui.MenuItem("Save as..");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Saves the current project file in the desired location.");
 
         ImGui.Separator();
 
         ImGui.MenuItem("Import");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Load a PewPew mesh or an SVG.");
         ImGui.MenuItem("Export");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Export the current project as a PewPew mesh.");
 
         ImGui.Separator();
 
-        ImGui.MenuItem("Quit", "Alt+F4");
+        if (ImGui.MenuItem("Quit", "Alt+F4"))
+        {
+            Environment.Exit(0);
+        }
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Quit PewPew Mesh Studio.");
 
         ImGui.EndMenu();
     }
 
-    private void EditMENU()
+    private void EditMenu()
     {
         if (!ImGui.BeginMenu("Edit"))
             return;
 
         ImGui.MenuItem("Undo", "Ctrl+Z");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Undo previous action.");
         ImGui.MenuItem("Redo", "Ctrl+Y");
-
-        ImGui.Separator();
-
-        ImGui.MenuItem("Copy", "Ctrl+C");
-        ImGui.MenuItem("Paste", "Ctrl+V");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Redo previous action.");
 
         ImGui.Separator();
 
         ImGui.MenuItem("Preferences");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Edit user preferences.");
+
+        ImGui.EndMenu();
+    }
+    private void DebugMenu()
+    {
+        if (!ImGui.BeginMenu("Debug"))
+            return;
+
+        if (ImGui.MenuItem("Error"))
+        {
+            ErrorPopup.Initialize();
+        }
 
         ImGui.EndMenu();
     }

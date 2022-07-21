@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace PewPewMeshStudio.UI;
 
-public class ToolsTAB
+public class ToolsTab
 {
     bool perspective;
     public void Initialize()
@@ -12,15 +12,15 @@ public class ToolsTAB
 
         ImGui.Text("View");
 
-        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(180f / 255f, 20f / 255f, 20f / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.Button, ColorUtil.Vec4IntToFloat(new Vector4(180, 20, 20, 255)));
         ImGui.Button(" X ");
 
         ImGui.SameLine();
-        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(20f / 255f, 180f / 255f, 20f / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.Button, ColorUtil.Vec4IntToFloat(new Vector4(20, 180, 20, 255)));
         ImGui.Button(" Y ");
 
         ImGui.SameLine();
-        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(20f / 255f, 20f / 255f, 180f / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.Button, ColorUtil.Vec4IntToFloat(new Vector4(20, 20, 180, 255)));
         ImGui.Button(" Z ");
 
         ImGui.Checkbox("Isometric", ref perspective);

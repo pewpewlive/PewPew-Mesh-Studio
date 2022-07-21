@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PewPewMeshStudio.UI;
 
-public class FileDialogTAB
+public class FileDialogTab
 {
     public bool open;
 
@@ -11,9 +11,9 @@ public class FileDialogTAB
 
     public void Initialize(ref bool open1)
     {
-        ImGui.OpenPopup("file_dialog");
+        ImGui.OpenPopup("File Dialog");
 
-        if (!ImGui.BeginPopupModal("file_dialog", ref open))
+        if (!ImGui.BeginPopupModal("File Dialog", ref open))
         {
             open1 = false;
             return;
@@ -28,7 +28,14 @@ public class FileDialogTAB
         //ImGui.
 
         //ImGui.NewFrame();
+        ImGui.Selectable("..\\");
+        ImGui.Separator();
+        ImGui.Selectable("folder1\\");
+        ImGui.Selectable("folder2\\");
+        ImGui.Selectable("folder3\\");
+        ImGui.Separator();
         ImGui.Selectable("file.txt");
+        ImGui.Selectable("mesh.lua");
 
         ImGui.EndPopup();
     }

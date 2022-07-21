@@ -14,11 +14,11 @@ public class Window : GameWindow
 
     ImGuiController UIController;
 
-    InspectorTAB inspectorTAB = new InspectorTAB();
-    ToolsTAB toolsTAB = new ToolsTAB();
-    FileDialogTAB filedTab = new FileDialogTAB();
+    InspectorTab inspectorTAB = new InspectorTab();
+    ToolsTab toolsTAB = new ToolsTab();
+    FileDialogTab filedTab = new FileDialogTab();
     ProgramMenu progMenu = new ProgramMenu();
-    ProgramPOPUPS progPops = new ProgramPOPUPS();
+    ContextMenu progPops = new ContextMenu();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
