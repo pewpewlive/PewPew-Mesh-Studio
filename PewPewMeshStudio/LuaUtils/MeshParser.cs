@@ -15,7 +15,7 @@ namespace PewPewMeshStudio.LuaUtils
             );
         }
 
-        public static void ReturnMeshDict(string filepath, int index)
+        public static void ParseMeshFile(string filepath, int index)
         {
             using Lua lua = new();
             lua.DoFile(filepath);
@@ -67,7 +67,6 @@ namespace PewPewMeshStudio.LuaUtils
 
                 break;
             }
-
             //Currently is void, will be later implemented to be used with the Renderable Class
         }
     }
