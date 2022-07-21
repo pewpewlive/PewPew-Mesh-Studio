@@ -106,8 +106,8 @@ public class MeshParser
         }
         catch (Exception Ex)
         {
-            Console.WriteLine(string.Format("[Lua Error]: {0}", Ex.Message));
-            Console.WriteLine("[Error]: Failed to parse mesh file! Returning empty mesh object.");
+            Console.WriteLine(string.Format("[Error]: Mesh Parser -> {0}", Ex.Message));
+            Console.WriteLine("[Error]: Mesh Parser -> Failed to parse mesh file! Returning empty mesh object.");
             //return new Renderable(new MeshObject());
         }
     }
