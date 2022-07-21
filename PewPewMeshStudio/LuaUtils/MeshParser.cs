@@ -87,8 +87,8 @@ public class MeshParser
                         Colors.Add(LongToColor4(Convert.ToInt64(ColorItem.Value)));
                     }
 
-                    if (Colors.Count != Vertexes.Count)
-                        throw new ParserExceptions.InsufficientColorCount(filepath, index);
+                    for (int i = Colors.Count; i < Vertexes.Count; i++)
+                        Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff)));
                 } 
                 else
                 {

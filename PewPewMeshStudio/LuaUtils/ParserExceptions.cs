@@ -24,13 +24,6 @@ public class ParserExceptions
     }
 
     [Serializable]
-    public class InsufficientColorCount : Exception
-    {
-        public InsufficientColorCount(string filename, int index)
-            : base(string.Format("{0}:0: the table 'colors' in mesh at index ({1}) must be the same size as 'vertexes'", filename, index)) { }
-    }
-
-    [Serializable]
     public class InvalidVertexIndex : Exception
     {
         public InvalidVertexIndex(string filename, int index, int size)
