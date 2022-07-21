@@ -86,15 +86,10 @@ public class MeshParser
                     {
                         Colors.Add(LongToColor4(Convert.ToInt64(ColorItem.Value)));
                     }
-
-                    for (int i = Colors.Count; i < Vertexes.Count; i++)
-                        Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff)));
                 } 
-                else
-                {
-                    for (int i = 0; i < Vertexes.Count; i++)
-                        Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff)));
-                }
+
+                for (int i = 0; i < Vertexes.Count; i++)
+                    Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff)));
 
                 break;
             }
