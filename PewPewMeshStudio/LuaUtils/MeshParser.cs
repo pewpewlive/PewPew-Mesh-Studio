@@ -95,7 +95,7 @@ public class MeshParser
                 else
                 {
                     for (int i = 0; i < Vertexes.Count; i++)
-                        Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff));
+                        Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff)));
                 }
 
                 break;
