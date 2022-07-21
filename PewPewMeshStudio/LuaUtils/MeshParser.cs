@@ -40,12 +40,8 @@ public class MeshParser
                 if (!MeshDict.ContainsKey("vertexes"))
                     throw new ParserExceptions.NoVertexTable(filepath, index);
 
-                if (!MeshDict.ContainsKey("segments"))
-                    throw new ParserExceptions.NoSegmentTable(filepath, index);
 
                 Dictionary<object, object> VertexesDict = lua.GetTableDict((LuaTable)MeshDict["vertexes"]);
-                Dictionary<object, object> SegmentsDict = lua.GetTableDict((LuaTable)MeshDict["segments"]);
-                Dictionary<object, object> ColorsDict = lua.GetTableDict((LuaTable)MeshDict["colors"]);
 
                 foreach (KeyValuePair<object, object> VertexItem in VertexesDict)
                 {
@@ -58,6 +54,11 @@ public class MeshParser
 
                     Vertexes.Add(Vertex);
                 }
+
+                if (!MeshDict.ContainsKey("segments"))
+                    throw new ParserExceptions.NoSegmentTable(filepath, index);
+
+                Dictionary<object, object> SegmentsDict = lua.GetTableDict((LuaTable)MeshDict["segments"]);
 
                 foreach (KeyValuePair<object, object> SegmentItem in SegmentsDict)
                 {
@@ -79,13 +80,23 @@ public class MeshParser
                     Segments.Add(Segment);
                 }
 
-                foreach (KeyValuePair<object, object> ColorItem in ColorsDict)
+                if (MeshDict.ContainsKey("colors"))
                 {
-                    Colors.Add(LongToColor4(Convert.ToInt64(ColorItem.Value)));
-                }
+                    Dictionary<object, object> ColorsDict = lua.GetTableDict((LuaTable)MeshDict["colors"]);
 
-                if (Colors.Count != Vertexes.Count) 
-                    throw new ParserExceptions.InsufficientColorCount(filepath, index);
+                    foreach (KeyValuePair<object, object> ColorItem in ColorsDict)
+                    {
+                        Colors.Add(LongToColor4(Convert.ToInt64(ColorItem.Value)));
+                    }
+
+                    if (Colors.Count != Vertexes.Count)
+                        throw new ParserExceptions.InsufficientColorCount(filepath, index);
+                } 
+                else
+                {
+                    for (int i = 0; i < Vertexes.Count; i++)
+                        Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff));
+                }
 
                 break;
             }
