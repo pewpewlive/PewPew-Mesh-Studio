@@ -21,7 +21,6 @@ public class MeshParser
         try
         {
             using Lua lua = new Lua();
-
             lua.DoFile(filepath);
 
             Dictionary<object, object> MeshesDict = lua.GetTableDict(lua.GetTable("meshes"));
@@ -39,7 +38,6 @@ public class MeshParser
 
                 if (!MeshDict.ContainsKey("vertexes"))
                     throw new ParserExceptions.NoVertexTable(filepath, index);
-
 
                 Dictionary<object, object> VertexesDict = lua.GetTableDict((LuaTable)MeshDict["vertexes"]);
 
