@@ -1,4 +1,6 @@
 ﻿using PewPewMeshStudio.Core;
+using PewPewMeshStudio.LuaUtils;
+using PewPewMeshStudio.ExtraUtils;
 
 namespace PewPewMeshStudio
 {
@@ -6,7 +8,10 @@ namespace PewPewMeshStudio
     {
         static void Main()
         {
-            Window MainWindow = new Window();
+            //ConsoleExtension.Hide();
+            MeshParser.ParseMeshFile("mesh.lua", 1);
+
+            Window MainWindow = new();
             MainWindow.Run();
         }
     }
