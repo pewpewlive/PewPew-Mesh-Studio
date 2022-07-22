@@ -5,8 +5,9 @@ namespace PewPewMeshStudio.UI;
 
 public class ProgramMenu
 {
-    public bool openFileDialog;
+    public bool OpenFileDialog;
     public bool OpenErrorDialog;
+    public bool OpenAboutDialog;
 
     public void Initialize()
     {
@@ -26,7 +27,7 @@ public class ProgramMenu
 
         if (ImGui.MenuItem("New"))
         {
-            openFileDialog = true;
+            OpenFileDialog = true;
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Create a new project.");
@@ -78,6 +79,15 @@ public class ProgramMenu
         ImGui.MenuItem("Preferences");
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Edit user preferences.");
+
+        ImGui.Separator();
+
+        if (ImGui.MenuItem("About"))
+        {
+            OpenAboutDialog = true;
+        }
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Shows information about PewPew Mesh Studio.");
 
         ImGui.EndMenu();
     }
