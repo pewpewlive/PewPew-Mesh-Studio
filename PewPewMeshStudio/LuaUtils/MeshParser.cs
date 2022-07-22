@@ -86,9 +86,12 @@ public class MeshParser
                     {
                         Colors.Add(LongToColor4(Convert.ToInt64(ColorItem.Value)));
                     }
+
+                    if (Colors.Count > Vertexes.Count)
+                        Colors.RemoveRange(Vertexes.Count, Colors.Count - Vertexes.Count);
                 } 
 
-                for (int i = 0; i < Vertexes.Count; i++)
+                for (int i = Colors.Count; i < Vertexes.Count; i++)
                     Colors.Add(LongToColor4(Convert.ToInt64(0xffffffff)));
 
                 break;
