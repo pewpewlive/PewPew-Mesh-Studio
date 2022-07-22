@@ -20,6 +20,7 @@ public class Window : GameWindow
     ProgramMenu progMenu = new ProgramMenu();
     ContextMenu ctxMenu = new ContextMenu();
     ErrorPopup errorPopup = new ErrorPopup();
+    AboutPopup aboutPopup = new AboutPopup();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -67,12 +68,16 @@ public class Window : GameWindow
             errorPopup.open = true;
             errorPopup.Initialize(ref progMenu.OpenErrorDialog);
         }
-        if (progMenu.openFileDialog)
+        if (progMenu.OpenFileDialog)
         {
             filedTab.open = true;
-            filedTab.Initialize(ref progMenu.openFileDialog);
+            filedTab.Initialize(ref progMenu.OpenFileDialog);
         }
-
+        if (progMenu.OpenAboutDialog)
+        {
+            aboutPopup.open = true;
+            aboutPopup.Initialize(ref progMenu.OpenAboutDialog);
+        }
         UIController.Render();
 
         ImGuiController.CheckGLError("End of frame");
