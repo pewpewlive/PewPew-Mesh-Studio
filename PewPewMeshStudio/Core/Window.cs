@@ -14,11 +14,12 @@ public class Window : GameWindow
 
     ImGuiController UIController;
 
-    InspectorTab inspectorTAB = new InspectorTab();
-    ToolsTab toolsTAB = new ToolsTab();
+    InspectorTab inspectorTab = new InspectorTab();
+    ToolsTab toolsTab = new ToolsTab();
     FileDialogTab filedTab = new FileDialogTab();
     ProgramMenu progMenu = new ProgramMenu();
-    ContextMenu progPops = new ContextMenu();
+    ContextMenu ctxMenu = new ContextMenu();
+    ErrorPopup errorPopup = new ErrorPopup();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -56,11 +57,16 @@ public class Window : GameWindow
         ImGui.ShowDemoWindow();
 
         progMenu.Initialize();
-        progPops.Initialize();
+        ctxMenu.Initialize();
 
-        inspectorTAB.Initialize();
-        toolsTAB.Initialize();
+        inspectorTab.Initialize();
+        toolsTab.Initialize();
 
+        if (progMenu.OpenErrorDialog)
+        {
+            errorPopup.open = true;
+            errorPopup.Initialize(ref progMenu.OpenErrorDialog);
+        }
         if (progMenu.openFileDialog)
         {
             filedTab.open = true;

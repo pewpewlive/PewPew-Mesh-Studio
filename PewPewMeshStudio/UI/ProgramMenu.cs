@@ -6,6 +6,7 @@ namespace PewPewMeshStudio.UI;
 public class ProgramMenu
 {
     public bool openFileDialog;
+    public bool OpenErrorDialog;
 
     public void Initialize()
     {
@@ -87,7 +88,7 @@ public class ProgramMenu
 
         if (ImGui.MenuItem("Error"))
         {
-            ErrorPopup.Initialize();
+            OpenErrorDialog = true;
         }
 
         ImGui.EndMenu();

@@ -40,7 +40,7 @@ public class ContextMenu
 
         ImGui.MenuItem("Delete", "Del");
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Deletes selected items");
+            ImGui.SetTooltip("Deletes selected items.");
 
         ImGui.EndPopup();
     }
