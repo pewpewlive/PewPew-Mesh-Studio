@@ -25,15 +25,17 @@ public class ProgramMenu
         if (!ImGui.BeginMenu("File"))
             return;
 
-        if (ImGui.MenuItem("New"))
+        ImGui.MenuItem("New");
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Create a new project.");
+
+        if (ImGui.MenuItem("Open"))
         {
             OpenFileDialog = true;
         }
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Create a new project.");
-        ImGui.MenuItem("Open");
-        if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Open a project file.");
+
         ImGui.MenuItem("Save", "Ctrl+S");
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Saves the current project file.");
