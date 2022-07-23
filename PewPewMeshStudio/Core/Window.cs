@@ -71,7 +71,7 @@ public class Window : GameWindow
         if (progMenu.OpenFileDialog)
         {
             filedTab.open = true;
-            filedTab.Initialize(ref progMenu.OpenFileDialog);
+            filedTab.Initialize(ref progMenu.OpenFileDialog, progMenu.fileDialogType);
         }
         if (progMenu.OpenAboutDialog)
         {

@@ -5,9 +5,11 @@ namespace PewPewMeshStudio.UI;
 
 public class ProgramMenu
 {
-    public bool OpenFileDialog;
     public bool OpenErrorDialog;
     public bool OpenAboutDialog;
+    public bool OpenFileDialog;
+
+    public int fileDialogType;
 
     public void Initialize()
     {
@@ -25,30 +27,49 @@ public class ProgramMenu
         if (!ImGui.BeginMenu("File"))
             return;
 
-        ImGui.MenuItem("New");
+        if (ImGui.MenuItem("New"))
+        {
+            OpenFileDialog = true;
+            fileDialogType = 0;
+        }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Create a new project.");
 
         if (ImGui.MenuItem("Open"))
         {
             OpenFileDialog = true;
+            fileDialogType = 1;
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Open a project file.");
 
-        ImGui.MenuItem("Save", "Ctrl+S");
+        ImGui.MenuItem("Save", "Ctrl+S"); // save
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Saves the current project file.");
-        ImGui.MenuItem("Save as..");
+
+        if (ImGui.MenuItem("Save as.."))
+        {
+            OpenFileDialog = true;
+            fileDialogType = 2;
+        }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Saves the current project file in the desired location.");
 
         ImGui.Separator();
 
-        ImGui.MenuItem("Import");
+        if (ImGui.MenuItem("Import"))
+        {
+            OpenFileDialog = true;
+            fileDialogType = 3;
+        }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Load a PewPew mesh or an SVG.");
-        ImGui.MenuItem("Export");
+
+        if (ImGui.MenuItem("Export"))
+        {
+            OpenFileDialog = true;
+            fileDialogType = 4;
+        }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Export the current project as a PewPew mesh.");
 
