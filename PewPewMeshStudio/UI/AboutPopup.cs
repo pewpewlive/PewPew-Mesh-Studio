@@ -15,7 +15,7 @@ public class AboutPopup
             open1 = false;
             return;
         }
-        ImGui.Text("Copyright © Tasty Kiwi, SKPG-Tech, Mutoxicated, MnHs.");
+        ImGui.Text("Copyright © PewPew Mesh Studio team & contributors.");
         ImGui.Text("Licensed under zlib license.");
         if (ImGui.Button("GitHub"))
         {
