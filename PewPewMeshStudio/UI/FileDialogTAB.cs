@@ -17,14 +17,29 @@ public class FileDialogTab
     string[] Files = new string[0];
     string[] Drives = new string[0];
 
+    string pwd = Directory.GetCurrentDirectory();
+    
     bool inDrivesList;
     bool refreshDirectory = true;
 
     // Path Working Directory
-    string pwd = Directory.GetCurrentDirectory(); 
-
-    public void Initialize(ref bool open1)
+    /*enum FileDialogType
     {
+        NewProject = 0,
+        OpenProject = 1,
+
+        SaveProjectAs = 2,
+
+        ImportMesh = 3,
+        ExportMesh = 4
+    }*/
+
+    int FileDialogType;
+
+    public void Initialize(ref bool open1, int fileDialogType)
+    {
+        FileDialogType = fileDialogType;
+
         ImGui.OpenPopup("File Dialog");
 
         if (!ImGui.BeginPopupModal("File Dialog", ref open))
@@ -43,7 +58,7 @@ public class FileDialogTab
         ImGui.SameLine();
 
         ImGui.SetNextItemWidth(ImGui.GetWindowSize().X - 200f);
-        ImGui.InputText("", ref pwd, 100);
+        ImGui.InputText("", ref pwd, 100, ImGuiInputTextFlags.ReadOnly);
 
         ImGui.BeginChild("fileList", new Vector2(0f, ImGui.GetWindowSize().Y - 100f), true, ImGuiWindowFlags.HorizontalScrollbar);
 
@@ -57,15 +72,9 @@ public class FileDialogTab
         ImGui.EndChild();
 
         ImGui.Button("Cancel");
-        ImGui.SameLine();
-        if (ImGui.Button("Save"))
-        {
-            //FileStream stream = new FileStream(pwd + @$"\{fileName}.ppmp" , FileMode.Create);
 
-            // write the project file
+        UpdateButtons();
 
-            //stream.Close();
-        }
         ImGui.SameLine();
         ImGui.Button("New Folder");
 
@@ -95,7 +104,6 @@ public class FileDialogTab
             //Console.WriteLine(pwd);
 
             if (pwd == Directory.GetDirectoryRoot(pwd)) inDrivesList = true;
-
             pwd = pwd == Directory.GetDirectoryRoot(pwd) ? Directory.GetDirectoryRoot(pwd) : Directory.GetParent(pwd).FullName;//pwd.Remove((pwd.Length - Path.GetFileName(pwd).Length), Path.GetFileName(pwd).Length);
 
             refreshDirectory = true;
@@ -123,7 +131,7 @@ public class FileDialogTab
         {
             if (ImGui.Selectable(Path.GetFileName(file)))
             {
-                fileName = Path.GetFileName(file);
+                fileName = Path.GetFileNameWithoutExtension(file);
             }
         }
     }
@@ -142,6 +150,40 @@ public class FileDialogTab
                 inDrivesList = false;
                 refreshDirectory = true;
             }
+        }
+    }
+
+    private void UpdateButtons() // i will change the name
+    {
+        ImGui.SameLine();
+
+        switch (FileDialogType)
+        {
+            case 0: // NewProject
+                if (ImGui.Button("Create"))
+                {
+                }
+                return;
+            case 1: // OpenProject
+                if (ImGui.Button("Open"))
+                {
+                }
+                return;
+            case 2: // SaveProjectAs
+                if (ImGui.Button("Save"))
+                {
+                }
+                return;
+            case 3: // ImportMesh
+                if (ImGui.Button("Import"))
+                {
+                }
+                return;
+            case 4: // ExportMesh
+                if (ImGui.Button("Export"))
+                {
+                }
+                return;
         }
     }
 }
