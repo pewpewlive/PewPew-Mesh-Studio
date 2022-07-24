@@ -114,15 +114,6 @@ public class ProgramMenu
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Shows information about PewPew Mesh Studio.");
 
-        ImGui.Separator();
-
-        if (ImGui.MenuItem("About"))
-        {
-            OpenAboutDialog = true;
-        }
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Shows information about PewPew Mesh Studio.");
-
         ImGui.EndMenu();
     }
     private void DebugMenu()
