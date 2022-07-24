@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace PewPewMeshStudio.UI;
 
@@ -8,8 +9,13 @@ public class ContextMenu
     {
         if (ImGui.IsMouseClicked(ImGuiMouseButton.Right))
             ImGui.OpenPopup("ContextMenu");
-
         TooltipMenu();
+
+        ImGuiIOPtr IO = ImGui.GetIO();
+
+        if (IO.KeysDown[(int)Keys.LeftShift] && IO.KeysDown[(int)Keys.A])
+            ImGui.OpenPopup("CreateObjectMenu");
+        CreateObjectMenu();
     }
 
     private void TooltipMenu()
@@ -45,8 +51,21 @@ public class ContextMenu
         ImGui.EndPopup();
     }
 
-    private void DeletePOPUP()
+    private void CreateObjectMenu()
     {
-        
+        if (!ImGui.BeginPopup("CreateObjectMenu"))
+            return;
+
+        ImGui.MenuItem("Cube");
+        ImGui.MenuItem("Plane");
+        ImGui.MenuItem("Sphere");
+        ImGui.MenuItem("Cylinder");
+        ImGui.MenuItem("Circle");
+
+        ImGui.Separator();
+
+        ImGui.MenuItem("Alpha");
+
+        ImGui.EndPopup();
     }
 }

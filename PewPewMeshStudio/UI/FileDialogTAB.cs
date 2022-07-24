@@ -11,18 +11,17 @@ public class FileDialogTab
     public bool allowMultiSelect;
 
     string fileName = "";
-    string path = "";
 
     string[] Directories = new string[0];
     string[] Files = new string[0];
     string[] Drives = new string[0];
 
+    // Path Working Directory
     string pwd = Directory.GetCurrentDirectory();
     
     bool inDrivesList;
     bool refreshDirectory = true;
 
-    // Path Working Directory
     /*enum FileDialogType
     {
         NewProject = 0,
@@ -128,7 +127,7 @@ public class FileDialogTab
         ImGui.Separator();
 
         foreach (string file in Files)
-        {
+        { //Path.GetExtension(file)
             if (ImGui.Selectable(Path.GetFileName(file)))
             {
                 fileName = Path.GetFileNameWithoutExtension(file);
