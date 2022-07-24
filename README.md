@@ -1,4 +1,4 @@
 # PewPew Mesh Studio
-The *most* advanced PewPew mesh editor out there.
+The most advanced mesh editor for PewPew Live.
 
 Licensed under zlib license.
