@@ -23,7 +23,7 @@ public class Window : GameWindow
     ErrorPopup errorPopup = new ErrorPopup();
     AboutPopup aboutPopup = new AboutPopup();
     UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
-    PrefsPopup prefsPopup = new PrefsPopup();
+    PreferencesPopup prefsPopup = new PreferencesPopup();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {

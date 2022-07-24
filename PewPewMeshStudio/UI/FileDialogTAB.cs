@@ -186,6 +186,10 @@ public class FileDialogTab
                 {
                 }
                 return;
+
+            default:
+                Console.WriteLine("Invalid context button index");
+                return;
         }
     }
 }
