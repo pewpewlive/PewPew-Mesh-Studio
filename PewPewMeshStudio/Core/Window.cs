@@ -60,6 +60,12 @@ public class Window : GameWindow
         GL.ClearColor(new Color4(0, 32, 90, 235));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
+        ImGuiStylePtr style = ImGui.GetStyle();
+        style.FrameRounding = 2;
+
+        //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
+        //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
+
         ImGui.ShowDemoWindow();
 
         progMenu.Initialize();
