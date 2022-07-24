@@ -2,6 +2,7 @@
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using PewPewMeshStudio.UI;
 
@@ -21,6 +22,7 @@ public class Window : GameWindow
     ContextMenu ctxMenu = new ContextMenu();
     ErrorPopup errorPopup = new ErrorPopup();
     AboutPopup aboutPopup = new AboutPopup();
+    UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
     PrefsPopup prefsPopup = new PrefsPopup();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -63,6 +65,8 @@ public class Window : GameWindow
 
         inspectorTab.Initialize();
         toolsTab.Initialize();
+
+        //uchangesPopup.Initialize();
 
         if (progMenu.OpenErrorDialog)
         {

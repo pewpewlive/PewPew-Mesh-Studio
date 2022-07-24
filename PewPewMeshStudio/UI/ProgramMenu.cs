@@ -9,7 +9,6 @@ public class ProgramMenu
     public bool OpenAboutDialog;
     public bool OpenFileDialog;
     public bool OpenPrefsDialog;
-
     public int fileDialogType;
 
     public void Initialize()
@@ -106,6 +105,15 @@ public class ProgramMenu
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Edit user preferences.");
+        ImGui.Separator();
+
+        if (ImGui.MenuItem("About"))
+        {
+            OpenAboutDialog = true;
+        }
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Shows information about PewPew Mesh Studio.");
+
         ImGui.Separator();
 
         if (ImGui.MenuItem("About"))
