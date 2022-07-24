@@ -23,6 +23,7 @@ public class Window : GameWindow
     ErrorPopup errorPopup = new ErrorPopup();
     AboutPopup aboutPopup = new AboutPopup();
     UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
+    PreferencesPopup prefsPopup = new PreferencesPopup();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -81,6 +82,11 @@ public class Window : GameWindow
         {
             aboutPopup.open = true;
             aboutPopup.Initialize(ref progMenu.OpenAboutDialog);
+        }
+        if (progMenu.OpenPrefsDialog)
+        {
+            prefsPopup.open = true;
+            prefsPopup.Initialize(ref progMenu.OpenPrefsDialog);
         }
         UIController.Render();
 
