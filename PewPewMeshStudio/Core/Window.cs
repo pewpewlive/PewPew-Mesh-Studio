@@ -30,7 +30,7 @@ public class Window : GameWindow
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
         Size = new Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),
-        APIVersion = new Version(3, 3),
+        APIVersion = new Version(4, 1),
         Title = "PewPew Mesh Studio"
     })
     {
