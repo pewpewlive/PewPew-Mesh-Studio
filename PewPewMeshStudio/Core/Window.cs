@@ -21,6 +21,7 @@ public class Window : GameWindow
     ContextMenu ctxMenu = new ContextMenu();
     ErrorPopup errorPopup = new ErrorPopup();
     AboutPopup aboutPopup = new AboutPopup();
+    PrefsPopup prefsPopup = new PrefsPopup();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -77,6 +78,11 @@ public class Window : GameWindow
         {
             aboutPopup.open = true;
             aboutPopup.Initialize(ref progMenu.OpenAboutDialog);
+        }
+        if (progMenu.OpenPrefsDialog)
+        {
+            prefsPopup.open = true;
+            prefsPopup.Initialize(ref progMenu.OpenPrefsDialog);
         }
         UIController.Render();
 

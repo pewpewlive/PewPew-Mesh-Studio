@@ -8,6 +8,7 @@ public class ProgramMenu
     public bool OpenErrorDialog;
     public bool OpenAboutDialog;
     public bool OpenFileDialog;
+    public bool OpenPrefsDialog;
 
     public int fileDialogType;
 
@@ -99,10 +100,12 @@ public class ProgramMenu
 
         ImGui.Separator();
 
-        ImGui.MenuItem("Preferences");
+        if (ImGui.MenuItem("Preferences"))
+        {
+            OpenPrefsDialog = true;
+        }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Edit user preferences.");
-
         ImGui.Separator();
 
         if (ImGui.MenuItem("About"))
