@@ -3,7 +3,7 @@ using System;
 
 namespace PewPewMeshStudio.UI;
 
-public class ProgramMenu
+public class GlobalMenu
 {
     public bool OpenErrorDialog;
     public bool OpenAboutDialog;
