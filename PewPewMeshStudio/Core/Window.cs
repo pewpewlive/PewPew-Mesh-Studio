@@ -67,8 +67,13 @@ public class Window : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
         ImGuiStylePtr style = ImGui.GetStyle();
-        style.FrameRounding = 2;
-        style.WindowRounding = 2;
+        style.FrameRounding = 3;
+        style.WindowRounding = 3;
+        style.ChildRounding = 3;
+        style.ScrollbarRounding = 12;
+        style.TabRounding = 3;
+        style.GrabRounding = 3;
+        style.PopupRounding = 3;
 
         //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
         //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
