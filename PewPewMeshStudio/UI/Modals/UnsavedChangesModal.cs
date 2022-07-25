@@ -1,9 +1,9 @@
 ﻿using ImGuiNET;
 using System.Numerics;
 
-namespace PewPewMeshStudio.UI;
+namespace PewPewMeshStudio.UI.Modals;
 
-public class UnsavedChangesPopup
+public class UnsavedChangesModal
 {
     public bool open = true;
     public bool dontShowThisAgain = false;

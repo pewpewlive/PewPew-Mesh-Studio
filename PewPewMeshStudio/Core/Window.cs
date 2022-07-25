@@ -5,6 +5,9 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using PewPewMeshStudio.UI;
+using PewPewMeshStudio.UI.Modals;
+using PewPewMeshStudio.UI.Popups;
+using PewPewMeshStudio.UI.Windows;
 
 namespace PewPewMeshStudio.Core;
 
@@ -15,15 +18,15 @@ public class Window : GameWindow
 
     ImGuiController UIController;
 
-    InspectorTab inspectorTab = new InspectorTab();
-    ToolsTab toolsTab = new ToolsTab();
-    FileDialogTab filedTab = new FileDialogTab();
-    ProgramMenu progMenu = new ProgramMenu();
-    ContextMenu ctxMenu = new ContextMenu();
-    ErrorPopup errorPopup = new ErrorPopup();
-    AboutPopup aboutPopup = new AboutPopup();
-    UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
-    PreferencesPopup prefsPopup = new PreferencesPopup();
+    InspectorWindow inspectorWindow = new InspectorWindow();
+    ToolsWindow toolsWindow = new ToolsWindow();
+    FileDialogModal fileDialogModal = new FileDialogModal();
+    ProgramMenu programMenu = new ProgramMenu();
+    ContextMenu contextMenu = new ContextMenu();
+    ErrorModal errorModal = new ErrorModal();
+    AboutModal aboutModal = new AboutModal();
+    UnsavedChangesModal unsavedChangesModal = new UnsavedChangesModal();
+    PreferencesModal preferencesModal = new PreferencesModal();
 
     public string lastAction = "Last Action: Not Applicable";
 
@@ -71,33 +74,33 @@ public class Window : GameWindow
 
         ImGui.ShowDemoWindow();
 
-        progMenu.Initialize();
-        ctxMenu.Initialize();
+        programMenu.Initialize();
+        contextMenu.Initialize();
 
-        inspectorTab.Initialize();
-        toolsTab.Initialize();
+        inspectorWindow.Initialize();
+        toolsWindow.Initialize();
 
         //uchangesPopup.Initialize();
 
-        if (progMenu.OpenErrorDialog)
+        if (programMenu.OpenErrorDialog)
         {
-            errorPopup.open = true;
-            errorPopup.Initialize(ref progMenu.OpenErrorDialog);
+            errorModal.open = true;
+            errorModal.Initialize(ref programMenu.OpenErrorDialog);
         }
-        if (progMenu.OpenFileDialog)
+        if (programMenu.OpenFileDialog)
         {
-            filedTab.open = true;
-            filedTab.Initialize(ref progMenu.OpenFileDialog, progMenu.fileDialogType);
+            fileDialogModal.open = true;
+            fileDialogModal.Initialize(ref programMenu.OpenFileDialog, programMenu.fileDialogType);
         }
-        if (progMenu.OpenAboutDialog)
+        if (programMenu.OpenAboutDialog)
         {
-            aboutPopup.open = true;
-            aboutPopup.Initialize(ref progMenu.OpenAboutDialog);
+            aboutModal.open = true;
+            aboutModal.Initialize(ref programMenu.OpenAboutDialog);
         }
-        if (progMenu.OpenPrefsDialog)
+        if (programMenu.OpenPrefsDialog)
         {
-            prefsPopup.open = true;
-            prefsPopup.Initialize(ref progMenu.OpenPrefsDialog);
+            preferencesModal.open = true;
+            preferencesModal.Initialize(ref programMenu.OpenPrefsDialog);
         }
         /* Black Background Toggle (Unused)
         if (prefsPopup.blackBg)

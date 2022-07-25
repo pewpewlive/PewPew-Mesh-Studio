@@ -1,9 +1,9 @@
 ﻿using ImGuiNET;
 using PewPewMeshStudio.ExtraUtils;
 
-namespace PewPewMeshStudio.UI;
+namespace PewPewMeshStudio.UI.Modals;
 
-public class AboutPopup
+public class AboutModal
 {
     public bool open;
     public void Initialize(ref bool open1)
