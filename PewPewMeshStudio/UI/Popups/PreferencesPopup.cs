@@ -11,15 +11,12 @@ public class PreferencesPopup
     public bool displayLastAction;
     // public bool blackBg;
 
-    private string lastActionDone = "Not Applicable";
+    private String lastActionDone = "Not Applicable";
 
-    private string[] prefsItems = { "Graphics", "Keybinds", "Plugins", "Interface", "Project" };
+    private string[] prefsItems = { "Project", "Keybinds", "Plugins", "Interface" };
     private int prefSelected;
 
-    private string[] openglItems = { "3.3", "4.1", "4.6" };
-    public int oglSelected = 1; // display 4.1 as chosen
-
-    private string[] languageItems = { "English", "Lithuanian (Lietuviškai)", "Russian (Русский)", "Ukrainian (Українська)", "Greek (Ελληνικά)", "French (Français)" };
+    private string[] languageItems = { "English", "Lithuanian", "Russian", "Ukrainian", "Greek", "French" };
     public int langSelected;
 
     private string[] fontItems = { "Nunito (Default)", "ImGui" };
@@ -62,10 +59,12 @@ public class PreferencesPopup
                 if (ImGui.IsItemHovered())
                     ImGui.SetTooltip("Toggles mesh antialiasing in Editor.");
 
-                ImGui.Text("OpenGL version");
-                ImGui.ListBox(" ", ref oglSelected, openglItems, openglItems.Length);
-                /*if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Choose an OpenGL version.");*/
+                /*
+                ImGui.Checkbox("Display Latest Action", ref displayLastAction);
+                if (ImGui.IsItemHovered())
+                    ImGui.SetTooltip("Displays last action you've done at the bottom of the Editor window.");
+                */
+
                 //ImGui.Checkbox("Toggle Black Background", ref blackBg); 
                 return;
 
@@ -95,13 +94,7 @@ public class PreferencesPopup
                 ChangeTheme(themeSelected);
 
                 return;
-            case 4:
-                ImGui.Text("Undo / Redo behavior");
-                ImGui.Checkbox("Display Latest Action", ref displayLastAction);
-                if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Displays last action you've done at the bottom of the Editor window.");
 
-                return;
             default: // if some shit happens
                 Console.WriteLine("Invalid preference list item index");
                 return;

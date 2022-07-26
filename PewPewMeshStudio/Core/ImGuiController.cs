@@ -47,22 +47,7 @@ public class ImGuiController : IDisposable
         IntPtr context = ImGui.CreateContext();
         ImGui.SetCurrentContext(context);
         var io = ImGui.GetIO();
-
-        // the following code raises System.AccessViolationException
-
-        /*
-        ImVector ranges;
-        ImFontGlyphRangesBuilderPtr builderPtr = new ImFontGlyphRangesBuilderPtr();
-
-        builderPtr.AddText("ąčęėįšųū");
-        builderPtr.AddRanges(io.Fonts.GetGlyphRangesCyrillic());
-        builderPtr.BuildRanges(out ranges);
-
-        io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, new ImFontConfigPtr(), ranges.Data);
-        io.Fonts.Build();
-        */
-
-        io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, new ImFontConfigPtr(), io.Fonts.GetGlyphRangesCyrillic());
+        io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f);
 
         io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;
         io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
