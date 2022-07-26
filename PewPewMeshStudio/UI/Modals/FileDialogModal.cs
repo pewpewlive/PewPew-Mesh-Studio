@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using System.IO;
 using System.Numerics;
+using Serilog;
 
 namespace PewPewMeshStudio.UI.Modals;
 
@@ -101,7 +102,7 @@ public class FileDialogModal
         ImGui.SameLine();
         ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 185f);
 
-        bool dirChanged = ImGui.InputTextWithHint("", "Path B)", ref inputDir, 200, ImGuiInputTextFlags.EnterReturnsTrue);
+        bool dirChanged = ImGui.InputTextWithHint("", "Enter path here", ref inputDir, 200, ImGuiInputTextFlags.EnterReturnsTrue);
 
         if (refreshDirectory)
             inputDir = pwd;
@@ -134,9 +135,7 @@ public class FileDialogModal
             }
             catch
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[Error]: FileDialogModal -> Access to this directory is denied");
-                Console.ResetColor();
+                Log.Warning("(FileDialogModal) Access to this directory is denied.");
 
                 refreshDirectory = true;
                 inDrivesList = true;
@@ -250,9 +249,7 @@ public class FileDialogModal
                 return;
 
             default:
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[Error]: FileDialogModal -> Invalid context button index");
-                Console.ResetColor();
+                Log.Error("(FileDialogModal) Invalid context button index.");
                 return;
         }
     }

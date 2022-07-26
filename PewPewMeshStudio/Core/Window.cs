@@ -8,6 +8,7 @@ using PewPewMeshStudio.UI;
 using PewPewMeshStudio.UI.Modals;
 using PewPewMeshStudio.UI.Popups;
 using PewPewMeshStudio.UI.Windows;
+using Serilog;
 
 namespace PewPewMeshStudio.Core;
 
@@ -45,9 +46,7 @@ public class Window : GameWindow
     {
         base.OnLoad();
 
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("[Info]: Window -> GUI has loaded successfully.");
-        Console.ResetColor();
+        Log.Information("(Window) GUI loaded successfully.");
     }
 
     protected override void OnResize(ResizeEventArgs Event)
