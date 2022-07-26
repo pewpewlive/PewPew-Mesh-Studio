@@ -21,5 +21,7 @@ class Program
 
         Window MainWindow = new();
         MainWindow.Run();
+        Log.Information("(Program) Closed GUI, closing application...");
+        Log.CloseAndFlush();
     }
 }
