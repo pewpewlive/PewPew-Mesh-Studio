@@ -1,9 +1,9 @@
 ﻿using ImGuiNET;
 using System.Numerics;
 
-namespace PewPewMeshStudio.UI.Windows;
+namespace PewPewMeshStudio.UI;
 
-public class InspectorWindow
+public class InspectorTab
 {
     //test fields
     Vector3 objectPos = new Vector3(1, 2, 3);

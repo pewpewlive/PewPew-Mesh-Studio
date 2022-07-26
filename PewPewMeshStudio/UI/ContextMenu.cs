@@ -1,7 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace PewPewMeshStudio.UI.Popups;
+namespace PewPewMeshStudio.UI;
 
 public class ContextMenu
 {

@@ -1,9 +1,9 @@
 ﻿using ImGuiNET;
 using System.Numerics;
 
-namespace PewPewMeshStudio.UI.Windows;
+namespace PewPewMeshStudio.UI;
 
-public class ToolsWindow
+public class ToolsTab
 {
     bool perspective;
     public void Initialize()
