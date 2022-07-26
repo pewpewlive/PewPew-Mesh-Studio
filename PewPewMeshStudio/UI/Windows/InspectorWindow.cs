@@ -20,17 +20,17 @@ public class InspectorWindow
         ImGui.Begin("Inspector");
 
         ImGui.Text("Object: *selected object name*");
-        ImGui.DragFloat3("Object Position", ref objectPos);
+        ImGui.InputFloat3("Object Position", ref objectPos);
 
         ImGui.Text("\nMeshes");
-        ImGui.ListBox("", ref meshesIndex, new string[] { "1", "2", "3" }, 3);
+        ImGui.ListBox("Meshes", ref meshesIndex, new string[] { "1", "2", "3" }, 3);
 
-        ImGui.DragFloat3("Mesh Position", ref meshPos);
+        ImGui.InputFloat3("Mesh Position", ref meshPos);
 
         ImGui.Separator();
 
         ImGui.Text("Vertex");
-        ImGui.DragFloat3("Position", ref vertexPos);
+        ImGui.InputFloat3("Position", ref vertexPos);
 
         ImGui.NewLine();
 

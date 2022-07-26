@@ -18,7 +18,6 @@ public class Window : GameWindow
 
     ImGuiController UIController;
 
-    GlobalDockspace globalDockspace = new GlobalDockspace();
     InspectorWindow inspectorWindow = new InspectorWindow();
     ToolsWindow toolsWindow = new ToolsWindow();
     FileDialogModal fileDialogModal = new FileDialogModal();
@@ -28,6 +27,7 @@ public class Window : GameWindow
     AboutModal aboutModal = new AboutModal();
     UnsavedChangesModal unsavedChangesModal = new UnsavedChangesModal();
     PreferencesModal preferencesModal = new PreferencesModal();
+
     public string lastAction = "Last Action: Not Applicable";
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -68,12 +68,9 @@ public class Window : GameWindow
 
         ImGuiStylePtr style = ImGui.GetStyle();
         style.FrameRounding = 2;
-        style.WindowRounding = 2;
 
         //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
         //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
-
-        globalDockspace.Initialize();
 
         ImGui.ShowDemoWindow();
 
