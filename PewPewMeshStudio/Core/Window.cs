@@ -25,7 +25,7 @@ public class Window : GameWindow
     UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
     PreferencesPopup prefsPopup = new PreferencesPopup();
 
-    public String lastAction = "Last Action: Not Applicable";
+    public string lastAction = "Last Action: Not Applicable";
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
