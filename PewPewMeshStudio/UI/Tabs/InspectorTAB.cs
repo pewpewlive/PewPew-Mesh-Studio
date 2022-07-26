@@ -34,7 +34,7 @@ public class InspectorTab
 
         ImGui.NewLine();
 
-        ImGui.ColorEdit4("Color", ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
+        ImGui.ColorEdit4("Color", ref vertexCol);
 
         ImGui.End();
     }
