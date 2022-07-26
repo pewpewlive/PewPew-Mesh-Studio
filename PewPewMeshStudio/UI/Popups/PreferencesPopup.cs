@@ -9,12 +9,11 @@ public class PreferencesPopup
     public bool open;
     public bool antiAliasOn;
     public bool displayLastAction;
-    public bool displayDebugConsole;
     // public bool blackBg;
 
     private string lastActionDone = "Not Applicable";
 
-    private string[] prefsItems = { "Graphics", "Keybinds", "Plugins", "Interface", "Project", "Editor" };
+    private string[] prefsItems = { "Graphics", "Keybinds", "Plugins", "Interface", "Project" };
     private int prefSelected;
 
     private string[] openglItems = { "3.3", "4.1", "4.6" };
@@ -102,12 +101,6 @@ public class PreferencesPopup
                 if (ImGui.IsItemHovered())
                     ImGui.SetTooltip("Displays last action you've done at the bottom of the Editor window.");
 
-                return;
-            case 5:
-                ImGui.Text("Debug features");
-                ImGui.Checkbox("Display debug console", ref displayDebugConsole);
-                if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Displays debug console.");
                 return;
             default: // if some shit happens
                 Console.WriteLine("Invalid preference list item index");
