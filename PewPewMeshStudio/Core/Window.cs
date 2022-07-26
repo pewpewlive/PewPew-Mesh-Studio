@@ -22,7 +22,7 @@ public class Window : GameWindow
     InspectorWindow inspectorWindow = new InspectorWindow();
     ToolsWindow toolsWindow = new ToolsWindow();
     FileDialogModal fileDialogModal = new FileDialogModal();
-    GlobalMenu globalMenu = new GlobalMenu();
+    ProgramMenu programMenu = new ProgramMenu();
     ContextMenu contextMenu = new ContextMenu();
     ErrorModal errorModal = new ErrorModal();
     AboutModal aboutModal = new AboutModal();
@@ -77,7 +77,7 @@ public class Window : GameWindow
 
         ImGui.ShowDemoWindow();
 
-        globalMenu.Initialize();
+        programMenu.Initialize();
         contextMenu.Initialize();
 
         inspectorWindow.Initialize();
@@ -85,25 +85,25 @@ public class Window : GameWindow
 
         //uchangesPopup.Initialize();
 
-        if (globalMenu.OpenErrorDialog)
+        if (programMenu.OpenErrorDialog)
         {
             errorModal.open = true;
-            errorModal.Initialize(ref globalMenu.OpenErrorDialog);
+            errorModal.Initialize(ref programMenu.OpenErrorDialog);
         }
-        if (globalMenu.OpenFileDialog)
+        if (programMenu.OpenFileDialog)
         {
             fileDialogModal.open = true;
-            fileDialogModal.Initialize(ref globalMenu.OpenFileDialog, globalMenu.fileDialogType);
+            fileDialogModal.Initialize(ref programMenu.OpenFileDialog, programMenu.fileDialogType);
         }
-        if (globalMenu.OpenAboutDialog)
+        if (programMenu.OpenAboutDialog)
         {
             aboutModal.open = true;
-            aboutModal.Initialize(ref globalMenu.OpenAboutDialog);
+            aboutModal.Initialize(ref programMenu.OpenAboutDialog);
         }
-        if (globalMenu.OpenPrefsDialog)
+        if (programMenu.OpenPrefsDialog)
         {
             preferencesModal.open = true;
-            preferencesModal.Initialize(ref globalMenu.OpenPrefsDialog);
+            preferencesModal.Initialize(ref programMenu.OpenPrefsDialog);
         }
         /* Black Background Toggle (Unused)
         if (prefsPopup.blackBg)
