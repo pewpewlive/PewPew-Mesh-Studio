@@ -9,16 +9,16 @@ public class ContextMenu
     {
         if (ImGui.IsMouseClicked(ImGuiMouseButton.Right))
             ImGui.OpenPopup("ContextMenu");
-        ctxMenu();
+        TooltipMenu();
 
         ImGuiIOPtr IO = ImGui.GetIO();
 
-        if (ImGui.IsMouseClicked(ImGuiMouseButton.Right) && IO.KeysDown[(int)Keys.LeftShift])
+        if (IO.KeysDown[(int)Keys.LeftShift] && IO.KeysDown[(int)Keys.A])
             ImGui.OpenPopup("CreateObjectMenu");
         CreateObjectMenu();
     }
 
-    private void ctxMenu()
+    private void TooltipMenu()
     {
         if (!ImGui.BeginPopup("ContextMenu"))
             return;
@@ -57,29 +57,14 @@ public class ContextMenu
             return;
 
         ImGui.MenuItem("Cube");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Creates a cube.");
-        ImGui.MenuItem("Rect");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Creates a mesh with 4 vertices.");
-        ImGui.MenuItem("UV Sphere");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Creates a UV sphere.");
-        ImGui.MenuItem("Ico Sphere");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Creates an icosphere.");
+        ImGui.MenuItem("Plane");
+        ImGui.MenuItem("Sphere");
         ImGui.MenuItem("Cylinder");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Creates a cylinder.");
         ImGui.MenuItem("Circle");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Creates a 2D circle.");
 
         ImGui.Separator();
 
         ImGui.MenuItem("Alpha");
-        if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Construct Alpha ship mesh.");
 
         ImGui.EndPopup();
     }
