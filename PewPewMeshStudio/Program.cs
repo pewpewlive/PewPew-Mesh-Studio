@@ -8,6 +8,7 @@ namespace PewPewMeshStudio
     {
         static void Main()
         {
+            //ConsoleExtension.Hide();
             //ConsoleExtension.Show();
             MeshParser.ParseMeshFile("mesh.lua", 1);
 
