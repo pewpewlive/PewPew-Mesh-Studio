@@ -1,12 +1,12 @@
 ﻿using ImGuiNET;
 
-namespace PewPewMeshStudio.UI.Modals;
+namespace PewPewMeshStudio.UI;
 
-public class ErrorModal
+public class ErrorPopup
 {
     public bool open;
 
-    public string errorMessage = "ExampleError";
+    public string errorMessage = "";
 
     public void Initialize(ref bool open1)
     {
@@ -18,7 +18,7 @@ public class ErrorModal
             return;
         }
 
-        ImGui.Text("Error: " + errorMessage);
+        ImGui.Text("Error: *error string here*");
 
         if (ImGui.Button("Exit application"))
         {
@@ -26,8 +26,6 @@ public class ErrorModal
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Exits the application with a non-zero exit code.");
-
-        ImGui.SameLine();
 
         if (ImGui.Button("Continue"))
         {
