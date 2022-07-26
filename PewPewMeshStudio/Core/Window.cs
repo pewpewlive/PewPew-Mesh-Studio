@@ -25,6 +25,8 @@ public class Window : GameWindow
     UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
     PreferencesPopup prefsPopup = new PreferencesPopup();
 
+    public String lastAction = "Last Action: Not Applicable";
+
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
         Size = new Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),
@@ -88,6 +90,13 @@ public class Window : GameWindow
             prefsPopup.open = true;
             prefsPopup.Initialize(ref progMenu.OpenPrefsDialog);
         }
+        /* Black Background Toggle (Unused)
+        if (prefsPopup.blackBg)
+        {
+            GL.ClearColor(new Color4(0, 0, 0, 235));
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        }
+        */
         UIController.Render();
 
         ImGuiController.CheckGLError("End of frame");
