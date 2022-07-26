@@ -2,18 +2,17 @@
 using PewPewMeshStudio.LuaUtils;
 using PewPewMeshStudio.ExtraUtils;
 
-namespace PewPewMeshStudio
-{
-    class Program
-    {
-        static void Main()
-        {
-            //ConsoleExtension.Hide();
-            //ConsoleExtension.Show();
-            MeshParser.ParseMeshFile("mesh.lua", 1);
+namespace PewPewMeshStudio;
 
-            Window MainWindow = new();
-            MainWindow.Run();
-        }
+class Program
+{
+    static void Main()
+    {
+        //ConsoleExtension.Hide();
+        //ConsoleExtension.Show();
+        MeshParser.ParseMeshFile("mesh.lua", 1);
+
+        Window MainWindow = new();
+        MainWindow.Run();
     }
 }
