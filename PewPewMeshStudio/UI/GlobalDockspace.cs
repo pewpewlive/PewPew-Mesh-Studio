@@ -19,7 +19,7 @@ public class GlobalDockspace
         windowFlags |= ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus | ImGuiWindowFlags.NoBackground;
 
         ImGui.Begin("Global Dockspace", windowFlags);
-        uint dockspaceId = ImGui.GetID("GlobalDockspace");
+        uint dockspaceId = ImGui.GetID("MyDockSpace");
         ImGui.DockSpace(dockspaceId, new Vector2(0.0f, 0.0f), ImGuiDockNodeFlags.PassthruCentralNode);
         ImGui.End();
     }
