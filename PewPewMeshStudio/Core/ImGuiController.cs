@@ -356,9 +356,7 @@ void main()
                 GL.BufferData(BufferTarget.ArrayBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
                 _vertexBufferSize = newSize;
 
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"[Verbose]: ImGuiController -> Resized dear imgui vertex buffer to new size {_vertexBufferSize}");
-                Console.ResetColor();
+                Console.WriteLine($"Resized dear imgui vertex buffer to new size {_vertexBufferSize}");
             }
 
             int indexSize = cmd_list.IdxBuffer.Size * sizeof(ushort);
@@ -368,9 +366,7 @@ void main()
                 GL.BufferData(BufferTarget.ElementArrayBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
                 _indexBufferSize = newSize;
 
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"[Verbose]: ImGuiController -> Resized dear imgui index buffer to new size {_indexBufferSize}");
-                Console.ResetColor();
+                Console.WriteLine($"Resized dear imgui index buffer to new size {_indexBufferSize}");
             }
         }
 
