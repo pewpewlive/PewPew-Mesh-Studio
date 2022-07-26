@@ -2,9 +2,9 @@
 using PewPewMeshStudio.ExtraUtils;
 using System.Numerics;
 
-namespace PewPewMeshStudio.UI;
+namespace PewPewMeshStudio.UI.Modals;
 
-public class PreferencesPopup
+public class PreferencesModal
 {
     public bool open;
     public bool antiAliasOn;
@@ -57,7 +57,7 @@ public class PreferencesPopup
         switch (prefSelected)
         {
             case 0:
-                ImGui.Text("Mesh Rendering"); 
+                ImGui.Text("Mesh Rendering");
 
                 ImGui.Checkbox("Enable Antialiasing", ref antiAliasOn);
                 if (ImGui.IsItemHovered())
@@ -86,7 +86,7 @@ public class PreferencesPopup
                 ImGui.NewLine();
 
                 ImGui.Text("Font");
-       
+
                 ImGui.ListBox("  ", ref fontSelected, fontItems, fontItems.Length);
 
                 ImGui.NewLine();

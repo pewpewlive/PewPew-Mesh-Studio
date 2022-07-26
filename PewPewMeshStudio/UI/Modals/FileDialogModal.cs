@@ -2,9 +2,9 @@
 using System.IO;
 using System.Numerics;
 
-namespace PewPewMeshStudio.UI;
+namespace PewPewMeshStudio.UI.Modals;
 
-public class FileDialogTab
+public class FileDialogModal
 {
     public bool open;
 
@@ -21,7 +21,7 @@ public class FileDialogTab
 
     // Path Working Directory
     string pwd = Directory.GetCurrentDirectory();
-    
+
     bool inDrivesList;
     bool refreshDirectory = true;
 
@@ -70,7 +70,7 @@ public class FileDialogTab
             UpdateDrivesList();
         else
             UpdateDirectoryList();
-            
+
         ImGui.EndChild();
 
         ImGui.Button("Cancel");
@@ -129,7 +129,7 @@ public class FileDialogTab
         ImGui.Separator();
 
         foreach (string file in Files)
-        {   
+        {
             //Path.GetExtension(file)
             if (ImGui.Selectable(Path.GetFileName(file)))
             {
