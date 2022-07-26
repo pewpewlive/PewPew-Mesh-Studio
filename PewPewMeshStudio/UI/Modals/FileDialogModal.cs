@@ -13,6 +13,7 @@ public class FileDialogModal
     string fileName = "";
     string path = "";
 
+
     string[] Directories = new string[0];
     string[] Files = new string[0];
     string[] Drives = new string[0];
@@ -20,12 +21,11 @@ public class FileDialogModal
 
     // Path Working Directory
     string pwd = Directory.GetCurrentDirectory();
-    string inputDir = Directory.GetCurrentDirectory();
 
     bool inDrivesList;
     bool refreshDirectory = true;
 
-    enum FileDialogType
+    /*enum FileDialogType
     {
         NewProject = 0,
         OpenProject = 1,
@@ -34,15 +34,13 @@ public class FileDialogModal
 
         ImportMesh = 3,
         ExportMesh = 4
-    }
+    }*/
 
-    FileDialogType FDType;
+    int FileDialogType;
 
-    public string[] supportedExtentions = { ".ppmp", ".lua" };
-
-    public void Initialize(ref bool open1, int fdt)
+    public void Initialize(ref bool open1, int fileDialogType)
     {
-        FDType = (FileDialogType)fdt;
+        FileDialogType = fileDialogType;
 
         ImGui.OpenPopup("File Dialog");
 
@@ -54,20 +52,19 @@ public class FileDialogModal
 
         if (ImGui.Button("Refresh"))
             refreshDirectory = true;
-
         ImGui.SameLine();
         if (ImGui.Button("Drives"))
-        {
             inDrivesList = true;
-            refreshDirectory = true;
-        }
-
         ImGui.SameLine();
         ImGui.Text("Path:");
+        ImGui.SameLine();
 
-        UpdateDirectoryBar();
+        ImGui.SetNextItemWidth(ImGui.GetWindowSize().X - 200f);
+        ImGui.InputText("", ref pwd, 100, ImGuiInputTextFlags.ReadOnly);
 
-        ImGui.BeginChild("fileList", new Vector2(0f, ImGui.GetWindowSize().Y - 103f), true, ImGuiWindowFlags.HorizontalScrollbar);
+        ImGui.BeginChild("fileList", new Vector2(0f, ImGui.GetWindowSize().Y - 100f), true, ImGuiWindowFlags.HorizontalScrollbar);
+
+        ImGui.GetWindowSize();
 
         if (inDrivesList)
             UpdateDrivesList();
@@ -78,69 +75,29 @@ public class FileDialogModal
 
         ImGui.Button("Cancel");
 
-        UpdateContextButtons();
+        UpdateButtons();
 
         ImGui.SameLine();
         ImGui.Button("New Folder");
 
         ImGui.SameLine();
+        ImGui.Text("Name:");
+        ImGui.SameLine();
 
-        ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 300f);
-
-        if (FDType == (FileDialogType.NewProject & FileDialogType.SaveProjectAs & FileDialogType.ExportMesh))
-            ImGui.InputTextWithHint(".ppmp", "File name", ref fileName, 100);
-
-        else if (FDType == (FileDialogType.OpenProject & FileDialogType.ImportMesh))
-            ImGui.InputTextWithHint(".ppmp", "File name", ref fileName, 100, ImGuiInputTextFlags.ReadOnly);
+        ImGui.SetNextItemWidth(ImGui.GetWindowSize().X - 375f);
+        ImGui.InputText(".ppmp", ref fileName, 100);
 
         ImGui.EndPopup();
     }
 
-    private void UpdateDirectoryBar()
-    {
-        ImGui.SameLine();
-        ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 185f);
-
-        bool dirChanged = ImGui.InputTextWithHint("", "Path B)", ref inputDir, 200, ImGuiInputTextFlags.EnterReturnsTrue);
-
-        if (refreshDirectory)
-            inputDir = pwd;
-
-        if (dirChanged)
-            if (Directory.Exists(inputDir))
-            {
-                if (!inputDir.Contains("\\"))
-                    inputDir += "\\";
-
-                pwd = inputDir;
-
-                refreshDirectory = true;
-            }
-            else
-                inputDir = pwd;
-    }
-
     private void UpdateDirectoryList()
     {
+
         if (refreshDirectory)
         {
-            try
-            {
-                Directories = Directory.GetDirectories(pwd, "*", SearchOption.TopDirectoryOnly);
-                Files = Directory.GetFiles(pwd, "*", SearchOption.TopDirectoryOnly);
-                refreshDirectory = false;
-
-                ImGui.SetScrollY(0f);
-            }
-            catch
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[Error]: File Dialog -> Access to this directory is denied");
-                Console.ResetColor();
-
-                refreshDirectory = true;
-                inDrivesList = true;
-            }
+            Directories = Directory.GetDirectories(pwd, "*", SearchOption.TopDirectoryOnly);
+            Files = Directory.GetFiles(pwd, "*", SearchOption.TopDirectoryOnly);
+            refreshDirectory = false;
         }
 
         if (ImGui.Selectable("..\\")) //prev folder
@@ -155,8 +112,7 @@ public class FileDialogModal
             //Console.WriteLine(pwd + "\n");
         }
 
-        if (Directories.Length != 0)
-            ImGui.Separator();
+        ImGui.Separator();
 
         foreach (string dir in Directories)
         {
@@ -170,8 +126,7 @@ public class FileDialogModal
             }
         }
 
-        if (Files.Length != 0)
-            ImGui.Separator();
+        ImGui.Separator();
 
         foreach (string file in Files)
         {
@@ -186,12 +141,7 @@ public class FileDialogModal
     private void UpdateDrivesList()
     {
         if (refreshDirectory)
-        {
             Drives = Directory.GetLogicalDrives();
-            inputDir = @"";
-
-            refreshDirectory = false;
-        }
 
         foreach (string drive in Drives)
         {
@@ -205,54 +155,40 @@ public class FileDialogModal
         }
     }
 
-    private void UpdateContextButtons()
+    private void UpdateButtons() // i will change the name
     {
         ImGui.SameLine();
 
-        switch (FDType)
+        switch (FileDialogType)
         {
-            case FileDialogType.NewProject: // NewProject
-                if (fileName == "") ImGui.BeginDisabled(true);
-
+            case 0: // NewProject
                 if (ImGui.Button("Create"))
                 {
                 }
-
-                ImGui.EndDisabled();
                 return;
-            case FileDialogType.OpenProject: // OpenProject
+            case 1: // OpenProject
                 if (ImGui.Button("Open"))
                 {
                 }
                 return;
-            case FileDialogType.SaveProjectAs: // SaveProjectAs
-                if (fileName == "") ImGui.BeginDisabled(true);
-
+            case 2: // SaveProjectAs
                 if (ImGui.Button("Save"))
                 {
                 }
-
-                ImGui.EndDisabled();
                 return;
-            case FileDialogType.ImportMesh: // ImportMesh
+            case 3: // ImportMesh
                 if (ImGui.Button("Import"))
                 {
                 }
                 return;
-            case FileDialogType.ExportMesh: // ExportMesh
-                if (fileName == "") ImGui.BeginDisabled(true);
-
+            case 4: // ExportMesh
                 if (ImGui.Button("Export"))
                 {
                 }
-
-                ImGui.EndDisabled();
                 return;
 
             default:
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[Error]: File dialog -> Invalid context button index");
-                Console.ResetColor();
+                Console.WriteLine("Invalid context button index");
                 return;
         }
     }
