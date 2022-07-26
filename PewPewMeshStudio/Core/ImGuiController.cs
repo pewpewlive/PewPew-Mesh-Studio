@@ -64,7 +64,7 @@ public class ImGuiController : IDisposable
 
         io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, new ImFontConfigPtr(), io.Fonts.GetGlyphRangesCyrillic());
 
-        io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;
+        io.ConfigFlags |= ImGuiConfigFlags.DockingEnable | ImGuiConfigFlags.NavEnableKeyboard;
         io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
 
         CreateDeviceResources();
