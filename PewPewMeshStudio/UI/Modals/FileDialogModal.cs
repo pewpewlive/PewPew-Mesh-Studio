@@ -135,7 +135,7 @@ public class FileDialogModal
             catch
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[Error]: File Dialog -> Access to this directory is denied");
+                Console.WriteLine("[Error]: FileDialogModal -> Access to this directory is denied");
                 Console.ResetColor();
 
                 refreshDirectory = true;
@@ -162,7 +162,7 @@ public class FileDialogModal
         {
             if (ImGui.Selectable(Path.GetFileName(dir) + "\\"))
             {
-                pwd += @"\" + Path.GetFileName(dir);
+                pwd += "\\" + Path.GetFileName(dir);
 
                 refreshDirectory = true;
 
@@ -188,7 +188,7 @@ public class FileDialogModal
         if (refreshDirectory)
         {
             Drives = Directory.GetLogicalDrives();
-            inputDir = @"";
+            inputDir = "";
 
             refreshDirectory = false;
         }
@@ -251,7 +251,7 @@ public class FileDialogModal
 
             default:
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[Error]: File dialog -> Invalid context button index");
+                Console.WriteLine("[Error]: FileDialogModal -> Invalid context button index");
                 Console.ResetColor();
                 return;
         }
