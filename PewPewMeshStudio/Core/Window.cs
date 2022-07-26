@@ -41,9 +41,7 @@ public class Window : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("[Info]: Window -> GUI has loaded successfully.");
-        Console.ResetColor();
+        Console.WriteLine("Welcome to PewPewMeshStudio!");
     }
 
     protected override void OnResize(ResizeEventArgs Event)

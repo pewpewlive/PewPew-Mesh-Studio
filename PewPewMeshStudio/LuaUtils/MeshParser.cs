@@ -100,17 +100,12 @@ public class MeshParser
             if (Vertexes.Count == 0 && Segments.Count == 0 && Colors.Count == 0)
                 throw new ParserExceptions.InvalidMeshIndex(filepath, index);
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("[Info]: MeshParser -> Mesh parsed successfully.");
-            Console.ResetColor();
             //return new Renderable(new MeshObject());
         }
         catch (Exception Ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(string.Format("[Error]: MeshParser -> {0}", Ex.Message));
-            Console.WriteLine("[Error]: MeshParser -> Failed to parse mesh file! Returning empty mesh object.");
-            Console.ResetColor();
+            Console.WriteLine(string.Format("[Error]: Mesh Parser -> {0}", Ex.Message));
+            Console.WriteLine("[Error]: Mesh Parser -> Failed to parse mesh file! Returning empty mesh object.");
             //return new Renderable(new MeshObject());
         }
     }
