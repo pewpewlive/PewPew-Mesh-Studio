@@ -10,7 +10,7 @@ public class InspectorTab
     Vector3 meshPos = new Vector3(3, 5, 6);
 
     Vector3 vertexPos = new Vector3(2, 15, 63);
-    Vector4 vertexCol = ColorUtil.Vec4IntToFloat(new Vector4(2, 15, 63, 255));
+    Vector4 vertexCol = ColorUtil.Vec4ByteToFloat(new Vector4(2, 15, 63, 255));
 
     int meshesIndex = 0;
     int vertexesIndex = 0;
