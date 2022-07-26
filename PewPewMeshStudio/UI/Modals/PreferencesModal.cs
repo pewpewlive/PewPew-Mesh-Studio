@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using PewPewMeshStudio.ExtraUtils;
 using System.Numerics;
+using Serilog;
 
 namespace PewPewMeshStudio.UI.Modals;
 
@@ -110,7 +111,7 @@ public class PreferencesModal
                     ImGui.SetTooltip("Displays debug console.");
                 return;
             default: // if some shit happens
-                Console.WriteLine("Invalid preference list item index");
+                Log.Error("Invalid preference list item index.");
                 return;
         }
 
