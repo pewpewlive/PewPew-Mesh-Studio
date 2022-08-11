@@ -84,6 +84,8 @@ public class Window : GameWindow
 
         ImGui.ShowDemoWindow();
 
+        track.Track();
+
         globalMenu.Initialize();
         contextMenu.Initialize();
 
