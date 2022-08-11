@@ -5,6 +5,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using PewPewMeshStudio.UI;
+using PewPewMeshStudio.ExtraUtils;
 
 namespace PewPewMeshStudio.Core;
 
@@ -24,6 +25,8 @@ public class Window : GameWindow
     AboutPopup aboutPopup = new AboutPopup();
     UnsavedChangesPopup uchangesPopup = new UnsavedChangesPopup();
     PreferencesPopup prefsPopup = new PreferencesPopup();
+
+    InputSystem track = new InputSystem();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -59,6 +62,8 @@ public class Window : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
         ImGui.ShowDemoWindow();
+
+        track.Track();
 
         progMenu.Initialize();
         ctxMenu.Initialize();
