@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using PewPewMeshStudio.ExtraUtils;
 
 namespace PewPewMeshStudio.UI.Popups;
 
@@ -13,7 +14,7 @@ public class ContextMenu
 
         ImGuiIOPtr IO = ImGui.GetIO();
 
-        if (ImGui.IsMouseClicked(ImGuiMouseButton.Right) && IO.KeysDown[(int)Keys.LeftShift])
+        if (InputSystem.HotkeyPressed(new Keys[] { Keys.LeftShift, Keys.A }))
             ImGui.OpenPopup("CreateObjectMenu");
         CreateObjectMenu();
     }

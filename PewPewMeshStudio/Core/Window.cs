@@ -8,6 +8,7 @@ using PewPewMeshStudio.UI;
 using PewPewMeshStudio.UI.Modals;
 using PewPewMeshStudio.UI.Popups;
 using PewPewMeshStudio.UI.Windows;
+using PewPewMeshStudio.ExtraUtils;
 using Serilog;
 
 namespace PewPewMeshStudio.Core;
@@ -30,6 +31,8 @@ public class Window : GameWindow
     UnsavedChangesModal unsavedChangesModal = new UnsavedChangesModal();
     PreferencesModal preferencesModal = new PreferencesModal();
     public string lastAction = "Last Action: Not Applicable";
+
+    InputSystem track = new InputSystem();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
