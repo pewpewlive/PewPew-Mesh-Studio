@@ -17,8 +17,6 @@ class Program
             //.WriteTo.File("logs/.log", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-        MeshParser.ParseMeshFile("mesh.lua", 1);
-
         Window MainWindow = new();
         MainWindow.Run();
         Log.Information("(Program) Closed GUI, closing application...");

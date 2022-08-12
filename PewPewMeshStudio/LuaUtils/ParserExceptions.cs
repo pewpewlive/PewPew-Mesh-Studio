@@ -24,16 +24,30 @@ public class ParserExceptions
     }
 
     [Serializable]
-    public class InvalidVertexIndex : Exception
+    public class InvalidVertexCoordCount : Exception
     {
-        public InvalidVertexIndex(string filename, int index, int size)
-            : base(string.Format("{0}:0: a vertex index used in a segment in mesh at index ({1}) must be within the valid range [0,{2})", filename, index, size)) { }
+        public InvalidVertexCoordCount(string filename, int index)
+            : base(string.Format("{0}:0: the table 'vertexes' in mesh at index ({1}) countains a vertex with an invalid amount of position values", filename, index)) { }
     }
 
     [Serializable]
-    public class InvalidSegment : Exception
+    public class InvalidColorCount : Exception
     {
-        public InvalidSegment(string filename, int index)
+        public InvalidColorCount(string filename, int index)
+            : base(string.Format("{0}:0: the table 'colors' in mesh at index ({1}) must be the same size as 'vertexes'", filename, index)) { }
+    }
+
+    [Serializable]
+    public class InvalidVertexIndexInSegment : Exception
+    {
+        public InvalidVertexIndexInSegment(string filename, int index, int index2, int size)
+            : base(string.Format("{0}:0: a vertex index ({1}) used in a segment in mesh at index ({2}) must be within the valid range [0,{3})", filename, index, index2, size)) { }
+    }
+
+    [Serializable]
+    public class InvalidSegmentIndexCount : Exception
+    {
+        public InvalidSegmentIndexCount(string filename, int index)
             : base(string.Format("{0}:0: the table 'segments' in mesh at index ({1}) can not contain a single vertex index segment", filename, index)) { }
     }
 }
