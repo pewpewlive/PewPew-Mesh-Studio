@@ -35,7 +35,7 @@ public class ImGuiController : IDisposable
 
     private static bool KHRDebugAvailable = false;
 
-    public ImGuiController(int width, int height)
+    public ImGuiController(int width, int height, IntPtr FontPtr)
     {
         _windowWidth = width;
         _windowHeight = height;
@@ -57,7 +57,8 @@ public class ImGuiController : IDisposable
             builder.AddRanges(fontAtlas.GetGlyphRangesCyrillic()); // Cyrillic + Latin glyphs
             builder.AddText("ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωάέύίόώήϋϊΰΐΈΎΉΏΌ"); // Greek glyphs
             builder.BuildRanges(out ImVector ranges);
-            io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, null, ranges.Data);
+            //io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, null, ranges.Data);
+            io.Fonts.AddFontFromMemoryTTF(FontPtr, Properties.Resources.Font.Length, 20.0f, null, ranges.Data);
         }
 
         io.ConfigFlags |= ImGuiConfigFlags.DockingEnable | ImGuiConfigFlags.NavEnableKeyboard;
