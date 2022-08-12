@@ -4,11 +4,15 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+using PewPewMeshStudio.LuaUtils;
+using PewPewMeshStudio.Renderer;
 using PewPewMeshStudio.UI;
 using PewPewMeshStudio.UI.Modals;
 using PewPewMeshStudio.UI.Popups;
 using PewPewMeshStudio.UI.Windows;
 using PewPewMeshStudio.ExtraUtils;
+using System.Runtime.InteropServices;
 using Serilog;
 
 namespace PewPewMeshStudio.Core;
@@ -32,17 +36,33 @@ public class Window : GameWindow
     PreferencesModal preferencesModal = new PreferencesModal();
     public string lastAction = "Last Action: Not Applicable";
 
+    GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
+
+    Renderable Mesh;
+    Camera MeshCamera = new Camera();
     InputSystem track = new InputSystem();
+
+    private bool MouseHeld = false;
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
         Size = new Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),
         APIVersion = new Version(4, 1),
-        Title = "PewPew Mesh Studio"
+        Title = "PewPew Mesh Studio",
+        NumberOfSamples = 8,
     })
     {
         VSync = VSyncMode.On;
-        UIController = new(WINDOW_WIDTH, WINDOW_HEIGHT);
+        UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
+
+        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+    }
+
+    protected override void OnUnload()
+    {
+        base.OnUnload();
+        Mesh.Destroy();
+        FontPtr.Free();
     }
 
     protected override void OnLoad()
@@ -65,7 +85,7 @@ public class Window : GameWindow
 
         UIController.Update(this, (float)Event.Time);
 
-        GL.ClearColor(new Color4(0, 32, 90, 235));
+        GL.ClearColor(new Color4(0, 0, 0, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
         ImGuiStylePtr style = ImGui.GetStyle();
@@ -81,6 +101,7 @@ public class Window : GameWindow
         //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
 
         globalDockspace.Initialize();
+        Mesh.Render((Vector2)ClientSize, MeshCamera);
 
         ImGui.ShowDemoWindow();
 
@@ -138,5 +159,36 @@ public class Window : GameWindow
     {
         base.OnMouseWheel(Event);
         UIController.MouseScroll(Event.Offset);
+        MeshCamera.ZoomBy(Event.OffsetY < 0.0f ? 10.0f * MathF.Abs(Event.OffsetY) : -10.0f * MathF.Abs(Event.OffsetY));
+        MeshCamera.Update();
+    }
+
+    protected override void OnMouseDown(MouseButtonEventArgs Event)
+    {
+        base.OnMouseDown(Event);
+        if (Event.Button == MouseButton.Middle)
+            MouseHeld = true;
+    }
+
+    protected override void OnMouseUp(MouseButtonEventArgs Event)
+    {
+        base.OnMouseUp(Event);
+        if (Event.Button == MouseButton.Middle)
+            MouseHeld = false;
+    }
+
+    protected override void OnMouseMove(MouseMoveEventArgs Event)
+    {
+        base.OnMouseMove(Event);
+        if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift])
+        {
+            MeshCamera.PanBy(Event.Delta * 0.75f); 
+            MeshCamera.Update();
+        }
+        else if (MouseHeld)
+        {
+            MeshCamera.RotateBy(Event.Delta * 0.25f); 
+            MeshCamera.Update();
+        }
     }
 }
