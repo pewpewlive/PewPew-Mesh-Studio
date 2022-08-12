@@ -9,9 +9,9 @@ public class ToolsWindow
     bool perspective;
     public void Initialize()
     {
-        ImGui.Begin("Tools");
+        ImGui.Begin(I18n.c.GetString("Tools"));
 
-        ImGui.Text("View");
+        ImGui.Text(I18n.c.GetString("View"));
 
         ImGui.PushStyleColor(ImGuiCol.Button, ColorUtil.Vec4ByteToFloat(new Vector4(180, 20, 20, 255)));
         ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(8f, 3f));
@@ -27,7 +27,7 @@ public class ToolsWindow
 
         ImGui.PopStyleVar();
 
-        ImGui.Checkbox("Isometric", ref perspective);
+        ImGui.Checkbox(I18n.c.GetString("Isometric"), ref perspective);
 
         ImGui.PopStyleColor(3);
 

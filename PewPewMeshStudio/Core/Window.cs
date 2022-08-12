@@ -104,6 +104,7 @@ public class Window : GameWindow
         Mesh.Render((Vector2)ClientSize, MeshCamera);
 
         ImGui.ShowDemoWindow();
+        ImGui.ShowMetricsWindow();
 
         track.Track();
 

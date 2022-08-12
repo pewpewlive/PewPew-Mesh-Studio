@@ -18,24 +18,24 @@ public class InspectorWindow
 
     public void Initialize()
     {
-        ImGui.Begin("Inspector");
+        ImGui.Begin(I18n.c.GetString("Inspector"));
 
-        ImGui.Text("Object: *selected object name*");
-        ImGui.DragFloat3("Object Position", ref objectPos);
+        ImGui.Text(I18n.c.GetString("Object: {0}", "*selected object name*"));
+        ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos);
 
-        ImGui.Text("\nMeshes");
+        ImGui.Text(I18n.c.GetString("Meshes"));
         ImGui.ListBox("", ref meshesIndex, new string[] { "1", "2", "3" }, 3);
 
-        ImGui.DragFloat3("Mesh Position", ref meshPos);
+        ImGui.DragFloat3(I18n.c.GetString("Mesh Position"), ref meshPos);
 
         ImGui.Separator();
 
-        ImGui.Text("Vertex");
-        ImGui.DragFloat3("Position", ref vertexPos);
+        ImGui.Text(I18n.c.GetString("Vertex"));
+        ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos);
 
         ImGui.NewLine();
 
-        ImGui.ColorEdit4("Color", ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
+        ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
 
         ImGui.End();
     }
