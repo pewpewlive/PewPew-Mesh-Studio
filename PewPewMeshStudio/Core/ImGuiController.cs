@@ -49,21 +49,15 @@ public class ImGuiController : IDisposable
         ImGui.SetCurrentContext(context);
         var io = ImGui.GetIO();
 
-        // the following code raises System.AccessViolationException
-
-        /*
-        ImVector ranges;
-        ImFontGlyphRangesBuilderPtr builderPtr = new ImFontGlyphRangesBuilderPtr();
-
-        builderPtr.AddText("ąčęėįšųū");
-        builderPtr.AddRanges(io.Fonts.GetGlyphRangesCyrillic());
-        builderPtr.BuildRanges(out ranges);
-
-        io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, new ImFontConfigPtr(), ranges.Data);
-        io.Fonts.Build();
-        */
-
-        io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, new ImFontConfigPtr(), io.Fonts.GetGlyphRangesCyrillic());
+        unsafe
+        {
+            var fontAtlas = ImGui.GetIO().Fonts;
+            var builder = new ImFontGlyphRangesBuilderPtr(ImGuiNative.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder());
+            builder.AddText("ĄČĘĖĮŠŲŪŽąčęėįšųūž");
+            builder.AddRanges(fontAtlas.GetGlyphRangesCyrillic());
+            builder.BuildRanges(out ImVector ranges);
+            io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, null, ranges.Data);
+        }
 
         io.ConfigFlags |= ImGuiConfigFlags.DockingEnable | ImGuiConfigFlags.NavEnableKeyboard;
         io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
