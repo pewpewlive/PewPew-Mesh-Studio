@@ -53,8 +53,9 @@ public class ImGuiController : IDisposable
         {
             var fontAtlas = ImGui.GetIO().Fonts;
             var builder = new ImFontGlyphRangesBuilderPtr(ImGuiNative.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder());
-            builder.AddText("ĄČĘĖĮŠŲŪŽąčęėįšųūž");
-            builder.AddRanges(fontAtlas.GetGlyphRangesCyrillic());
+            builder.AddText("ĄČĘĖĮŠŲŪŽąčęėįšųūž"); // Lithuanian glyphs
+            builder.AddRanges(fontAtlas.GetGlyphRangesCyrillic()); // Cyrillic + Latin glyphs
+            builder.AddText("ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωάέύίόώήϋϊΰΐΈΎΉΏΌ"); // Greek glyphs
             builder.BuildRanges(out ImVector ranges);
             io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, null, ranges.Data);
         }
