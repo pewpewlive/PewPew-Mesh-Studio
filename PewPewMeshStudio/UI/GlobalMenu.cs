@@ -88,32 +88,32 @@ public class GlobalMenu
 
     private void EditMenu()
     {
-        if (!ImGui.BeginMenu("Edit"))
+        if (!ImGui.BeginMenu(I18n.c.GetString("Edit")))
             return;
 
-        ImGui.MenuItem("Undo", "Ctrl+Z");
+        ImGui.MenuItem(I18n.c.GetString("Undo"), "Ctrl+Z");
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Undo previous action.");
-        ImGui.MenuItem("Redo", "Ctrl+Y");
+            ImGui.SetTooltip(I18n.c.GetString("Undo previous action."));
+        ImGui.MenuItem(I18n.c.GetString("Redo"), "Ctrl+Y");
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Redo previous action.");
+            ImGui.SetTooltip(I18n.c.GetString("Redo previous action."));
 
         ImGui.Separator();
 
-        if (ImGui.MenuItem("Preferences"))
+        if (ImGui.MenuItem(I18n.c.GetString("Preferences")))
         {
             OpenPrefsDialog = true;
         }
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Edit user preferences.");
+            ImGui.SetTooltip(I18n.c.GetString("Edit user preferences."));
         ImGui.Separator();
 
-        if (ImGui.MenuItem("About"))
+        if (ImGui.MenuItem(I18n.c.GetString("About")))
         {
             OpenAboutDialog = true;
         }
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Shows information about PewPew Mesh Studio.");
+            ImGui.SetTooltip(I18n.c.GetString("Shows information about PewPew Mesh Studio."));
 
         ImGui.EndMenu();
     }
