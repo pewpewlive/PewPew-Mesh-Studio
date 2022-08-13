@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using PewPewMeshStudio.ExtraUtils;
 using System.IO;
 using System.Numerics;
 using Serilog;
@@ -45,26 +46,26 @@ public class FileDialogModal
     {
         FDType = (FileDialogType)fdt;
 
-        ImGui.OpenPopup("File Dialog");
+        ImGui.OpenPopup(I18n.c.GetString("File Dialog"));
 
-        if (!ImGui.BeginPopupModal("File Dialog", ref open))
+        if (!ImGui.BeginPopupModal(I18n.c.GetString("File Dialog"), ref open))
         {
             open1 = false;
             return;
         }
 
-        if (ImGui.Button("Refresh"))
+        if (ImGui.Button(I18n.c.GetString("Refresh")))
             refreshDirectory = true;
 
         ImGui.SameLine();
-        if (ImGui.Button("Drives"))
+        if (ImGui.Button(I18n.c.GetString("Drives")))
         {
             inDrivesList = true;
             refreshDirectory = true;
         }
 
         ImGui.SameLine();
-        ImGui.Text("Path:");
+        ImGui.Text(I18n.c.GetString("Path:"));
 
         UpdateDirectoryBar();
 
@@ -77,22 +78,22 @@ public class FileDialogModal
 
         ImGui.EndChild();
 
-        ImGui.Button("Cancel");
+        ImGui.Button(I18n.c.GetString("Cancel"));
 
         UpdateContextButtons();
 
         ImGui.SameLine();
-        ImGui.Button("New Folder");
+        ImGui.Button(I18n.c.GetString("New Folder"));
 
         ImGui.SameLine();
 
         ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 300f);
 
         if (FDType == (FileDialogType.NewProject & FileDialogType.SaveProjectAs & FileDialogType.ExportMesh))
-            ImGui.InputTextWithHint(".ppmp", "File name", ref fileName, 100);
+            ImGui.InputTextWithHint(".ppmp", I18n.c.GetString("File name"), ref fileName, 100);
 
         else if (FDType == (FileDialogType.OpenProject & FileDialogType.ImportMesh))
-            ImGui.InputTextWithHint(".ppmp", "File name", ref fileName, 100, ImGuiInputTextFlags.ReadOnly);
+            ImGui.InputTextWithHint(".ppmp", I18n.c.GetString("File name"), ref fileName, 100, ImGuiInputTextFlags.ReadOnly);
 
         ImGui.EndPopup();
     }
@@ -102,7 +103,7 @@ public class FileDialogModal
         ImGui.SameLine();
         ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 185f);
 
-        bool dirChanged = ImGui.InputTextWithHint("", "Enter path here", ref inputDir, 200, ImGuiInputTextFlags.EnterReturnsTrue);
+        bool dirChanged = ImGui.InputTextWithHint("", I18n.c.GetString("Enter path here"), ref inputDir, 200, ImGuiInputTextFlags.EnterReturnsTrue);
 
         if (refreshDirectory)
             inputDir = pwd;
@@ -213,35 +214,35 @@ public class FileDialogModal
             case FileDialogType.NewProject: // NewProject
                 if (fileName == "") ImGui.BeginDisabled(true);
 
-                if (ImGui.Button("Create"))
+                if (ImGui.Button(I18n.c.GetString("Create")))
                 {
                 }
 
                 ImGui.EndDisabled();
                 return;
             case FileDialogType.OpenProject: // OpenProject
-                if (ImGui.Button("Open"))
+                if (ImGui.Button(I18n.c.GetString("Open")))
                 {
                 }
                 return;
             case FileDialogType.SaveProjectAs: // SaveProjectAs
                 if (fileName == "") ImGui.BeginDisabled(true);
 
-                if (ImGui.Button("Save"))
+                if (ImGui.Button(I18n.c.GetString("Save")))
                 {
                 }
 
                 ImGui.EndDisabled();
                 return;
             case FileDialogType.ImportMesh: // ImportMesh
-                if (ImGui.Button("Import"))
+                if (ImGui.Button(I18n.c.GetString("Import")))
                 {
                 }
                 return;
             case FileDialogType.ExportMesh: // ExportMesh
                 if (fileName == "") ImGui.BeginDisabled(true);
 
-                if (ImGui.Button("Export"))
+                if (ImGui.Button(I18n.c.GetString("Export")))
                 {
                 }
 
