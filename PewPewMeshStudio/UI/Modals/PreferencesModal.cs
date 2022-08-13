@@ -15,7 +15,7 @@ public class PreferencesModal
 
     private string lastActionDone = "Not Applicable";
 
-    private string[] prefsItems = { "Graphics", "Keybinds", "Plugins", "Interface", "Project", "Editor" };
+    private string[] prefsItems = { I18n.c.GetString("Graphics"), I18n.c.GetString("Keybinds"), I18n.c.GetString("Plugins"), I18n.c.GetString("Interface"), I18n.c.GetString("Project"), I18n.c.GetString("Editor") };
     private int prefSelected;
 
     private string[] openglItems = { "3.3", "4.1", "4.6" };
@@ -27,14 +27,14 @@ public class PreferencesModal
     private string[] fontItems = { "Nunito (Default)", "ImGui" };
     public int fontSelected;
 
-    private string[] themeItems = { "Dark", "Light", "Classic" };
+    private string[] themeItems = { I18n.c.GetString("Dark"), I18n.c.GetString("Light"), I18n.c.GetString("Classic") };
     public int themeSelected;
 
     public void Initialize(ref bool open1)
     {
-        ImGui.OpenPopup("Preferences");
+        ImGui.OpenPopup(I18n.c.GetString("Preferences"));
 
-        if (!ImGui.BeginPopupModal("Preferences", ref open))
+        if (!ImGui.BeginPopupModal(I18n.c.GetString("Preferences"), ref open))
         {
             open1 = false;
             return;
@@ -58,57 +58,56 @@ public class PreferencesModal
         switch (prefSelected)
         {
             case 0:
-                ImGui.Text("Mesh Rendering");
+                ImGui.Text(I18n.c.GetString("Mesh Rendering"));
 
-                ImGui.Checkbox("Enable Antialiasing", ref antiAliasOn);
+                ImGui.Checkbox(I18n.c.GetString("Enable Antialiasing"), ref antiAliasOn);
                 if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Toggles mesh antialiasing in Editor.");
+                    ImGui.SetTooltip(I18n.c.GetString("Toggles mesh antialiasing in Editor."));
 
-                ImGui.Text("OpenGL version");
+                ImGui.Text(I18n.c.GetString("OpenGL version"));
                 ImGui.ListBox(" ", ref oglSelected, openglItems, openglItems.Length);
                 /*if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Choose an OpenGL version.");*/
-                //ImGui.Checkbox("Toggle Black Background", ref blackBg); 
+                    ImGui.SetTooltip(I18n.c.GetString("Choose an OpenGL version."));*/
                 return;
 
             case 1:
-                ImGui.Text("Keybinds");
+                ImGui.Text(I18n.c.GetString("Keybinds"));
                 return;
 
             case 2:
-                ImGui.Text("Plugins list");
+                ImGui.Text(I18n.c.GetString("Plugins list"));
                 return;
 
             case 3:
                 // Multiple ListBoxes in the same case require different labels. Remember that and put multiple spaces.
-                ImGui.Text("Language");
+                ImGui.Text(I18n.c.GetString("Language"));
                 ImGui.ListBox(" ", ref langSelected, languageItems, languageItems.Length);
 
                 ImGui.NewLine();
 
-                ImGui.Text("Font");
+                ImGui.Text(I18n.c.GetString("Font"));
 
                 ImGui.ListBox("  ", ref fontSelected, fontItems, fontItems.Length);
 
                 ImGui.NewLine();
 
-                ImGui.Text("Theme");
+                ImGui.Text(I18n.c.GetString("Theme"));
                 ImGui.ListBox("   ", ref themeSelected, themeItems, themeItems.Length);
                 ChangeTheme(themeSelected);
 
                 return;
             case 4:
-                ImGui.Text("Undo / Redo behavior");
-                ImGui.Checkbox("Display Latest Action", ref displayLastAction);
+                ImGui.Text(I18n.c.GetString("Undo / Redo behavior"));
+                ImGui.Checkbox(I18n.c.GetString("Display Latest Action"), ref displayLastAction);
                 if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Displays last action you've done at the bottom of the Editor window.");
+                    ImGui.SetTooltip(I18n.c.GetString("Displays last action you've done at the bottom of the Editor window."));
 
                 return;
             case 5:
-                ImGui.Text("Debug features");
-                ImGui.Checkbox("Display debug console", ref displayDebugConsole);
+                ImGui.Text(I18n.c.GetString("Debug features"));
+                ImGui.Checkbox(I18n.c.GetString("Display debug console"), ref displayDebugConsole);
                 if (ImGui.IsItemHovered())
-                    ImGui.SetTooltip("Displays debug console.");
+                    ImGui.SetTooltip(I18n.c.GetString("Displays debug console."));
                 return;
             default: // if some shit happens
                 Log.Error("Invalid preference list item index.");
