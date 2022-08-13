@@ -66,7 +66,7 @@ public class GlobalMenu
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip(I18n.c.GetString("Load a PewPew mesh or an SVG."));
 
-        if (ImGui.MenuItem("Export"))
+        if (ImGui.MenuItem(I18n.c.GetString("Export")))
         {
             OpenFileDialog = true;
             fileDialogType = 4;

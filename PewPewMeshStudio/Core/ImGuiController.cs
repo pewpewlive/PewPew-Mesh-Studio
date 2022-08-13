@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using PewPewMeshStudio.ExtraUtils;
 using System.Runtime.CompilerServices;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -53,11 +54,12 @@ public class ImGuiController : IDisposable
         {
             var fontAtlas = ImGui.GetIO().Fonts;
             var builder = new ImFontGlyphRangesBuilderPtr(ImGuiNative.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder());
-            builder.AddText("ĄČĘĖĮŠŲŪŽąčęėįšųūž„“"); // Lithuanian glyphs
+            builder.AddText(I18n.rangeGlyphs[0]); // Lithuanian glyphs
             builder.AddRanges(fontAtlas.GetGlyphRangesCyrillic()); // Cyrillic + Latin glyphs
-            builder.AddText("ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωάέύίόώήϋϊΰΐΈΎΉΏΌ"); // Greek glyphs
+            builder.AddText(I18n.rangeGlyphs[1]); // Greek glyphs
+            builder.AddText(I18n.rangeGlyphs[2]);
             builder.BuildRanges(out ImVector ranges);
-            //io.Fonts.AddFontFromFileTTF("resources/Nunito-Regular.ttf", 20f, null, ranges.Data);
+            //io.Fonts.AddFontFromFileTTF("resources/BalooChettan2-Regular.ttf", 23f, null, ranges.Data);
             io.Fonts.AddFontFromMemoryTTF(FontPtr, Properties.Resources.Font.Length, 20.0f, null, ranges.Data);
         }
 
