@@ -60,7 +60,8 @@ public class ImGuiController : IDisposable
             builder.AddText(I18n.rangeGlyphs[2]);
             builder.BuildRanges(out ImVector ranges);
             //io.Fonts.AddFontFromFileTTF("resources/BalooChettan2-Regular.ttf", 23f, null, ranges.Data);
-            io.Fonts.AddFontFromMemoryTTF(FontPtr, Properties.Resources.Font.Length, 20.0f, null, ranges.Data);
+            io.Fonts.AddFontFromFileTTF("resources/Inter-Regular.ttf", 20f, null, ranges.Data);
+            //io.Fonts.AddFontFromMemoryTTF(FontPtr, Properties.Resources.Font.Length, 20.0f, null, ranges.Data);
         }
 
         io.ConfigFlags |= ImGuiConfigFlags.DockingEnable | ImGuiConfigFlags.NavEnableKeyboard;

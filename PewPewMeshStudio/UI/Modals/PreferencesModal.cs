@@ -21,7 +21,7 @@ public class PreferencesModal
     private string[] openglItems = { "3.3", "4.1", "4.6" };
     public int oglSelected = 1; // display 4.1 as chosen
 
-    private string[] languageItems = { "English", "Lithuanian (Lietuviškai)", "Russian (Русский)", "Ukrainian (Українська)", "Greek (Ελληνικά)", "French (Français)" };
+    private string[] languageItems = { "English", "Lithuanian (Lietuviškai)", "Russian (Русский)", "Ukrainian (Українська)", "Greek (Ελληνικά)", "French (Français)", "Malayalam (മലയാളം)" };
     public int langSelected;
 
     private string[] fontItems = { "Nunito (Default)", "ImGui" };

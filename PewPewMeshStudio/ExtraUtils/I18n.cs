@@ -8,9 +8,9 @@ namespace PewPewMeshStudio.ExtraUtils
         public static string[] rangeGlyphs =
         {
             "ĄČĘĖĮŠŲŪŽąčęėįšųūž„“", // Lithuanian
-            "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωάέύίόώήϋϊΰΐΈΎΉΏΌ", // Greek
+            "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωςάέύίόώήϋϊΰΐΆΈΎΉΏΌΊ", // Greek
             "$ഀ$ഁ$ം$ഃഄഅആഇഈഉഊഋഌഎഏഐഒഓഔകഖഗഘങചഛജഝഞടഠഡഢണതഥദധനഩപഫബഭമയരറലളഴവശഷസഹഺ$഻$഼ഽ$ാ$ി$ീ$ു$ൂ$ൃ$ൄ$െ$േ$ൈ$ൊ$ോ$ൌ$്ൎ൥ൔൕൖ$ൗ൘൙൚൛൜൝൞ൟൠൡ$ൢ$ൣ൦൧൨൩൪൫൬൭൮൯൰൱൲൳൴൵൶൷൸൹ൺൻർൽൾൿ" // Malayalam
         };
-        public static ICatalog c = new Catalog("Translation", ".\\locale", new CultureInfo("lt"));
+        public static ICatalog c = new Catalog("Translation", ".\\locale", new CultureInfo("el"));
     }
 }
