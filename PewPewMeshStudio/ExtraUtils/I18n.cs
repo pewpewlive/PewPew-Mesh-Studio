@@ -1,16 +1,15 @@
 ﻿using GetText;
 using System.Globalization;
 
-namespace PewPewMeshStudio.ExtraUtils
+namespace PewPewMeshStudio.ExtraUtils;
+
+public static class I18n
 {
-    public static class I18n
+    public static string[] rangeGlyphs =
     {
-        public static string[] rangeGlyphs =
-        {
-            "ĄČĘĖĮŠŲŪŽąčęėįšųūž„“", // Lithuanian
-            "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωςάέύίόώήϋϊΰΐΆΈΎΉΏΌΊ", // Greek
-            "$ഀ$ഁ$ം$ഃഄഅആഇഈഉഊഋഌഎഏഐഒഓഔകഖഗഘങചഛജഝഞടഠഡഢണതഥദധനഩപഫബഭമയരറലളഴവശഷസഹഺ$഻$഼ഽ$ാ$ി$ീ$ു$ൂ$ൃ$ൄ$െ$േ$ൈ$ൊ$ോ$ൌ$്ൎ൥ൔൕൖ$ൗ൘൙൚൛൜൝൞ൟൠൡ$ൢ$ൣ൦൧൨൩൪൫൬൭൮൯൰൱൲൳൴൵൶൷൸൹ൺൻർൽൾൿ" // Malayalam
-        };
-        public static ICatalog c = new Catalog("Translation", ".\\locale", new CultureInfo("lt"));
-    }
+        "ĄČĘĖĮŠŲŪŽąčęėįšųūž„“", // Lithuanian
+        "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθιγκλμνξοπρστυφχψωςάέύίόώήϋϊΰΐΆΈΎΉΏΌΊ", // Greek
+        "$ഀ$ഁ$ം$ഃഄഅആഇഈഉഊഋഌഎഏഐഒഓഔകഖഗഘങചഛജഝഞടഠഡഢണതഥദധനഩപഫബഭമയരറലളഴവശഷസഹഺ$഻$഼ഽ$ാ$ി$ീ$ു$ൂ$ൃ$ൄ$െ$േ$ൈ$ൊ$ോ$ൌ$്ൎ൥ൔൕൖ$ൗ൘൙൚൛൜൝൞ൟൠൡ$ൢ$ൣ൦൧൨൩൪൫൬൭൮൯൰൱൲൳൴൵൶൷൸൹ൺൻർൽൾൿ" // Malayalam
+    };
+    public static ICatalog c = new Catalog("Translation", ".\\locale", new CultureInfo("lt"));
 }

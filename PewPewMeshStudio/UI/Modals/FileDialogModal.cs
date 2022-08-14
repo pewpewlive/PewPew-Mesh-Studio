@@ -40,7 +40,7 @@ public class FileDialogModal
 
     FileDialogType FDType;
 
-    public string[] supportedExtentions = { ".ppmp", ".lua" };
+    public string[] supportedExtensions = { ".ppmp", ".lua" };
 
     public void Initialize(ref bool open1, int fdt)
     {
