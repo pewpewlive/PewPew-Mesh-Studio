@@ -121,6 +121,11 @@ public class Window : GameWindow
             errorModal.open = true;
             errorModal.Initialize(ref globalMenu.OpenErrorDialog);
         }
+        if (globalMenu.OpenUnsavedChangesDialog)
+        {
+            unsavedChangesModal.open = true;
+            unsavedChangesModal.Initialize(ref globalMenu.OpenUnsavedChangesDialog);
+        }
         if (globalMenu.OpenFileDialog)
         {
             fileDialogModal.open = true;

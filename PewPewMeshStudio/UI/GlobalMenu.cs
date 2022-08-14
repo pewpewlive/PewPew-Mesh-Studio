@@ -6,6 +6,7 @@ namespace PewPewMeshStudio.UI;
 
 public class GlobalMenu
 {
+    public bool OpenUnsavedChangesDialog;
     public bool OpenErrorDialog;
     public bool OpenAboutDialog;
     public bool OpenFileDialog;
@@ -126,7 +127,10 @@ public class GlobalMenu
         {
             OpenErrorDialog = true;
         }
-
+        if (ImGui.MenuItem("Unsaved changes"))
+        {
+            OpenUnsavedChangesDialog = true;
+        }
         ImGui.EndMenu();
     }
 }
