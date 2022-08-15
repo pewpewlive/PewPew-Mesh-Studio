@@ -104,6 +104,7 @@ public class Window : GameWindow
         Mesh.Render((Vector2)ClientSize, MeshCamera);
 
         ImGui.ShowDemoWindow();
+        ImGui.ShowMetricsWindow();
 
         track.Track();
 
@@ -119,6 +120,11 @@ public class Window : GameWindow
         {
             errorModal.open = true;
             errorModal.Initialize(ref globalMenu.OpenErrorDialog);
+        }
+        if (globalMenu.OpenUnsavedChangesDialog)
+        {
+            unsavedChangesModal.open = true;
+            unsavedChangesModal.Initialize(ref globalMenu.OpenUnsavedChangesDialog);
         }
         if (globalMenu.OpenFileDialog)
         {
