@@ -6,12 +6,12 @@ using OpenTK.Mathematics;
 
 namespace PewPewMeshStudio.Editor;
 
-public class ViewVertices //  i will change the name
+public class VertexShower //  i will change the name
 {
     private List<MeshVertex> vertices = new List<MeshVertex>();
     private List<Mesh> vertsPreview = new List<Mesh>();
 
-    public ViewVertices(List<MeshVertex> verts)
+    public VertexShower(List<MeshVertex> verts)
     {
         vertices = verts;
 

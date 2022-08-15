@@ -11,14 +11,17 @@ public class EditingMesh // i will change the name
 
     private List<Mesh> meshes = new List<Mesh>();
     
-    private List<ViewVertices> viewVertices = new List<ViewVertices>();
-    private List<ViewVertices> selectedVertices = new List<ViewVertices>();
+    private List<VertexShower> viewVertices = new List<VertexShower>();
+    private List<VertexShower> selectedVertices = new List<VertexShower>();
 
     public static Action OnMeshDestroy;
     public static Action OnMeshUpdate;
 
+    private VertexShower vertexShower;
+
     public void FrameUpdate()
     {
+        //vertexShower.UpdateVertsPositions();
         OnMeshUpdate?.Invoke();
     }
 
@@ -29,6 +32,8 @@ public class EditingMesh // i will change the name
 
     public void LoadMesh(string loadMeshPath)
     {
-        meshes.Add(new Mesh(loadMeshPath, new Vector3()));
+        Mesh mesh = new Mesh(loadMeshPath, new Vector3());
+        meshes.Add(mesh);
+        //vertexShower = new VertexShower(mesh.vertices);
     }
 }
