@@ -7,6 +7,7 @@ namespace PewPewMeshStudio.UI.Windows;
 public class ToolsWindow
 {
     bool perspective;
+    bool EnableColors = true;
     public void Initialize()
     {
         ImGui.Begin(I18n.c.GetString("Tools"));
@@ -28,6 +29,8 @@ public class ToolsWindow
         ImGui.PopStyleVar();
 
         ImGui.Checkbox(I18n.c.GetString("Isometric"), ref perspective);
+
+        ImGui.Checkbox(I18n.c.GetString("Enable colors"), ref EnableColors);
 
         ImGui.PopStyleColor(3);
 
