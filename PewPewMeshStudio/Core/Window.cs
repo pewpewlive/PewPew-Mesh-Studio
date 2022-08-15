@@ -116,6 +116,7 @@ public class Window : GameWindow
         globalDockspace.Initialize();
 
         ImGui.ShowDemoWindow();
+        ImGui.ShowMetricsWindow();
 
         track.Track();
 

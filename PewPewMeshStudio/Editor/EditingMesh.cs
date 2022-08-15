@@ -21,7 +21,7 @@ public class EditingMesh // i will change the name
 
     public void FrameUpdate()
     {
-        //vertexShower.UpdateVertsPositions();
+        vertexShower.UpdateVertsPositions();
         OnMeshUpdate?.Invoke();
     }
 
@@ -32,8 +32,8 @@ public class EditingMesh // i will change the name
 
     public void LoadMesh(string loadMeshPath)
     {
-        Mesh mesh = new Mesh(loadMeshPath, new Vector3());
+        Mesh mesh = new Mesh(loadMeshPath, 1, new Vector3());
         meshes.Add(mesh);
-        //vertexShower = new VertexShower(mesh.vertices);
+        vertexShower = new VertexShower(mesh.vertices);
     }
 }
