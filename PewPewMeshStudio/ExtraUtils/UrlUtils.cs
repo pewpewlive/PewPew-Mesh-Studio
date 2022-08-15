@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Serilog;
 
 namespace PewPewMeshStudio.ExtraUtils;
 
@@ -16,7 +17,7 @@ public class UrlUtils
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Log.Error("(UrlUtils) {0}", e.Message);
         }
     }
 }
