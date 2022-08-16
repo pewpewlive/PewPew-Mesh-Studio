@@ -5,10 +5,12 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using PewPewMeshStudio.LuaUtils;
+//using PewPewMeshStudio.LuaUtils;
 using PewPewMeshStudio.Renderer;
 using PewPewMeshStudio.UI;
 using PewPewMeshStudio.ExtraUtils;
+//using PewPewMeshStudio.Editor;
+//using PewPewMeshStudio.Editor.EditorUtils;
 using System.Runtime.InteropServices;
 using Serilog;
 
@@ -25,12 +27,15 @@ public class Window : GameWindow
     //public string lastAction = "Last Action: Not Applicable";
 
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
-
-    Renderable Mesh;
-    Camera MeshCamera = new Camera();
+    //Renderable Mesh;
+    //Renderable vertPickSphere;
+    public static Camera MeshCamera = new Camera();
+    public static Vector2 windowSize = new Vector2i();
     InputSystem track = new InputSystem();
 
     private bool MouseHeld = false;
+
+    Editor.EditingMesh editing = new Editor.EditingMesh();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -43,13 +48,16 @@ public class Window : GameWindow
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
 
-        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        editing.LoadMesh("mesh.lua");
+        //mousePick = new MousePick(MeshCamera, MeshCamera.GetCameraView());
     }
 
     protected override void OnUnload()
     {
         base.OnUnload();
-        Mesh.Destroy();
+
+        editing.FrameUnload();
+
         FontPtr.Free();
     }
 
@@ -63,6 +71,9 @@ public class Window : GameWindow
     protected override void OnResize(ResizeEventArgs Event)
     {
         base.OnResize(Event);
+
+        windowSize = (Vector2)ClientSize;
+
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         UIController.WindowResized(ClientSize.X, ClientSize.Y);
     }
@@ -76,9 +87,6 @@ public class Window : GameWindow
         GL.ClearColor(new Color4(0, 0, 0, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
-        //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
-        //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
-        Mesh.Render((Vector2)ClientSize, MeshCamera);
         track.Track();
 
         uiHandler.InitUI();
@@ -87,6 +95,7 @@ public class Window : GameWindow
         ImGuiController.CheckGLError("End of frame");
 
         SwapBuffers();
+        //MousePosition.X
     }
 
     protected override void OnTextInput(TextInputEventArgs Event)
@@ -120,7 +129,9 @@ public class Window : GameWindow
     protected override void OnMouseMove(MouseMoveEventArgs Event)
     {
         base.OnMouseMove(Event);
-        if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift]) 
+        //mousePick.Update(Event.Position, (Vector2)ClientSize);
+
+        if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift])
         {
             MeshCamera.PanBy(Event.Delta * 0.75f); 
             MeshCamera.Update();
