@@ -7,6 +7,7 @@ namespace PewPewMeshStudio.UI.Windows;
 public class ToolsWindow
 {
     bool perspective;
+
     public void Initialize()
     {
         ImGui.Begin("Tools");

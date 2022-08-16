@@ -11,17 +11,13 @@ public class Renderable
 
     private Shader RenderableShader = new Shader();
 
-    private MeshVertex[] VertexData;
-
     public Renderable(MeshVertex[] LineVertexData, uint[][] Segments)
     {
-        VertexData = LineVertexData;
-
         VertexBuffer = GL.GenBuffer();
         VertexArray = GL.GenVertexArray();
 
         GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBuffer);
-        GL.BufferData(BufferTarget.ArrayBuffer, VertexData.Length * Marshal.SizeOf<MeshVertex>(), VertexData, BufferUsageHint.StaticDraw);
+        GL.BufferData(BufferTarget.ArrayBuffer, LineVertexData.Length * Marshal.SizeOf<MeshVertex>(), LineVertexData, BufferUsageHint.StaticDraw);
 
         foreach (uint[] Segment in Segments)
         {
@@ -31,11 +27,8 @@ public class Renderable
         }
     }
 
-    public void Render(/*OpenTK.Mathematics.Vector2 WindowSize, Camera Camera*/)
+    public void Render(OpenTK.Mathematics.Vector2 WindowSize, Camera Camera)
     {
-        GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBuffer);
-        GL.BufferData(BufferTarget.ArrayBuffer, VertexData.Length * Marshal.SizeOf<MeshVertex>(), VertexData, BufferUsageHint.StaticDraw);
-
         RenderableShader.UseShader();
 
         GL.BindVertexArray(VertexArray);
@@ -53,11 +46,11 @@ public class Renderable
         GL.Enable(EnableCap.Blend);
         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
 
-        OpenTK.Mathematics.Matrix4 MVP =
-            OpenTK.Mathematics.Matrix4.CreateRotationX(OpenTK.Mathematics.MathHelper.DegreesToRadians(-90.0f)) * Core.Window.MeshCamera.GetCameraView() * OpenTK.Mathematics.Matrix4.CreatePerspectiveFieldOfView(OpenTK.Mathematics.MathHelper.DegreesToRadians(75.0f), Core.Window.windowSize.X / Core.Window.windowSize.Y, 0.1f, 7000.0f);
+        OpenTK.Mathematics.Matrix4 MVP = 
+            OpenTK.Mathematics.Matrix4.CreateRotationX(OpenTK.Mathematics.MathHelper.DegreesToRadians(-90.0f)) * Camera.GetCameraView() * OpenTK.Mathematics.Matrix4.CreatePerspectiveFieldOfView(OpenTK.Mathematics.MathHelper.DegreesToRadians(75.0f), WindowSize.X / WindowSize.Y, 0.1f, 7000.0f);
 
         RenderableShader.SetMatrix4Uniform("uMVP", MVP);
-        RenderableShader.SetVector2Uniform("uScreenSize", Core.Window.windowSize);
+        RenderableShader.SetVector2Uniform("uScreenSize", WindowSize);
 
         foreach (Tuple<int, int> ElementBuffer in ElementBuffers)
         {
@@ -82,12 +75,4 @@ public class Renderable
 
         GL.DeleteProgram(RenderableShader.GetShaderHandle());
     }
-
-
-    public void GetVertexesData(ref List<MeshVertex> verts)
-    {
-        for (int i = 0; i < VertexData.Length; i++)
-            verts.Add(VertexData[i]);
-    }
-    public void SetVertexesData(MeshVertex[] data) => VertexData = data;
 }

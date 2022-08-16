@@ -15,7 +15,7 @@ public class InspectorWindow
 
     int meshesIndex = 0;
     int vertexesIndex = 0;
-
+    
     public void Initialize()
     {
         ImGui.Begin("Inspector");
