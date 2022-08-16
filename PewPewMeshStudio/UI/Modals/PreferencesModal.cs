@@ -30,16 +30,13 @@ public class PreferencesModal
     private string[] themeItems = { "Dark", "Light", "Classic" };
     public int themeSelected;
 
-    public void Initialize()
+    public void Initialize(ref bool open1)
     {
-        if (UIHandler.openModals == UIHandler.OpenModals.Preferences)
-            open = true;
-
         ImGui.OpenPopup("Preferences");
 
         if (!ImGui.BeginPopupModal("Preferences", ref open))
         {
-            UIHandler.openModals = UIHandler.OpenModals.None;
+            open1 = false;
             return;
         }
 

@@ -1,7 +1,7 @@
 ﻿using ImGuiNET;
 using System.Numerics;
 
-namespace PewPewMeshStudio.UI.Globals;
+namespace PewPewMeshStudio.UI;
 
 public class GlobalDockspace
 {

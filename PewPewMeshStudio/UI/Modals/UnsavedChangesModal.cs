@@ -11,16 +11,9 @@ public class UnsavedChangesModal
 
     public void Initialize()
     {
-        if (UIHandler.openModals == UIHandler.OpenModals.UnsavedChanges)
-            open = true;
-
         ImGui.OpenPopup("Alert");
-
         if (!ImGui.BeginPopupModal("Alert", ref open))
-        {
-            UIHandler.openModals = UIHandler.OpenModals.None;
             return;
-        }
 
         ImGui.TextColored(ColorUtil.Vec4ByteToFloat(new Vector4(225, 50, 50, 255)), "You have unsaved changes\nYou sure you want to quit?");
         ImGui.Checkbox("Don't show this again", ref dontShowThisAgain);

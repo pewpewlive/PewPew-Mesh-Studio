@@ -26,9 +26,7 @@ public class FileDialogModal
     bool inDrivesList;
     bool refreshDirectory = true;
 
-    public string[] supportedExtentions = { ".ppmp", ".lua" };
-
-    public enum FileDialogType
+    enum FileDialogType
     {
         NewProject = 0,
         OpenProject = 1,
@@ -41,18 +39,17 @@ public class FileDialogModal
 
     FileDialogType FDType;
 
-    public void Initialize(int fdt)
+    public string[] supportedExtentions = { ".ppmp", ".lua" };
+
+    public void Initialize(ref bool open1, int fdt)
     {
         FDType = (FileDialogType)fdt;
-
-        if (UIHandler.openModals == UIHandler.OpenModals.FileDialog)
-            open = true;
 
         ImGui.OpenPopup("File Dialog");
 
         if (!ImGui.BeginPopupModal("File Dialog", ref open))
         {
-            UIHandler.openModals = UIHandler.OpenModals.None;
+            open1 = false;
             return;
         }
 

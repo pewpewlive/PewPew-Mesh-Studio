@@ -5,10 +5,15 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using PewPewMeshStudio.LuaUtils;
+//using PewPewMeshStudio.LuaUtils;
 using PewPewMeshStudio.Renderer;
 using PewPewMeshStudio.UI;
+using PewPewMeshStudio.UI.Modals;
+using PewPewMeshStudio.UI.Popups;
+using PewPewMeshStudio.UI.Windows;
 using PewPewMeshStudio.ExtraUtils;
+//using PewPewMeshStudio.Editor;
+//using PewPewMeshStudio.Editor.EditorUtils;
 using System.Runtime.InteropServices;
 using Serilog;
 
@@ -20,17 +25,29 @@ public class Window : GameWindow
     private const int WINDOW_HEIGHT = 600;
 
     ImGuiController UIController;
-    UIHandler uiHandler = new UIHandler();
 
-    //public string lastAction = "Last Action: Not Applicable";
+    GlobalDockspace globalDockspace = new GlobalDockspace();
+    InspectorWindow inspectorWindow = new InspectorWindow();
+    ToolsWindow toolsWindow = new ToolsWindow();
+    FileDialogModal fileDialogModal = new FileDialogModal();
+    GlobalMenu globalMenu = new GlobalMenu();
+    ContextMenu contextMenu = new ContextMenu();
+    ErrorModal errorModal = new ErrorModal();
+    AboutModal aboutModal = new AboutModal();
+    UnsavedChangesModal unsavedChangesModal = new UnsavedChangesModal();
+    PreferencesModal preferencesModal = new PreferencesModal();
+    public string lastAction = "Last Action: Not Applicable";
 
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
-
-    Renderable Mesh;
-    Camera MeshCamera = new Camera();
+    //Renderable Mesh;
+    //Renderable vertPickSphere;
+    public static Camera MeshCamera = new Camera();
+    public static Vector2 windowSize = new Vector2i();
     InputSystem track = new InputSystem();
 
     private bool MouseHeld = false;
+
+    Editor.EditingMesh editing = new Editor.EditingMesh();
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -43,13 +60,16 @@ public class Window : GameWindow
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
 
-        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        editing.LoadMesh("mesh.lua");
+        //mousePick = new MousePick(MeshCamera, MeshCamera.GetCameraView());
     }
 
     protected override void OnUnload()
     {
         base.OnUnload();
-        Mesh.Destroy();
+
+        editing.FrameUnload();
+
         FontPtr.Free();
     }
 
@@ -63,6 +83,9 @@ public class Window : GameWindow
     protected override void OnResize(ResizeEventArgs Event)
     {
         base.OnResize(Event);
+
+        windowSize = (Vector2)ClientSize;
+
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         UIController.WindowResized(ClientSize.X, ClientSize.Y);
     }
@@ -76,17 +99,71 @@ public class Window : GameWindow
         GL.ClearColor(new Color4(0, 0, 0, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
+        editing.FrameUpdate();
+
+        ImGuiStylePtr style = ImGui.GetStyle();
+        style.FrameRounding = 3;
+        style.WindowRounding = 3;
+        style.ChildRounding = 3;
+        style.ScrollbarRounding = 12;
+        style.TabRounding = 3;
+        style.GrabRounding = 3;
+        style.PopupRounding = 3;
+
         //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
         //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
-        Mesh.Render((Vector2)ClientSize, MeshCamera);
+
+        globalDockspace.Initialize();
+
+        ImGui.ShowDemoWindow();
+        ImGui.ShowMetricsWindow();
+
         track.Track();
 
-        uiHandler.InitUI();
+        globalMenu.Initialize();
+        contextMenu.Initialize();
+
+        //System.Numerics.Vector3 meshpos = new System.Numerics.Vector3(mesh.position.X, mesh.position.Y, mesh.position.Z);
+        inspectorWindow.Initialize();
+        //mesh.position = new Vector3(meshpos.X, meshpos.Y, meshpos.Z);
+
+        toolsWindow.Initialize();
+        
+        //uchangesPopup.Initialize();
+
+        if (globalMenu.OpenErrorDialog)
+        {
+            errorModal.open = true;
+            errorModal.Initialize(ref globalMenu.OpenErrorDialog);
+        }
+        if (globalMenu.OpenFileDialog)
+        {
+            fileDialogModal.open = true;
+            fileDialogModal.Initialize(ref globalMenu.OpenFileDialog, globalMenu.fileDialogType);
+        }
+        if (globalMenu.OpenAboutDialog)
+        {
+            aboutModal.open = true;
+            aboutModal.Initialize(ref globalMenu.OpenAboutDialog);
+        }
+        if (globalMenu.OpenPrefsDialog)
+        {
+            preferencesModal.open = true;
+            preferencesModal.Initialize(ref globalMenu.OpenPrefsDialog);
+        }
+        /* Black Background Toggle (Unused)
+        if (prefsPopup.blackBg)
+        {
+            GL.ClearColor(new Color4(0, 0, 0, 235));
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        }
+        */
         UIController.Render();
 
         ImGuiController.CheckGLError("End of frame");
 
         SwapBuffers();
+        //MousePosition.X
     }
 
     protected override void OnTextInput(TextInputEventArgs Event)
@@ -120,7 +197,9 @@ public class Window : GameWindow
     protected override void OnMouseMove(MouseMoveEventArgs Event)
     {
         base.OnMouseMove(Event);
-        if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift]) 
+        //mousePick.Update(Event.Position, (Vector2)ClientSize);
+
+        if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift])
         {
             MeshCamera.PanBy(Event.Delta * 0.75f); 
             MeshCamera.Update();
