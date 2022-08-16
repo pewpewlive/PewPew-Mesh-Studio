@@ -43,7 +43,7 @@ public class Window : GameWindow
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
 
-        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        Mesh = MeshParser.ParseMeshFile("s.lua", 1);
     }
 
     protected override void OnUnload()
@@ -70,7 +70,7 @@ public class Window : GameWindow
     protected override void OnRenderFrame(FrameEventArgs Event)
     {
         base.OnRenderFrame(Event);
-
+        
         UIController.Update(this, (float)Event.Time);
 
         GL.ClearColor(new Color4(0, 0, 0, 255));
