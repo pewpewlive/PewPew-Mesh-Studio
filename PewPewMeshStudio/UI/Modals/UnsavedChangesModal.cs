@@ -11,10 +11,14 @@ public class UnsavedChangesModal
 
     public void Initialize(ref bool open1)
     {
+        if (UIHandler.openModals == UIHandler.OpenModals.UnsavedChanges)
+            open = true;
+
         ImGui.OpenPopup(I18n.c.GetString("Alert"));
+
         if (!ImGui.BeginPopupModal(I18n.c.GetString("Alert"), ref open))
         {
-            open1 = false;
+            UIHandler.openModals = UIHandler.OpenModals.None;
             return;
         }
 

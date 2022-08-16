@@ -9,13 +9,16 @@ public class ErrorModal
 
     public string errorMessage = "ExampleError";
 
-    public void Initialize(ref bool open1)
+    public void Initialize()
     {
+        if (UIHandler.openModals == UIHandler.OpenModals.Error)
+            open = true;
+
         ImGui.OpenPopup(I18n.c.GetString("Error encountered"));
 
         if (!ImGui.BeginPopupModal(I18n.c.GetString("Error encountered"), ref open))
         {
-            open1 = false;
+            UIHandler.openModals = UIHandler.OpenModals.None;
             return;
         }
 
@@ -32,7 +35,7 @@ public class ErrorModal
 
         if (ImGui.Button(I18n.c.GetString("Continue")))
         {
-            open1 = false;
+            UIHandler.openModals = UIHandler.OpenModals.None;
             return;
         }
         if (ImGui.IsItemHovered())

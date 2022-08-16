@@ -2,15 +2,10 @@
 using PewPewMeshStudio.ExtraUtils;
 using System;
 
-namespace PewPewMeshStudio.UI;
+namespace PewPewMeshStudio.UI.Globals;
 
 public class GlobalMenu
 {
-    public bool OpenUnsavedChangesDialog;
-    public bool OpenErrorDialog;
-    public bool OpenAboutDialog;
-    public bool OpenFileDialog;
-    public bool OpenPrefsDialog;
     public int fileDialogType;
 
     public void Initialize()
@@ -31,7 +26,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("New")))
         {
-            OpenFileDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.FileDialog;
             fileDialogType = 0;
         }
         if (ImGui.IsItemHovered())
@@ -39,7 +34,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("Open")))
         {
-            OpenFileDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.FileDialog;
             fileDialogType = 1;
         }
         if (ImGui.IsItemHovered())
@@ -51,7 +46,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("Save as...")))
         {
-            OpenFileDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.FileDialog;
             fileDialogType = 2;
         }
         if (ImGui.IsItemHovered())
@@ -61,7 +56,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("Import")))
         {
-            OpenFileDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.FileDialog;
             fileDialogType = 3;
         }
         if (ImGui.IsItemHovered())
@@ -69,7 +64,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("Export")))
         {
-            OpenFileDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.FileDialog;
             fileDialogType = 4;
         }
         if (ImGui.IsItemHovered())
@@ -103,7 +98,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("Preferences")))
         {
-            OpenPrefsDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.Preferences;
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip(I18n.c.GetString("Edit user preferences."));
@@ -111,7 +106,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("About")))
         {
-            OpenAboutDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.About;
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip(I18n.c.GetString("Shows information about PewPew Mesh Studio."));
@@ -125,7 +120,7 @@ public class GlobalMenu
 
         if (ImGui.MenuItem("Error"))
         {
-            OpenErrorDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.Error;
         }
         if (ImGui.MenuItem("Unsaved changes"))
         {
