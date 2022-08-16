@@ -26,10 +26,11 @@ public class Window : GameWindow
 
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
 
-    Renderable Mesh;
-    Camera MeshCamera = new Camera();
-    InputSystem track = new InputSystem();
+    public static Camera MeshCamera = new Camera();
+    public static Vector2 windowSize = new Vector2i();
+    private Editor.EditingMesh editor = new Editor.EditingMesh();
 
+    InputSystem track = new InputSystem();
     private bool MouseHeld = false;
 
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -43,26 +44,26 @@ public class Window : GameWindow
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
 
-        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        editor.LoadMesh("mesh.lua");
     }
 
     protected override void OnUnload()
     {
         base.OnUnload();
-        Mesh.Destroy();
+        editor.FrameUnload();
         FontPtr.Free();
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
-
         Log.Information("(Window) GUI loaded successfully.");
     }
 
     protected override void OnResize(ResizeEventArgs Event)
     {
         base.OnResize(Event);
+        windowSize = (Vector2)ClientSize;
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         UIController.WindowResized(ClientSize.X, ClientSize.Y);
     }
@@ -75,10 +76,8 @@ public class Window : GameWindow
 
         GL.ClearColor(new Color4(0, 0, 0, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        editor.FrameUpdate();
 
-        //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
-        //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
-        Mesh.Render((Vector2)ClientSize, MeshCamera);
         track.Track();
 
         uiHandler.InitUI();
