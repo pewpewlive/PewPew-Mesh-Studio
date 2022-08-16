@@ -124,7 +124,7 @@ public class GlobalMenu
         }
         if (ImGui.MenuItem("Unsaved changes"))
         {
-            OpenUnsavedChangesDialog = true;
+            UIHandler.openModals = UIHandler.OpenModals.UnsavedChanges;
         }
         ImGui.EndMenu();
     }

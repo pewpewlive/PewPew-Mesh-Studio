@@ -61,10 +61,11 @@ public class UIHandler
         style.GrabRounding = 3;
         style.PopupRounding = 3;
 
+        globalDockspace.Initialize();
+
         ImGui.ShowDemoWindow();
         ImGui.ShowMetricsWindow();
 
-        globalDockspace.Initialize();
         globalMenu.Initialize();
 
         if (openModals == OpenModals.About) aboutModal.Initialize();

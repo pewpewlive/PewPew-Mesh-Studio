@@ -9,7 +9,7 @@ public class UnsavedChangesModal
     public bool open;
     public bool dontShowThisAgain = false;
 
-    public void Initialize(ref bool open1)
+    public void Initialize()
     {
         if (UIHandler.openModals == UIHandler.OpenModals.UnsavedChanges)
             open = true;
