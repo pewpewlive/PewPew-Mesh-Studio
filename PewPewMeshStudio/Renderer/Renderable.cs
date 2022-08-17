@@ -24,38 +24,49 @@ public class Renderable
         {
             for (int i = 0; i < Segment.Length; i++)
             {
+                Vector3 NewPrevious, NewCurrent, NewNext;
                 if (i == 0)
                 {
-                    Vector3 NewCurrent = LineVertexData[Segment[i]].Position;
-                    Vector3 NewNext = LineVertexData[Segment[i + 1]].Position;
-                    Vector3 NewPrevious = NewCurrent - (NewNext - NewCurrent).Normalized();
-                    RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, -1.0f));
-                    RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, 1.0f));
-                }
-                else if (i >= 1 && i < Segment.Length - 1)
+                    NewCurrent = LineVertexData[Segment[i]].Position;
+                    NewNext = LineVertexData[Segment[i + 1]].Position;
+                    if (Segment[0] == Segment[Segment.Length - 1])
+                    {
+                        NewPrevious = LineVertexData[Segment[Segment.Length - 2]].Position;
+                    } else
+                    {
+                        NewPrevious = NewCurrent - (NewNext - NewCurrent);
+                    }
+                } else
                 {
-                    Vector3 NewPrevious = LineVertexData[Segment[i - 1]].Position;
-                    Vector3 NewCurrent = LineVertexData[Segment[i]].Position;
-                    Vector3 NewNext = LineVertexData[Segment[i + 1]].Position;
-                    RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, -1.0f));
-                    RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, 1.0f));
-                }
-                else if (i == Segment.Length - 1)
-                {
-                    Vector3 NewPrevious = LineVertexData[Segment[i - 1]].Position;
-                    Vector3 NewCurrent = LineVertexData[Segment[i]].Position;
-                    Vector3 NewNext = NewCurrent + (NewCurrent - NewPrevious).Normalized();
-                    RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, -1.0f));
-                    RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, 1.0f));
-                }
-
-                RenderableSegmentData.AddRange(new uint[3] { Convert.ToUInt32(RenderableVertexData.Count - 2),
-                                                             Convert.ToUInt32(RenderableVertexData.Count - 1),
-                                                             Convert.ToUInt32(RenderableVertexData.Count) });
-
-                RenderableSegmentData.AddRange(new uint[3] { Convert.ToUInt32(RenderableVertexData.Count - 1),
+                    if (i >= 1 && i < Segment.Length - 1)
+                    {
+                        NewPrevious = LineVertexData[Segment[i - 1]].Position;
+                        NewCurrent = LineVertexData[Segment[i]].Position;
+                        NewNext = LineVertexData[Segment[i + 1]].Position;
+                    }
+                    else
+                    {
+                        NewPrevious = LineVertexData[Segment[i - 1]].Position;
+                        NewCurrent = LineVertexData[Segment[i]].Position;
+                        if (Segment[0] == Segment[Segment.Length - 1])
+                        {
+                            NewNext = LineVertexData[Segment[1]].Position;
+                        }
+                        else
+                        {
+                            NewNext = NewCurrent + (NewCurrent - NewPrevious);
+                        }
+                    }
+                    RenderableSegmentData.AddRange(new uint[3] { Convert.ToUInt32(RenderableVertexData.Count + 1),
                                                              Convert.ToUInt32(RenderableVertexData.Count),
-                                                             Convert.ToUInt32(RenderableVertexData.Count + 1) });
+                                                             Convert.ToUInt32(RenderableVertexData.Count - 1) });
+
+                    RenderableSegmentData.AddRange(new uint[3] { Convert.ToUInt32(RenderableVertexData.Count),
+                                                             Convert.ToUInt32(RenderableVertexData.Count - 1),
+                                                             Convert.ToUInt32(RenderableVertexData.Count - 2) });
+                }
+                RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, -1.0f));
+                RenderableVertexData.Add(new RenderableVertex(NewPrevious, NewCurrent, NewNext, LineVertexData[Segment[i]].Color, 1.0f));
             }
         }
 
@@ -107,11 +118,22 @@ public class Renderable
         GL.Enable(EnableCap.Blend);
         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
 
-        Matrix4 MVP = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90.0f)) * Camera.GetCameraView() * 
+        Matrix4 MVP = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90.0f)) * Camera.GetCameraView() *
                       Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(75.0f), WindowSize.X / WindowSize.Y, 0.1f, 7000.0f);
+
+        Vector3 ViewVector = Camera.GetViewVector() * Matrix3.CreateRotationX(MathHelper.DegreesToRadians(90.0f));
+
+        Matrix3 W = new Matrix3(0, -ViewVector.Z, ViewVector.Y,
+                            ViewVector.Z, 0, -ViewVector.X,
+                            -ViewVector.Y, ViewVector.X, 0);
+
+        Matrix3 WSquared = W * W;
         
         RenderableShader.SetMatrix4Uniform("uMVP", MVP);
+        RenderableShader.SetMatrix3Uniform("uW", W);
+        RenderableShader.SetMatrix3Uniform("uWSquared", WSquared);
         RenderableShader.SetVector2Uniform("uScreenSize", WindowSize);
+        RenderableShader.SetVector3Uniform("uViewVector", ViewVector);
 
         GL.BindBuffer(BufferTarget.ElementArrayBuffer, ElementBuffer.Item1);
         //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);

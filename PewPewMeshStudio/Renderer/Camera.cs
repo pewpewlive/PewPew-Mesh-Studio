@@ -43,6 +43,8 @@ public class Camera
 
     public Matrix4 GetCameraView() => CameraView;
 
+    public Vector3 GetViewVector() => Vector3.Normalize(LookPosition - CameraPosition);
+
     public void RotateBy(Vector2 Offset)
     {
         CameraAngle += new Vector3(MathHelper.DegreesToRadians(Offset.X), MathHelper.DegreesToRadians(Offset.Y), 0.0f);

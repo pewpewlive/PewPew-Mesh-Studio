@@ -59,5 +59,9 @@ public class Shader
 
     public void SetMatrix4Uniform(string Name, Matrix4 U) => GL.UniformMatrix4(GL.GetUniformLocation(GetShaderHandle(), Name), true, ref U);
 
+    public void SetMatrix3Uniform(string Name, Matrix3 U) => GL.UniformMatrix3(GL.GetUniformLocation(GetShaderHandle(), Name), true, ref U);
+
+    public void SetVector3Uniform(string Name, Vector3 U) => GL.Uniform3(GL.GetUniformLocation(GetShaderHandle(), Name), U);
+
     public void SetVector2Uniform(string Name, Vector2 U) => GL.Uniform2(GL.GetUniformLocation(GetShaderHandle(), Name), U);
 }

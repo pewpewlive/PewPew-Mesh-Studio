@@ -9,27 +9,27 @@ layout (location = 4) in float lVertSg;
 out vec4 VertexColor;
 
 uniform mat4 uMVP;
+uniform mat3 uW;
+uniform mat3 uWSquared;
 uniform vec2 uScreenSize;
+uniform vec3 uViewVector;
+
+float tau = 6.283185307179586;
+float pi = 3.14159265359;
 
 void main()
 {
-    vec4 PrevPosProj = vec4(lPrevPos, 1.0) * uMVP;
-    vec4 CurrPosProj = vec4(lCurrPos, 1.0) * uMVP;
-    vec4 NextPosProj = vec4(lNextPos, 1.0) * uMVP;
+    vec3 start = normalize(lNextPos - lCurrPos);
+    float angle = acos(dot(normalize(lPrevPos - lCurrPos), normalize(lNextPos - lCurrPos))) / 2;
 
-    vec2 PrevPosScrn = (PrevPosProj.xy / PrevPosProj.w) * uScreenSize;
-    vec2 CurrPosScrn = (CurrPosProj.xy / CurrPosProj.w) * uScreenSize;
-    vec2 NextPosScrn = (NextPosProj.xy / NextPosProj.w) * uScreenSize;
+    if (lVertSg == 1.0) {
+        angle = angle - pi;
+    }
+    
+    mat3 rotation_matrix = mat3(1.0) + (sin(angle) * uW) + (2.0 * pow(sin(angle / 2.0), 2.0) * uWSquared);
 
-    vec2 AB = normalize(CurrPosScrn - PrevPosScrn);
-    vec2 BC = normalize(NextPosScrn - CurrPosScrn);
+    vec4 pos = vec4(start * rotation_matrix + lCurrPos, 1.0) * uMVP;
 
-    vec2 Tangent = normalize(AB + BC);
-    vec2 Miter = vec2(-Tangent.y, Tangent.x);
-    vec2 Normal = vec2(-AB.y, AB.x);
-
-    float Length = 5.0 / dot(Miter, Normal);
-
-    gl_Position = vec4((CurrPosScrn + (Miter * Length * lVertSg)) / uScreenSize, CurrPosProj.z / CurrPosProj.w, 1.0);
+    gl_Position = vec4(pos);
     VertexColor = lVertCol;
 }
