@@ -25,8 +25,8 @@ public class InspectorWindow
     {
         ImGui.Begin(I18n.c.GetString("Inspector"));
 
-        ImGui.Text(I18n.c.GetString("Object: {0}", "*selected object name*"));
-        if (ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos)) 
+        ImGui.Text(I18n.c.GetString("Object: {0}", "mesh.lua"));
+        if (ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos, 0.5f)) 
             OnObjectPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(objectPos.X, objectPos.Y, objectPos.Z));
 
         ImGui.Text(I18n.c.GetString("Meshes"));
