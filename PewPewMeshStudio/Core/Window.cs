@@ -42,6 +42,7 @@ public class Window : GameWindow
     {
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
+        Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
 
         Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
     }
