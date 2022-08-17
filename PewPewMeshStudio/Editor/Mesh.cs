@@ -8,8 +8,11 @@ public class Mesh
 {
     private Renderable mesh;
     public List<MeshVertex> vertices = new List<MeshVertex>();
+    public List<int> selectedVerts = new List<int>();
     //private List<MeshVertex> vertsWorldPos = new List<MeshVertex>();
 
+    public bool selected = false;
+    public bool hidden = false;
     public Vector3 position;
     //public Vector3 newPos;
 
@@ -46,7 +49,8 @@ public class Mesh
 
     private void UpdateMesh()
     {
-        mesh.Render(/*windowSize, meshCam*/);
+        if (hidden == false)
+            mesh.Render(/*windowSize, meshCam*/);
     }
     
     private void UpdateMeshPosition(Vector3 newPos)
@@ -66,8 +70,24 @@ public class Mesh
         mesh.SetVertexesData(vertices.ToArray());
     }
 
-    public void SetUpdate() => UI.Windows.InspectorWindow.OnObjectPositionUpdate += UpdateMeshPosition;
-    public void RemoveUpdate() => UI.Windows.InspectorWindow.OnObjectPositionUpdate -= UpdateMeshPosition;
+    public void ShiftVertexPosition(Vector3 newPos)
+    {
+        foreach (int selected in selectedVerts)
+        {
+            MeshVertex vert = vertices[selected];
+            vert.Position -= position;
+            vertices[selected] = vert;
+
+            vert = vertices[selected];
+            vert.Position += newPos;
+            vertices[selected] = vert;
+        }
+
+        mesh.SetVertexesData(vertices.ToArray());
+    }
+
+    public void SetUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate += UpdateMeshPosition;
+    public void RemoveUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate -= UpdateMeshPosition;
 
     public void DestroyMesh() => mesh.Destroy();
 }

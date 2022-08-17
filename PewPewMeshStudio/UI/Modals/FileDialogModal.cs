@@ -13,6 +13,7 @@ public class FileDialogModal
     public bool allowMultiSelect;
 
     string fileName = "";
+    string loadFileName = "";
     string path = "";
 
     string[] Directories = new string[0];
@@ -81,7 +82,11 @@ public class FileDialogModal
 
         ImGui.EndChild();
 
-        ImGui.Button(I18n.c.GetString("Cancel"));
+        if (ImGui.Button(I18n.c.GetString("Cancel")))
+        {
+            UIHandler.openModals = UIHandler.OpenModals.None;
+            return;
+        }
 
         UpdateContextButtons();
 
@@ -106,7 +111,7 @@ public class FileDialogModal
         ImGui.SameLine();
         ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 185f);
 
-        bool dirChanged = ImGui.InputTextWithHint("", I18n.c.GetString("Enter path here"), ref inputDir, 200, ImGuiInputTextFlags.EnterReturnsTrue);
+        bool dirChanged = ImGui.InputTextWithHint("", I18n.c.GetString("Enter path here"), ref inputDir, 1000, ImGuiInputTextFlags.EnterReturnsTrue);
 
         if (refreshDirectory)
             inputDir = pwd;
@@ -181,6 +186,7 @@ public class FileDialogModal
             //Path.GetExtension(file)
             if (ImGui.Selectable(Path.GetFileName(file)))
             {
+                loadFileName = Path.GetFileName(file);
                 fileName = Path.GetFileNameWithoutExtension(file);
             }
         }
@@ -240,6 +246,8 @@ public class FileDialogModal
             case FileDialogType.ImportMesh: // ImportMesh
                 if (ImGui.Button(I18n.c.GetString("Import")))
                 {
+                    if (Path.GetExtension(loadFileName) == ".lua")
+                        Core.Window.editor.LoadMesh(loadFileName);
                 }
                 return;
             case FileDialogType.ExportMesh: // ExportMesh

@@ -28,7 +28,7 @@ public class Window : GameWindow
 
     public static Camera MeshCamera = new Camera();
     public static Vector2 windowSize = new Vector2i();
-    private Editor.EditingMesh editor = new Editor.EditingMesh();
+    public static Editor.EditingMesh editor { get; private set; } = new Editor.EditingMesh();
 
     InputSystem track = new InputSystem();
     private bool MouseHeld = false;
@@ -43,8 +43,6 @@ public class Window : GameWindow
     {
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
-
-        editor.LoadMesh("mesh.lua");
     }
 
     protected override void OnUnload()
@@ -57,6 +55,7 @@ public class Window : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
+        editor.FrameLoad();
         Log.Information("(Window) GUI loaded successfully.");
     }
 
