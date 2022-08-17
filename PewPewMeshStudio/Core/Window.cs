@@ -140,6 +140,7 @@ public class Window : GameWindow
 
     protected override void OnClosing(CancelEventArgs Event)
     {
+        base.OnClosing(Event);
         if (!UI.Modals.UnsavedChangesModal.dontShowThisAgain)
         {
             Event.Cancel = true;
@@ -149,6 +150,7 @@ public class Window : GameWindow
 
     protected override void OnFileDrop(FileDropEventArgs Event)
     {
+        base.OnFileDrop(Event);
         Mesh = MeshParser.ParseMeshFile(Event.FileNames[0], 1);
         Console.WriteLine("Drag & Dropped following files (1st file tried to import): ");
         foreach (string item in Event.FileNames)
