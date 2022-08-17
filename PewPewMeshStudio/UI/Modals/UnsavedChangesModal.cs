@@ -36,9 +36,15 @@ public class UnsavedChangesModal
         ImGui.PopStyleColor(3);
 
         ImGui.SameLine();
-        ImGui.Button(I18n.c.GetString("Save & Quit"));
+        if(ImGui.Button(I18n.c.GetString("Save & Quit")))
+            Environment.Exit(0);
+
         ImGui.SameLine();
-        ImGui.Button(I18n.c.GetString("Cancel"));
+        if (ImGui.Button(I18n.c.GetString("Cancel")))
+        {
+            UIHandler.openModals = UIHandler.OpenModals.None;
+            return;
+        }
 
         ImGui.EndPopup();
     }
