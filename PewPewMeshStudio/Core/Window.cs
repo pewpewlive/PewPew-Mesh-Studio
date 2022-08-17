@@ -61,6 +61,8 @@ public class Window : GameWindow
     {
         base.OnLoad();
 
+        UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
+        
         Log.Information("(Window) GUI loaded successfully.");
     }
 

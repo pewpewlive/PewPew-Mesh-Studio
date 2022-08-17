@@ -125,6 +125,10 @@ public class GlobalMenu
         {
             UIHandler.openModals = UIHandler.OpenModals.UnsavedChanges;
         }
+        if (ImGui.MenuItem("Splash Screen"))
+        {
+            UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
+        }
         ImGui.EndMenu();
     }
 }
