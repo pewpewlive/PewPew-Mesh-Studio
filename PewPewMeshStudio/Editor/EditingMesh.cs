@@ -32,7 +32,7 @@ public class EditingMesh // i will change the name
         OnMeshDestroy?.Invoke();
     }
 
-    public void SetShitUpdating()
+    public void SetStuffUpdating()
     {
         foreach (Mesh mesh in meshes)
             mesh.RemoveUpdate();
@@ -45,7 +45,7 @@ public class EditingMesh // i will change the name
         Mesh mesh = new Mesh(loadMeshPath, 1, new Vector3());
         meshes.Add(mesh);
         currentEditingMesh = 0; // for now
-        SetShitUpdating();
+        SetStuffUpdating();
         //vertexShower = new VertexShower(mesh.vertices);
     }
 }
