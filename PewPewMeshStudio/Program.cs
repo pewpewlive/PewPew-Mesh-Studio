@@ -17,7 +17,7 @@ class Program
             //.WriteTo.File("logs/.log", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-        Window MainWindow = new();
+        Window MainWindow = new Window();
         MainWindow.Run();
         Log.Information("(Program) Closed GUI, closing application...");
         Log.CloseAndFlush();

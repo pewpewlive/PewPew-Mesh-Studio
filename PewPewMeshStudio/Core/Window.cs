@@ -10,7 +10,9 @@ using PewPewMeshStudio.Renderer;
 using PewPewMeshStudio.UI;
 using PewPewMeshStudio.ExtraUtils;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 using Serilog;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace PewPewMeshStudio.Core;
 
@@ -31,7 +33,6 @@ public class Window : GameWindow
     InputSystem track = new InputSystem();
 
     private bool MouseHeld = false;
-
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
         Size = new Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),
@@ -43,8 +44,12 @@ public class Window : GameWindow
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
         Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
-
-        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        //Cursor = new MouseCursor(0, 0, 64, 64, Properties.Resources.logo);
+        
+        //WindowState = WindowState.Maximized;
+        
+        //Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
     }
 
     protected override void OnUnload()
@@ -132,4 +137,24 @@ public class Window : GameWindow
             MeshCamera.Update();
         }
     }
+
+    protected override void OnClosing(CancelEventArgs Event)
+    {
+        if (!UI.Modals.UnsavedChangesModal.dontShowThisAgain)
+        {
+            Event.Cancel = true;
+            UIHandler.openModals = UIHandler.OpenModals.UnsavedChanges;
+        }
+    }
+
+    protected override void OnFileDrop(FileDropEventArgs Event)
+    {
+        Mesh = MeshParser.ParseMeshFile(Event.FileNames[0], 1);
+        Console.WriteLine("Drag & Dropped following files (1st file tried to import): ");
+        foreach (string item in Event.FileNames)
+        {
+            Console.WriteLine(item);
+        }
+    }
+
 }

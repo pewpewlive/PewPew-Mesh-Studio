@@ -1,6 +1,5 @@
 ﻿using ImGuiNET;
 using PewPewMeshStudio.ExtraUtils;
-using System;
 
 namespace PewPewMeshStudio.UI.Globals;
 
