@@ -128,7 +128,7 @@ public class Window : GameWindow
         base.OnMouseMove(Event);
         if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift]) 
         {
-            MeshCamera.PanBy(Event.Delta * 0.75f); 
+            MeshCamera.PanBy(Event.Delta * 0.75f);
             MeshCamera.Update();
         }
         else if (MouseHeld)

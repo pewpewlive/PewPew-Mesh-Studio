@@ -18,6 +18,7 @@ class Program
             .CreateLogger();
 
         Window MainWindow = new Window();
+        unsafe { CursorSetter.WindowPointer = MainWindow.WindowPtr; }
         MainWindow.Run();
         Log.Information("(Program) Closed GUI, closing application...");
         Log.CloseAndFlush();
