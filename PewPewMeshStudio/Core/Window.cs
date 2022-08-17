@@ -44,12 +44,10 @@ public class Window : GameWindow
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
         Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
-        //Cursor = new MouseCursor(0, 0, 64, 64, Properties.Resources.logo);
-        
         //WindowState = WindowState.Maximized;
         
-        //Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
-        Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
+        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        //Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
     }
 
     protected override void OnUnload()
