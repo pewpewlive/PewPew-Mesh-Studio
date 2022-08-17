@@ -88,6 +88,10 @@ public class Window : GameWindow
         track.Track();
 
         uiHandler.InitUI();
+
+        if (!ImGui.IsAnyItemHovered())
+            CursorSetter.ResetCursor();
+
         UIController.Render();
 
         ImGuiController.CheckGLError("End of frame");
