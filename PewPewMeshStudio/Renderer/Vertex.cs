@@ -8,10 +8,10 @@ public struct MeshVertex
     public Vector3 Position;
     public Vector4 Color;
 
-    public MeshVertex(Vector3 NewPosition, Vector4 NewColor)
+    public MeshVertex(Vector3 Position, Vector4 Color)
     {
-        Position = NewPosition;
-        Color = NewColor;
+        this.Position = Position;
+        this.Color = Color;
     }
 }
 
@@ -21,15 +21,14 @@ public struct RenderableVertex
     public Vector3 Current;
     public Vector3 Next;
     public Vector4 Color;
+    public float MiterLength;
 
-    public float Sign;
-
-    public RenderableVertex(Vector3 NewPrevious, Vector3 NewCurrent, Vector3 NewNext, Vector4 NewColor, float NewSign)
+    public RenderableVertex(Vector3 Previous, Vector3 Current, Vector3 Next, Vector4 Color, float MiterLength)
     {
-        Previous = NewPrevious;
-        Current = NewCurrent;
-        Next = NewNext;
-        Color = NewColor;
-        Sign = NewSign;
+        this.Previous = Previous;
+        this.Current = Current;
+        this.Next = Next;
+        this.Color = Color;
+        this.MiterLength = MiterLength;
     }
 }
