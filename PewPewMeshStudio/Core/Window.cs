@@ -46,7 +46,7 @@ public class Window : GameWindow
         Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
         //WindowState = WindowState.Maximized;
         
-        Mesh = MeshParser.ParseMeshFile("mesh.lua", 1);
+        Mesh = MeshParser.ParseMeshFile("s.lua", 1);
         //Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
     }
 
@@ -60,10 +60,9 @@ public class Window : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
-
-        UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
         
         Log.Information("(Window) GUI loaded successfully.");
+        //UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
     }
 
     protected override void OnResize(ResizeEventArgs Event)
@@ -103,6 +102,18 @@ public class Window : GameWindow
     {
         base.OnTextInput(Event);
         UIController.PressChar((char)Event.Unicode);
+    }
+
+    protected override void OnKeyDown(KeyboardKeyEventArgs Event)
+    {
+        base.OnKeyDown(Event);
+        if (Event.Key == Keys.F11 && WindowState == WindowState.Normal)
+            WindowState = WindowState.Fullscreen;
+        else if (Event.Key == Keys.F11 && WindowState == WindowState.Fullscreen)
+        {
+            WindowState = WindowState.Normal;
+        }
+
     }
 
     protected override void OnMouseWheel(MouseWheelEventArgs Event)
