@@ -107,13 +107,15 @@ public class Window : GameWindow
     protected override void OnKeyDown(KeyboardKeyEventArgs Event)
     {
         base.OnKeyDown(Event);
-        if (Event.Key == Keys.F11 && WindowState == WindowState.Normal)
+        if (Event.Key == Keys.F11 && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized))
+        {
             WindowState = WindowState.Fullscreen;
+            VSync = VSyncMode.On;
+        }
         else if (Event.Key == Keys.F11 && WindowState == WindowState.Fullscreen)
         {
             WindowState = WindowState.Normal;
         }
-
     }
 
     protected override void OnMouseWheel(MouseWheelEventArgs Event)
