@@ -19,8 +19,8 @@ public class UrlUtils
         catch (Exception e)
         {
             Log.Error(e, "(UrlUtils) Error encountered");
-            UIHandler.openModals = UIHandler.OpenModals.Error;
             UI.Modals.ErrorModal.errorMessage = e.Message;
+            UIHandler.openModals = UIHandler.OpenModals.Error;
         }
     }
 }

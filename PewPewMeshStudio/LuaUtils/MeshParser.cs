@@ -109,8 +109,8 @@ public class MeshParser
         catch (Exception Ex)
         {
             Log.Error(Ex, "(MeshParser) Failed to parse mesh file! Returning empty mesh object.");
-            UIHandler.openModals = UIHandler.OpenModals.Error;
             UI.Modals.ErrorModal.errorMessage = Ex.Message;
+            UIHandler.openModals = UIHandler.OpenModals.Error;
             return new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
         }
     }
