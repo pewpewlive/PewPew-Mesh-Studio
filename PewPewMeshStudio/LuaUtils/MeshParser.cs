@@ -3,6 +3,7 @@ using System.Numerics;
 using PewPewMeshStudio.Renderer;
 using PewPewMeshStudio.ExtraUtils;
 using Serilog;
+using PewPewMeshStudio.UI;
 
 namespace PewPewMeshStudio.LuaUtils;
 
@@ -108,6 +109,8 @@ public class MeshParser
         catch (Exception Ex)
         {
             Log.Error(Ex, "(MeshParser) Failed to parse mesh file! Returning empty mesh object.");
+            UIHandler.openModals = UIHandler.OpenModals.Error;
+            UI.Modals.ErrorModal.errorMessage = Ex.Message;
             return new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
         }
     }

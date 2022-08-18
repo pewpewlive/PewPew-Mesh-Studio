@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using PewPewMeshStudio.UI;
 using Serilog;
 
 namespace PewPewMeshStudio.ExtraUtils;
@@ -17,7 +18,9 @@ public class UrlUtils
         }
         catch (Exception e)
         {
-            Log.Error("(UrlUtils) {0}", e.Message);
+            Log.Error(e, "(UrlUtils) Error encountered");
+            UIHandler.openModals = UIHandler.OpenModals.Error;
+            UI.Modals.ErrorModal.errorMessage = e.Message;
         }
     }
 }
