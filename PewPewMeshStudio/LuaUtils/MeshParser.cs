@@ -104,12 +104,14 @@ public class MeshParser
                 lua.Dispose();
                 lua.Close();
 
+                Log.Information("(MeshParser) <MeshThread> Mesh parsed successfully.");
+
                 return new Renderable(VertexData.ToArray(), Segments.ToArray());
             }
         }
         catch (Exception Ex)
         {
-            Log.Error(Ex, "(MeshParser) Failed to parse mesh file! Returning empty mesh object.");
+            Log.Error(Ex, "(MeshParser) <MeshThread> Failed to parse mesh file! Returning empty mesh object.");
             UI.Modals.ErrorModal.errorMessage = Ex.Message;
             UIHandler.openModals = UIHandler.OpenModals.Error;
             return new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
