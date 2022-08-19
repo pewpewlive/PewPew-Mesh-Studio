@@ -2,16 +2,14 @@
 using PewPewMeshStudio.UI;
 using PewPewMeshStudio.Core;
 using Serilog;
+using System.Threading;
 
 namespace PewPewMeshStudio.LuaAPI;
 
 public static class Interpreter
 {
-    public static void SayHello()
-    {
-        Console.WriteLine("Hello");
-    }
-    private static void RunFile(string path)
+    private static string LuaPath;
+    private static void RunFile()
     {
         using (Lua lua = new Lua())
         { 
@@ -25,14 +23,17 @@ public static class Interpreter
             lua["API.SetMeshFile"] = API.SetMeshFile;
             lua["API.SetMeshTable"] = API.SetMeshTable;
 #pragma warning restore CS8974
-            lua.DoFile(path);
+            lua.DoFile(LuaPath);
         }
     }
-    public static async void Run(string path)
+    public static void Run(string path)
     {
         try 
-        { 
-            await Task.Run(() => RunFile(path)); 
+        {
+            //await Task.Run(() => RunFile(path)); 
+            Thread luaThread = new Thread(new ThreadStart(RunFile));
+            LuaPath = path;
+            luaThread.Start();
         }
         catch (Exception Ex)
         {

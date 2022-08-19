@@ -15,6 +15,8 @@ using Serilog;
 using static OpenTK.Graphics.OpenGL.GL;
 using OpenTK.Compute.OpenCL;
 using PewPewMeshStudio.LuaAPI;
+using System.Threading;
+using System.IO;
 
 namespace PewPewMeshStudio.Core;
 
@@ -31,9 +33,10 @@ public class Window : GameWindow
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
 
     public Renderable Mesh { set; get; }
+    private Thread meshThread;
+
     Camera MeshCamera = new Camera();
     InputSystem track = new InputSystem();
-
     private bool MouseHeld = false;
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -47,12 +50,18 @@ public class Window : GameWindow
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
         Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
         //WindowState = WindowState.Maximized;
-        
-        //Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
 
+        Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
+
+        //Mesh = MeshParser.ParseMeshFile("s.lua", 1);
+        meshThread = new Thread(new ThreadStart(RunMesh));
+        
+        meshThread.Start();
+    }
+    private void RunMesh()
+    {
         Mesh = MeshParser.ParseMeshFile("s.lua", 1);
     }
-
     protected override void OnUnload()
     {
         base.OnUnload();
