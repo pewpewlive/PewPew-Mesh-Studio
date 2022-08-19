@@ -31,9 +31,10 @@ public static class Interpreter
         try 
         {
             //await Task.Run(() => RunFile(path)); 
-            Thread luaThread = new Thread(new ThreadStart(RunFile));
+            Log.Information("(Interpreter) Spawning a new plugin thread...");
+            Thread pluginThread = new Thread(new ThreadStart(RunFile));
             LuaPath = path;
-            luaThread.Start();
+            pluginThread.Start();
         }
         catch (Exception Ex)
         {
