@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using Serilog;
 using static OpenTK.Graphics.OpenGL.GL;
+using OpenTK.Compute.OpenCL;
+using PewPewMeshStudio.LuaAPI;
 
 namespace PewPewMeshStudio.Core;
 
@@ -28,7 +30,7 @@ public class Window : GameWindow
 
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
 
-    Renderable Mesh;
+    public Renderable Mesh { set; get; }
     Camera MeshCamera = new Camera();
     InputSystem track = new InputSystem();
 
@@ -46,8 +48,9 @@ public class Window : GameWindow
         Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
         //WindowState = WindowState.Maximized;
         
-        Mesh = MeshParser.ParseMeshFile("s.lua", 1);
         //Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
+
+        Mesh = MeshParser.ParseMeshFile("s.lua", 1);
     }
 
     protected override void OnUnload()
@@ -62,6 +65,7 @@ public class Window : GameWindow
         base.OnLoad();
         
         Log.Information("(Window) GUI loaded successfully.");
+        Interpreter.Run("plugins\\test.lua");
         //UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
     }
 
@@ -168,6 +172,7 @@ public class Window : GameWindow
     protected override void OnFileDrop(FileDropEventArgs Event)
     {
         base.OnFileDrop(Event);
+
         Mesh = MeshParser.ParseMeshFile(Event.FileNames[0], 1);
         Console.WriteLine("Drag & Dropped following files (1st file tried to import): ");
         foreach (string item in Event.FileNames)

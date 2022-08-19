@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="LuaUtils\MeshParser.cs~RF14cdb401.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Properties\PPMS_Logo_ICO.ico" />
   </ItemGroup>
 

@@ -21,7 +21,8 @@ public class UIHandler
         FileDialog,
         Preferences,
         UnsavedChanges,
-        SplashScreen
+        SplashScreen,
+        Custom
     }
     public static OpenModals openModals = OpenModals.None;
 
@@ -31,6 +32,7 @@ public class UIHandler
     PreferencesModal preferencesModal = new PreferencesModal();
     UnsavedChangesModal unsavedChangesModal = new UnsavedChangesModal();
     SplashScreen splashScreenModal = new SplashScreen();
+    CustomizableModal customizableModal = new CustomizableModal();
 
     // Popups
     ContextMenu contextMenu = new ContextMenu();
@@ -89,6 +91,9 @@ public class UIHandler
                 break;
             case OpenModals.SplashScreen:
                 splashScreenModal.Initialize();
+                break;
+            case OpenModals.Custom:
+                customizableModal.Initialize();
                 break;
         }
 
