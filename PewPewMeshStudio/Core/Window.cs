@@ -56,7 +56,7 @@ public class Window : GameWindow
         //Mesh = MeshParser.ParseMeshFile("s.lua", 1);
         meshThread = new Thread(new ThreadStart(RunMesh));
         
-        meshThread.Start();
+        //meshThread.Start();
     }
     private void RunMesh()
     {
@@ -67,13 +67,14 @@ public class Window : GameWindow
         base.OnUnload();
         Mesh.Destroy();
         FontPtr.Free();
+        Log.Information("(Window) <{0}> Closed GUI, closing application...", Thread.CurrentThread.Name);
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
         
-        Log.Information("(Window) GUI loaded successfully.");
+        Log.Information("(Window) <{0}> GUI loaded successfully.", Thread.CurrentThread.Name);
         Interpreter.Run("plugins\\test.lua");
         //UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
     }

@@ -23,6 +23,7 @@ public static class Interpreter
             lua["API.SetMeshFile"] = API.SetMeshFile;
             lua["API.SetMeshTable"] = API.SetMeshTable;
 #pragma warning restore CS8974
+            Log.Information("(Interpreter) <{0}> Plugin API initialized", Thread.CurrentThread.Name);
             lua.DoFile(LuaPath);
         }
     }
@@ -31,7 +32,7 @@ public static class Interpreter
         try 
         {
             //await Task.Run(() => RunFile(path)); 
-            Log.Information("(Interpreter) Spawning a new plugin thread...");
+            Log.Information("(Interpreter) <{0}> Spawning a new plugin thread...", Thread.CurrentThread.Name);
             Thread pluginThread = new Thread(new ThreadStart(RunFile));
             pluginThread.Name = "PluginThread";
             LuaPath = path;
