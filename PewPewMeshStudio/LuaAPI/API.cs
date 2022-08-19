@@ -13,7 +13,7 @@ public static class API
     //public static Window WindowClass { set; private get; }
     public static void AddLog(string str)
     {
-        Log.Information("(API) <PluginThread> {0}", str);
+        Log.Information("(API) <{0}> {1}", Thread.CurrentThread.Name, str);
     }
     public static void ShowModal(LuaTable content)
     {

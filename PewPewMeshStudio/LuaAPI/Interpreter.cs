@@ -33,6 +33,7 @@ public static class Interpreter
             //await Task.Run(() => RunFile(path)); 
             Log.Information("(Interpreter) Spawning a new plugin thread...");
             Thread pluginThread = new Thread(new ThreadStart(RunFile));
+            pluginThread.Name = "PluginThread";
             LuaPath = path;
             pluginThread.Start();
         }
