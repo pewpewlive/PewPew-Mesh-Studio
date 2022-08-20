@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using OpenTK.Compute.OpenCL;
 using PewPewMeshStudio.ExtraUtils;
 
 namespace PewPewMeshStudio.UI.Globals;
@@ -73,7 +74,10 @@ public class GlobalMenu
 
         if (ImGui.MenuItem(I18n.c.GetString("Quit"), "Alt+F4"))
         {
-            Environment.Exit(0);
+            if (!UI.Modals.UnsavedChangesModal.dontShowThisAgain)
+                UIHandler.openModals = UIHandler.OpenModals.UnsavedChanges;
+            else
+                Environment.Exit(0);
         }
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip(I18n.c.GetString("Quit PewPew Mesh Studio."));

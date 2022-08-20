@@ -22,11 +22,13 @@ public static class API
 
         UIHandler.openModals = UIHandler.OpenModals.Custom;
     }
-    public static void SetMeshFile(string path, int index)
+    public static void RenderMeshFile(string path, int index)
     {
-        throw new NotImplementedException();
+        Window.requestedMeshPath = path;
+        Window.requestedMeshIndex = index;
+        Window.isMeshChangeRequest = true;
     }
-    public static void SetMeshTable(LuaTable table, int index)
+    public static void RenderMeshTable(LuaTable table, int index)
     {
         throw new NotImplementedException();
     }

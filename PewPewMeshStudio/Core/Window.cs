@@ -21,7 +21,7 @@ using System.IO;
 namespace PewPewMeshStudio.Core;
 
 public class Window : GameWindow
-{   
+{
     private const int WINDOW_WIDTH = 800;
     private const int WINDOW_HEIGHT = 600;
 
@@ -34,6 +34,11 @@ public class Window : GameWindow
 
     public Renderable Mesh { set; get; }
     private Thread meshThread;
+    
+    // Try to find a better solution for importing meshes from LuaAPI
+    public static bool isMeshChangeRequest { set; private get; } = false;
+    public static string requestedMeshPath { set; private get; }
+    public static int requestedMeshIndex { set; private get; }
 
     Camera MeshCamera = new Camera();
     InputSystem track = new InputSystem();
@@ -97,6 +102,13 @@ public class Window : GameWindow
 
         //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
         //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
+
+        if (isMeshChangeRequest)
+        {
+            Mesh = MeshParser.ParseMeshFile(requestedMeshPath, requestedMeshIndex);
+            isMeshChangeRequest = false;
+        }
+
         Mesh.Render((Vector2)ClientSize, MeshCamera);
         track.Track();
 

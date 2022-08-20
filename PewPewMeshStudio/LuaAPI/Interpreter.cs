@@ -20,8 +20,8 @@ public static class Interpreter
 #pragma warning disable CS8974
             lua["API.AddLog"] = API.AddLog;
             lua["API.ShowModal"] = API.ShowModal;
-            lua["API.SetMeshFile"] = API.SetMeshFile;
-            lua["API.SetMeshTable"] = API.SetMeshTable;
+            lua["API.RenderMeshFile"] = API.RenderMeshFile;
+            lua["API.RenderMeshTable"] = API.RenderMeshTable;
 #pragma warning restore CS8974
             Log.Information("(Interpreter) <{0}> Plugin API initialized", Thread.CurrentThread.Name);
             lua.DoFile(LuaPath);
