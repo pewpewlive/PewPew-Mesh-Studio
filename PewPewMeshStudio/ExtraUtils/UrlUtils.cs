@@ -4,7 +4,7 @@ using Serilog;
 
 namespace PewPewMeshStudio.ExtraUtils;
 
-public class UrlUtils
+public static class UrlUtils
 {
     public static void OpenUrl(string url)
     {

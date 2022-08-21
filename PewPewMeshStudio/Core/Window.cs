@@ -60,7 +60,8 @@ public class Window : GameWindow
 
         //Mesh = MeshParser.ParseMeshFile("s.lua", 1);
         meshThread = new Thread(new ThreadStart(RunMesh));
-        
+        meshThread.Name = "MeshThread";
+
         //meshThread.Start();
     }
     private void RunMesh()

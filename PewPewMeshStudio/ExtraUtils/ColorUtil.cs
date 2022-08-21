@@ -2,7 +2,7 @@
 
 namespace PewPewMeshStudio.ExtraUtils;
 
-public class ColorUtil
+public static class ColorUtil
 {
     public static Vector4 Vec4ByteToFloat(Vector4 Vec4Int)
     {
