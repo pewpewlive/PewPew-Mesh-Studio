@@ -19,6 +19,7 @@ public class AboutModal
             UIHandler.openModals = UIHandler.OpenModals.None;
             return;
         }
+        ImGui.Text(I18n.c.GetString("Version: ") + "0.1-Unstable"); 
         ImGui.Text(I18n.c.GetString("Copyright © PewPew Mesh Studio team & contributors."));
         ImGui.Text(I18n.c.GetString("Licensed under zlib license."));
         if (ImGui.Button(I18n.c.GetString("GitHub")))
