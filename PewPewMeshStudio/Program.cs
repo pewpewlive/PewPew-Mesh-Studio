@@ -17,7 +17,7 @@ class Program
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .WriteTo.Console()
-            //.WriteTo.File("logs/.log", rollingInterval: RollingInterval.Day)
+            //.WriteTo.Async(asyncWrite => asyncWrite.File("logs/.log", rollingInterval: RollingInterval.Day), blockWhenFull: true)
             .CreateLogger();
 
         Log.Information("(Program @ Main) <{thread}> Welcome to PewPew Mesh Studio v0.1-Unstable", Thread.CurrentThread.Name);
