@@ -5,17 +5,21 @@ namespace PewPewMeshStudio.ExtraUtils;
 
 public static unsafe class CursorSetter
 {
+
     public static Window* WindowPointer { private get; set; }
+
     public static void SetCursor(CursorShape shape)
     {
         GLFW.SetCursor(WindowPointer, GLFW.CreateStandardCursor(shape));
     }
+
     public static void ResetCursor()
     {
         GLFW.SetCursor(WindowPointer, GLFW.CreateStandardCursor(CursorShape.Arrow));
     }
     // == Incomplete ==
-    /*private static bool locked = false;
+    /*
+    private static bool locked = false;
     public static void SetCursor(CursorShape shape)
     {
         if (!locked)
@@ -28,5 +32,6 @@ public static unsafe class CursorSetter
     {
         GLFW.SetCursor(WindowPointer, GLFW.CreateStandardCursor(CursorShape.Arrow));
         locked = false;
-    }*/
+    }
+    */
 }
