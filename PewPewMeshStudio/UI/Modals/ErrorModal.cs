@@ -7,7 +7,7 @@ public class ErrorModal
 {
     public bool open;
 
-    public string errorMessage = "ExampleError";
+    public static string errorMessage { private get; set; }
 
     public void Initialize()
     {

@@ -7,7 +7,7 @@ namespace PewPewMeshStudio.UI.Modals;
 public class UnsavedChangesModal
 {
     public bool open;
-    public bool dontShowThisAgain = false;
+    public static bool dontShowThisAgain = false;
 
     public void Initialize()
     {
@@ -30,13 +30,21 @@ public class UnsavedChangesModal
         ImGui.PushStyleColor(ImGuiCol.Button, ColorUtil.Vec4ByteToFloat(new Vector4(200, 50, 50, 255)));
         ImGui.PushStyleColor(ImGuiCol.ButtonHovered, ColorUtil.Vec4ByteToFloat(new Vector4(150, 50, 50, 255)));
         ImGui.PushStyleColor(ImGuiCol.ButtonActive, ColorUtil.Vec4ByteToFloat(new Vector4(100, 50, 50, 255)));
-        ImGui.Button(I18n.c.GetString("Quit"));
+        if(ImGui.Button(I18n.c.GetString("Quit")))
+            Environment.Exit(0);
+
         ImGui.PopStyleColor(3);
 
         ImGui.SameLine();
-        ImGui.Button(I18n.c.GetString("Save & Quit"));
+        if(ImGui.Button(I18n.c.GetString("Save & Quit")))
+            Environment.Exit(0);
+
         ImGui.SameLine();
-        ImGui.Button(I18n.c.GetString("Cancel"));
+        if (ImGui.Button(I18n.c.GetString("Cancel")))
+        {
+            UIHandler.openModals = UIHandler.OpenModals.None;
+            return;
+        }
 
         ImGui.EndPopup();
     }

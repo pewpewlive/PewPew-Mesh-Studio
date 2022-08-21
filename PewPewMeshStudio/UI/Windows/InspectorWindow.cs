@@ -22,20 +22,28 @@ public class InspectorWindow
 
         ImGui.Text(I18n.c.GetString("Object: {0}", "*selected object name*"));
         ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos);
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         ImGui.Text(I18n.c.GetString("Meshes"));
         ImGui.ListBox("", ref meshesIndex, new string[] { "1", "2", "3" }, 3);
 
         ImGui.DragFloat3(I18n.c.GetString("Mesh Position"), ref meshPos);
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         ImGui.Separator();
 
         ImGui.Text(I18n.c.GetString("Vertex"));
         ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos);
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         ImGui.NewLine();
 
         ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         ImGui.End();
     }
