@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using PewPewMeshStudio.ExtraUtils;
+using Serilog;
 
 namespace PewPewMeshStudio.UI.Modals;
 
@@ -26,6 +27,7 @@ public class ErrorModal
 
         if (ImGui.Button(I18n.c.GetString("Quit")))
         {
+            Log.CloseAndFlush();
             Environment.Exit(1); // send an error exit code
         }
         if (ImGui.IsItemHovered())

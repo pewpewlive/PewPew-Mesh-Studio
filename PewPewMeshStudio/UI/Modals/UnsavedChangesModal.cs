@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using PewPewMeshStudio.ExtraUtils;
+using Serilog;
 using System.Numerics;
 
 namespace PewPewMeshStudio.UI.Modals;
@@ -30,14 +31,20 @@ public class UnsavedChangesModal
         ImGui.PushStyleColor(ImGuiCol.Button, ColorUtil.Vec4ByteToFloat(new Vector4(200, 50, 50, 255)));
         ImGui.PushStyleColor(ImGuiCol.ButtonHovered, ColorUtil.Vec4ByteToFloat(new Vector4(150, 50, 50, 255)));
         ImGui.PushStyleColor(ImGuiCol.ButtonActive, ColorUtil.Vec4ByteToFloat(new Vector4(100, 50, 50, 255)));
-        if(ImGui.Button(I18n.c.GetString("Quit")))
+        if (ImGui.Button(I18n.c.GetString("Quit")))
+        {
+            Log.CloseAndFlush();
             Environment.Exit(0);
+        }
 
         ImGui.PopStyleColor(3);
 
         ImGui.SameLine();
         if(ImGui.Button(I18n.c.GetString("Save & Quit")))
+        {
+            Log.CloseAndFlush();
             Environment.Exit(0);
+        }
 
         ImGui.SameLine();
         if (ImGui.Button(I18n.c.GetString("Cancel")))
