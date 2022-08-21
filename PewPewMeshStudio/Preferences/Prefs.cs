@@ -1,11 +1,8 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-
-namespace PewPewMeshStudio.Preferences;
+﻿namespace PewPewMeshStudio.Preferences;
 
 public class Prefs
 {
-    public int PrefsVersion { get; set; }
+    public ushort PrefsRevision { get; set; }
     public string Language { get; set; }
     public string Font { get; set; }
     public float Scale { get; set; }
