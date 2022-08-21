@@ -23,7 +23,7 @@ public static class Interpreter
             lua["API.RenderMeshFile"] = API.RenderMeshFile;
             lua["API.RenderMeshTable"] = API.RenderMeshTable;
 #pragma warning restore CS8974
-            Log.Information("(Interpreter) <{0}> Plugin API initialized", Thread.CurrentThread.Name);
+            Log.Information("(Interpreter) <{Thread}> Plugin API initialized", Thread.CurrentThread.Name);
             lua.DoFile(LuaPath);
         }
     }
@@ -32,7 +32,7 @@ public static class Interpreter
         try 
         {
             //await Task.Run(() => RunFile(path)); 
-            Log.Information("(Interpreter) <{0}> Spawning a new plugin thread...", Thread.CurrentThread.Name);
+            Log.Information("(Interpreter) <{Thread}> Spawning a new plugin thread...", Thread.CurrentThread.Name);
             Thread pluginThread = new Thread(new ThreadStart(RunFile));
             pluginThread.Name = "PluginThread";
             LuaPath = path;
@@ -40,7 +40,7 @@ public static class Interpreter
         }
         catch (Exception Ex)
         {
-            Log.Error(Ex, "(Interpreter) Error encountered");
+            Log.Error(Ex, "(Interpreter) <Thread> Error encountered", Thread.CurrentThread.Name);
             UI.Modals.ErrorModal.errorMessage = Ex.Message;
             UIHandler.openModals = UIHandler.OpenModals.Error;
         }

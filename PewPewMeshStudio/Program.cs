@@ -20,7 +20,7 @@ class Program
             //.WriteTo.File("logs/.log", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-        Log.Information("(Program) <{0}> Welcome to PewPew Mesh Studio v0.1-Unstable", Thread.CurrentThread.Name);
+        Log.Information("(Program @ Main) <{thread}> Welcome to PewPew Mesh Studio v0.1-Unstable", Thread.CurrentThread.Name);
         
         Window MainWindow = new Window();
         unsafe { CursorSetter.WindowPointer = MainWindow.WindowPtr; }

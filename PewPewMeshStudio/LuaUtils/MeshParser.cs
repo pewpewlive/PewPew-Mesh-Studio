@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace PewPewMeshStudio.LuaUtils;
 
-public class MeshParser
+public static class MeshParser
 {
     public static Vector4 LongToVector4(long Color)
     {
@@ -104,14 +104,14 @@ public class MeshParser
                 lua.Dispose();
                 lua.Close();
 
-                Log.Information("(MeshParser) <MeshThread> Mesh parsed successfully.");
+                Log.Information("(MeshParser @ ParseMeshFile) <{thread}> Mesh parsed successfully.", Thread.CurrentThread.Name);
 
                 return new Renderable(VertexData.ToArray(), Segments.ToArray());
             }
         }
         catch (Exception Ex)
         {
-            Log.Error(Ex, "(MeshParser) <MeshThread> Failed to parse mesh file! Returning empty mesh object.");
+            Log.Error(Ex, "(MeshParser @ ParseMeshFile) <{thread}> Failed to parse mesh file! Returning empty mesh object.", Thread.CurrentThread.Name);
             UI.Modals.ErrorModal.errorMessage = Ex.Message;
             UIHandler.openModals = UIHandler.OpenModals.Error;
             return new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());

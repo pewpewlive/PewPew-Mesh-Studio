@@ -356,7 +356,7 @@ void main()
                 GL.BufferData(BufferTarget.ArrayBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
                 _vertexBufferSize = newSize;
 
-                Log.Verbose("(ImGuiController) <{0}> Resized dear imgui vertex buffer to new size {vertex_buffer_size}", Thread.CurrentThread.Name, _vertexBufferSize);
+                Log.Debug("(ImGuiController @ RenderImDrawData) <{thread}> Resized dear imgui vertex buffer to new size {vertex_buffer_size}", Thread.CurrentThread.Name, _vertexBufferSize);
             }
 
             int indexSize = cmd_list.IdxBuffer.Size * sizeof(ushort);
@@ -366,7 +366,7 @@ void main()
                 GL.BufferData(BufferTarget.ElementArrayBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
                 _indexBufferSize = newSize;
 
-                Log.Verbose("(ImGuiController) <{0}> Resized dear imgui vertex buffer to new size {index_buffer_size}", Thread.CurrentThread.Name, _indexBufferSize);
+                Log.Debug("(ImGuiController @ RenderImDrawData) <{thread}> Resized dear imgui vertex buffer to new size {index_buffer_size}", Thread.CurrentThread.Name, _indexBufferSize);
             }
         }
 
@@ -506,9 +506,13 @@ void main()
         if (success == 0)
         {
             string info = GL.GetProgramInfoLog(program);
-            Log.Debug("GL.LinkProgram had info log [{name}]:\n{info}", name, info);
+            Log.Warning("(ImGuiController @ CreateProgram) <{thread}> GL.LinkProgram had info log [{name}]:\n{info}", Thread.CurrentThread.Name, name, info);
         }
-
+        else
+        {
+            string info = GL.GetProgramInfoLog(program);
+            Log.Debug("(ImGuiController @ CreateProgram) <{thread}> Linked {name} GL program successfully.", Thread.CurrentThread.Name, name);
+        }
         GL.DetachShader(program, vertex);
         GL.DetachShader(program, fragment);
 
@@ -530,7 +534,12 @@ void main()
         if (success == 0)
         {
             string info = GL.GetShaderInfoLog(shader);
-            Log.Debug("GL.CompileShader for shader '{name}' [{type}] had info log:\n{info}", name, type, info);
+            Log.Warning("(ImGuiController @ CompileShader) <{thread}> GL.CompileShader for shader '{name}' [{shader_type}] had info log:\n{info}", Thread.CurrentThread.Name, name, type, info);
+        } 
+        else
+        {
+            string info = GL.GetShaderInfoLog(shader);
+            Log.Debug("(ImGuiController @ CompileShader) <{thread}> {name} {shader_type} compiled successfully.", Thread.CurrentThread.Name, name, type);
         }
 
         return shader;
@@ -542,7 +551,7 @@ void main()
         int i = 1;
         while ((error = GL.GetError()) != ErrorCode.NoError)
         {
-            Log.Debug("{title} ({ipp}): {error}", title, i++, error);
+            Log.Error("(ImGuiController @ CheckGLError) <{thread}> {title} ({ipp}): {error}", Thread.CurrentThread.Name, title, i++, error);
         }
     }
 }

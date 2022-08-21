@@ -72,14 +72,14 @@ public class Window : GameWindow
         base.OnUnload();
         Mesh.Destroy();
         FontPtr.Free();
-        Log.Information("(Window) <{0}> Closed GUI, closing application...", Thread.CurrentThread.Name);
+        Log.Information("(Window @ OnUnload) <{thread}> Closed GUI, closing application...", Thread.CurrentThread.Name);
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
         
-        Log.Information("(Window) <{0}> GUI loaded successfully.", Thread.CurrentThread.Name);
+        Log.Information("(Window @ OnLoad) <{thread}> GUI loaded successfully.", Thread.CurrentThread.Name);
         Interpreter.Run("plugins\\test.lua");
         //UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
     }
@@ -196,11 +196,7 @@ public class Window : GameWindow
         base.OnFileDrop(Event);
 
         Mesh = MeshParser.ParseMeshFile(Event.FileNames[0], 1);
-        Console.WriteLine("Drag & Dropped following files (1st file tried to import): ");
-        foreach (string item in Event.FileNames)
-        {
-            Console.WriteLine(item);
-        }
+        Log.Verbose("(Window @ OnFileDrop) <{Thread}> Drag & Dropped following files (1st file tried to import):\n{@file_names}", Thread.CurrentThread.Name, Event.FileNames);
     }
 
 }
