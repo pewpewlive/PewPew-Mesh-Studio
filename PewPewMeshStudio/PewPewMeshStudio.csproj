@@ -10,6 +10,7 @@
     <ApplicationIcon>Resources\PPMS_Logo_ICO.ico</ApplicationIcon>
     <PackageLicenseExpression>Zlib</PackageLicenseExpression>
     <Title>PewPew Mesh Studio</Title>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
