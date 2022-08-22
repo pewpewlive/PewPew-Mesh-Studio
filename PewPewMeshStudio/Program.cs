@@ -27,11 +27,12 @@ class Program
         /*MeshProjectIO.Save("test.ppmp", new MeshProject()
         {
             PpmpRevision = 1,
-            currentMeshes = new string[] { "s.lua", "mesh.lua" },
-            currentMeshesIndexes = new int[] { 1, 1 }
+            CurrentMeshes = new string[] { "s.lua", "mesh.lua" },
+            CurrentMeshesIndexes = new int[] { 1, 1 },
+            CurrentPos = new System.Numerics.Vector3(3f, 5f, 6.5f)
         });*/
 
-        //MeshProjectIO.Load("test.ppmp");
+        MeshProjectIO.Load("test.ppmp");
 
         /*PrefIO.Save("prefs.json", new Prefs()
         {
