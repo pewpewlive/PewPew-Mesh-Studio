@@ -53,7 +53,7 @@ public class Window : GameWindow
     {
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
-        Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.logo));
+        Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.Logo));
         //WindowState = WindowState.Maximized;
 
         Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());

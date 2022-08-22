@@ -80,7 +80,7 @@ namespace PewPewMeshStudio.Properties {
         ///void main()
         ///{
         ///    FragColor = VertexColor;
-        ///} .
+        ///}.
         /// </summary>
         public static string FragShader {
             get {
@@ -91,9 +91,9 @@ namespace PewPewMeshStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] logo {
+        public static byte[] Logo {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
                 return ((byte[])(obj));
             }
         }
