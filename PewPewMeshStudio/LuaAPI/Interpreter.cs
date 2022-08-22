@@ -1,8 +1,6 @@
 ﻿using NLua;
 using PewPewMeshStudio.UI;
-using PewPewMeshStudio.Core;
 using Serilog;
-using System.Threading;
 
 namespace PewPewMeshStudio.LuaAPI;
 
@@ -27,6 +25,10 @@ public static class Interpreter
             lua.DoFile(LuaPath);
         }
     }
+    /// <summary>
+    /// Runs a Lua plugin in a seperate thread and exposes C# API.
+    /// </summary>
+    /// <param name="path">A string containing a path.</param>
     public static void Run(string path)
     {
         try 

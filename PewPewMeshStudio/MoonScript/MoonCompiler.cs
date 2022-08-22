@@ -6,7 +6,12 @@ namespace PewPewMeshStudio.MoonScript;
 
 public static class MoonCompiler
 {
-    public static void Compile(string path)
+    /// <summary>
+    /// Compiles MoonScript code.
+    /// </summary>
+    /// <param name="path">A string containing a path.</param>
+    /// <returns>The path to compiled Lua code in the temp directory.</returns>
+    public static string Compile(string path)
     {
         // not implemented completely
         Process moonc = new Process();
@@ -22,11 +27,12 @@ public static class MoonCompiler
             if (moonc.ExitCode != 0)
                 throw new Exception("moonc error");
         }
-        catch (Exception e)
+        catch (Exception Ex)
         {
-            Log.Error(e, "(MoonCompiler) Error encountered");
+            Log.Error(Ex, "(MoonCompiler) Error encountered");
             UI.Modals.ErrorModal.errorMessage = e.Message;
             UIHandler.openModals = UIHandler.OpenModals.Error;
         }
+        return "Not Implemented";
     }
 }

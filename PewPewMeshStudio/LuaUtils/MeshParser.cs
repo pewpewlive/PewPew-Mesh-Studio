@@ -9,6 +9,19 @@ namespace PewPewMeshStudio.LuaUtils;
 
 public static class MeshParser
 {
+    /// <summary>
+    /// Parses a Lua mesh file and converts Lua tables to a Renderable class.
+    /// </summary>
+    /// <param name="FilePath">A string containing a path.</param>
+    /// <param name="MeshIndex">A meshes table index.</param>
+    /// <returns>Renderable class for rendering the mesh.</returns>
+    /// <exception cref="ParserExceptions.NoVertexTable"></exception>
+    /// <exception cref="ParserExceptions.InvalidColorCount"></exception>
+    /// <exception cref="ParserExceptions.InvalidVertexCoordCount"></exception>
+    /// <exception cref="ParserExceptions.NoSegmentTable"></exception>
+    /// <exception cref="ParserExceptions.InvalidVertexIndexInSegment"></exception>
+    /// <exception cref="ParserExceptions.InvalidSegmentIndexCount"></exception>
+    /// <exception cref="ParserExceptions.InvalidMeshIndex"></exception>
     public static Renderable ParseMeshFile(string FilePath, int MeshIndex)
     {
         try

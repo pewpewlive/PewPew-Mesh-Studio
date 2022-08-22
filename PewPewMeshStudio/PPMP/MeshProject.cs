@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace PewPewMeshStudio.PPMP;
 
+/// <summary>
+/// A class that holds the editor's state.
+/// </summary>
 [DataContract]
 public class MeshProject
 {
