@@ -23,6 +23,7 @@ public static class MeshProjectIO
             Log.Error(Ex, "(MeshProjectIO @ Save) <{thread}> Error while serializing {path}", Thread.CurrentThread.Name, path);
         }
     }
+
     public static MeshProject? Load(string path)
     {
         try
