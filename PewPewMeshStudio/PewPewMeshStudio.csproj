@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,7 +10,6 @@
     <ApplicationIcon>Resources\PPMS_Logo_ICO.ico</ApplicationIcon>
     <PackageLicenseExpression>Zlib</PackageLicenseExpression>
     <Title>PewPew Mesh Studio</Title>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
