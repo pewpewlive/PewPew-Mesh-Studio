@@ -8,6 +8,9 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\PPMS_Logo_ICO.ico</ApplicationIcon>
+    <PackageLicenseExpression>Zlib</PackageLicenseExpression>
+    <Title>PewPew Mesh Studio</Title>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
