@@ -29,7 +29,11 @@ class Program
             PpmpRevision = 1,
             CurrentMeshes = new string[] { "s.lua", "mesh.lua" },
             CurrentMeshesIndexes = new int[] { 1, 1 },
-            CurrentPos = new System.Numerics.Vector3(3f, 5f, 6.5f)
+            CurrentHiddenMeshes = new bool[] { true, false },
+            CurrentMeshesPositions = new System.Numerics.Vector3[] { new System.Numerics.Vector3(3f, 5.6f, 30f), new System.Numerics.Vector3(54f, 16f, 8.354f) },
+            ShowColors = true,
+            IsIsometricView = false,
+            CameraPos = new System.Numerics.Vector3(0f, 10f, 0f)
         });*/
 
         //MeshProjectIO.Load("test.ppmp");
