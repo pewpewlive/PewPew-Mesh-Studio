@@ -38,7 +38,7 @@ class Program
         {
             PrefsRevision = 1,
             Language = "en",
-            Font = "Nunito-Regular.ttf",
+            Font = "internal",
             Scale = 1.0f,
             OpenGlVersion = new Version(4, 1),
             Theme = "dark",
