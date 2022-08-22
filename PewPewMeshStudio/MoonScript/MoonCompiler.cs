@@ -30,7 +30,7 @@ public static class MoonCompiler
         catch (Exception Ex)
         {
             Log.Error(Ex, "(MoonCompiler) Error encountered");
-            UI.Modals.ErrorModal.errorMessage = e.Message;
+            UI.Modals.ErrorModal.errorMessage = Ex.Message;
             UIHandler.openModals = UIHandler.OpenModals.Error;
         }
         return "Not Implemented";

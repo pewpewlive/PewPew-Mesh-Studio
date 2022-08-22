@@ -32,7 +32,7 @@ class Program
             CurrentPos = new System.Numerics.Vector3(3f, 5f, 6.5f)
         });*/
 
-        MeshProjectIO.Load("test.ppmp");
+        //MeshProjectIO.Load("test.ppmp");
 
         /*PrefIO.Save("prefs.json", new Prefs()
         {
