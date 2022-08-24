@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using PewPewMeshStudio.ExtraUtils;
 using System.Numerics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace PewPewMeshStudio.UI.Windows;
 
@@ -20,6 +21,9 @@ public class InspectorWindow
     public static Action<OpenTK.Mathematics.Vector3> OnMeshPositionUpdate;
     //public static Action<OpenTK.Mathematics.Vector3> OnVertexPositionUpdate;
 
+    bool openPopup = false; //cringe
+    int hoveredMesh = 0;
+
     public void Initialize()
     {
         ImGui.Begin(I18n.c.GetString("Inspector"));
@@ -28,8 +32,27 @@ public class InspectorWindow
         if (ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos, 0.5f))
             OnObjectPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(objectPos.X, objectPos.Y, objectPos.Z));
 
+        InitMeshListChild();
+        
+        if (openPopup)
+        {
+            openPopup = false;
+            ImGui.OpenPopup("MeshCxtPopup");
+        }
+        MeshContextMenuPopup();
 
+        ImGui.Text(I18n.c.GetString("Vertex"));
+        ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos);
 
+        ImGui.NewLine();
+
+        ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
+
+        ImGui.End();
+    }
+
+    private void InitMeshListChild()
+    {
         ImGui.Text(I18n.c.GetString("Meshes"));
         ImGui.BeginChild("meshList", new Vector2(0f, 125f), true, ImGuiWindowFlags.HorizontalScrollbar);
 
@@ -43,29 +66,34 @@ public class InspectorWindow
                 OpenTK.Mathematics.Vector3 newMeshPos = Core.Window.editor.meshes[i].position;
                 meshPos = new Vector3(newMeshPos.X, newMeshPos.Y, newMeshPos.Z);
             }
+            if (ImGui.IsItemHovered() && InputSystem.KeyPressed(Keys.Q))
+            {
+                openPopup = true;
+                hoveredMesh = i;
+            }
 
             ImGui.NextColumn();
             ImGui.Checkbox("Hidden" + i, ref Core.Window.editor.meshes[i].hidden);
-
             ImGui.NextColumn();
         }
-        //ImGui.ListBox("", ref meshIndex, new string[] { "1", "2", "3" }, 3, 3);
-
         ImGui.EndChild();
-        
+        ImGui.Separator();
 
         if (ImGui.DragFloat3(I18n.c.GetString("Mesh Position"), ref meshPos))
             OnMeshPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(meshPos.X, meshPos.Y, meshPos.Z));
+    }
 
-        ImGui.Separator();
+    private void MeshContextMenuPopup()
+    {
+        if (!ImGui.BeginPopup("MeshCxtPopup")) //lol
+            return;
 
-        ImGui.Text(I18n.c.GetString("Vertex"));
-        ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos);
+        ImGui.MenuItem("Rename");
+        ImGui.MenuItem("Copy", "Ctrl + C");
+        //ImGui.MenuItem("Duplicate", "Ctrl + D");
+        if (ImGui.MenuItem("Delete", "X"))
+            Core.Window.editor.DeleteMesh(hoveredMesh);
 
-        ImGui.NewLine();
-
-        ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
-
-        ImGui.End();
+        ImGui.EndPopup();
     }
 }

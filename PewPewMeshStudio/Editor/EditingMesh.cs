@@ -7,12 +7,16 @@ namespace PewPewMeshStudio.Editor;
 
 public class EditingMesh // i will change the name
 {
+    // things
+    public Vector2 mouseDelta;
+
+    // scene
     //public Vector3 objectPosition = new Vector3();
     public List<Mesh> meshes { get; private set; } = new List<Mesh>();
     public int selectedMesh; // idk
 
-    private List<VertexShower> viewVertices = new List<VertexShower>();
-    private List<VertexShower> selectedVertices = new List<VertexShower>();
+    //private List<VertexShower> viewVertices = new List<VertexShower>();
+    //private List<VertexShower> selectedVertices = new List<VertexShower>();
 
     public static Action OnMeshDestroy;
     public static Action OnMeshUpdate;
@@ -64,5 +68,11 @@ public class EditingMesh // i will change the name
         selectedMesh = 0; // for now
         SetMeshUpdate();
         //vertexShower = new VertexShower(mesh.vertices);
+    }
+
+    public void DeleteMesh(int index)
+    {
+        meshes[index].DestroyMesh();
+        meshes.RemoveAt(index);
     }
 }

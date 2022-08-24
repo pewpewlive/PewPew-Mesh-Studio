@@ -52,7 +52,7 @@ public class Mesh
         if (hidden == false)
             mesh.Render(/*windowSize, meshCam*/);
     }
-    
+
     private void UpdateMeshPosition(Vector3 newPos)
     {
         for (int i = 0; i < vertices.Count; i++)
@@ -89,5 +89,10 @@ public class Mesh
     public void SetUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate += UpdateMeshPosition;
     public void RemoveUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate -= UpdateMeshPosition;
 
-    public void DestroyMesh() => mesh.Destroy();
+    public void DestroyMesh()
+    {
+        EditingMesh.OnMeshDestroy -= DestroyMesh;
+        EditingMesh.OnMeshUpdate -= UpdateMesh;
+        mesh.Destroy();
+    }
 }

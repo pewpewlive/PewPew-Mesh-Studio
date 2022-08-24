@@ -128,5 +128,7 @@ public class Window : GameWindow
             MeshCamera.RotateBy(Event.Delta * 0.25f); 
             MeshCamera.Update();
         }
+
+        editor.mouseDelta = Event.Delta;
     }
 }
