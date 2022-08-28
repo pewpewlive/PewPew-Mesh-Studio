@@ -26,14 +26,6 @@ public class Window : GameWindow
 
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
 
-    //public Renderable Mesh { set; get; }
-    private Thread meshThread;
-    
-    // Try to find a better solution for importing meshes from LuaAPI
-    public static bool isMeshChangeRequest { set; private get; } = false;
-    public static string requestedMeshPath { set; private get; }
-    public static int requestedMeshIndex { set; private get; }
-
     public static Camera MeshCamera = new Camera();
     public static Vector2 windowSize = new Vector2i();
     public static Editor.EditingMesh editor { get; private set; } = new Editor.EditingMesh();
@@ -51,23 +43,8 @@ public class Window : GameWindow
     {
         VSync = VSyncMode.On;
         UIController = new ImGuiController(WINDOW_WIDTH, WINDOW_HEIGHT, FontPtr.AddrOfPinnedObject());
-        Icon = new WindowIcon(new OpenTK.Windowing.Common.Input.Image(64, 64, Properties.Resources.Logo));
-        //WindowState = WindowState.Maximized;
-
-        Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
-
-
-        //Mesh = MeshParser.ParseMeshFile("s.lua", 1);
-        meshThread = new Thread(new ThreadStart(RunMesh));
-        meshThread.Name = "MeshThread";
-
-        //meshThread.Start
     }
-    private void RunMesh()
-    {
-        Mesh = MeshParser.ParseMeshFile("s.lua", 1);
-    }
-    
+
     protected override void OnUnload()
     {
         base.OnUnload();
@@ -99,17 +76,6 @@ public class Window : GameWindow
         GL.ClearColor(new Color4(0, 0, 0, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
         editor.FrameUpdate();
-
-        //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
-        //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
-
-        /*if (isMeshChangeRequest)
-        {
-            Mesh = MeshParser.ParseMeshFile(requestedMeshPath, requestedMeshIndex);
-            isMeshChangeRequest = false;
-        }*/
-
-        //Mesh.Render((Vector2)ClientSize, MeshCamera);
 
         track.Track();
 

@@ -156,8 +156,8 @@ public class MeshParser
                     if (Position.Count != 3)
                         throw new ParserExceptions.InvalidVertexCoordCount("internal", MeshIndex);
 
-                    Vector4 Color = ColorsDict.Count == 0 ? ColorUtil.Vec4ByteToFloat(ColorUtil.LongToVector4(0xffffffff)) :
-                                                            ColorUtil.Vec4ByteToFloat(ColorUtil.LongToVector4(Convert.ToInt64(ColorsDict[VertexItem.Key])));
+                    Vector4 Color = ColorsDict.Count == 0 ? ColorUtil.Vec4ByteToFloat(LongToVector4(0xffffffff)) :
+                                                            ColorUtil.Vec4ByteToFloat(LongToVector4(Convert.ToInt64(ColorsDict[VertexItem.Key])));
 
                     VertexData.Add(new MeshVertex(new OpenTK.Mathematics.Vector3(Position[0], Position[1], Position[2]),
                                                   new OpenTK.Mathematics.Vector4(Color.X, Color.Y, Color.Z, Color.W)));
