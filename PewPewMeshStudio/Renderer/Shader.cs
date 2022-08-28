@@ -1,7 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using Serilog;
-using System.Threading;
 
 namespace PewPewMeshStudio.Renderer;
 
@@ -24,14 +22,16 @@ public class Shader
         GL.GetShader(VertexShader, ShaderParameter.CompileStatus, out int VertexShaderStatus);
         if (VertexShaderStatus == 0)
         {
-            Log.Warning("(Shader @ Shader) <{thread}> Vertex Shader {@info}", Thread.CurrentThread.Name, GL.GetShaderInfoLog(VertexShader));
+            Console.WriteLine(string.Format("Vertex Shader {0}", GL.GetShaderInfoLog(VertexShader)));
+            Console.Read();
         }
 
         GL.CompileShader(FragmentShader);
         GL.GetShader(FragmentShader, ShaderParameter.CompileStatus, out int FragmentShaderStatus);
         if (FragmentShaderStatus == 0)
         {
-            Log.Warning("(Shader @ Shader) <{thread}> Fragment Shader {@info}", Thread.CurrentThread.Name, GL.GetShaderInfoLog(FragmentShader));
+            Console.WriteLine(string.Format("Fragment Shader {0}", GL.GetShaderInfoLog(FragmentShader)));
+            Console.Read();
         }
 
         ShaderHandle = GL.CreateProgram();
@@ -43,7 +43,8 @@ public class Shader
         GL.GetProgram(ShaderHandle, GetProgramParameterName.LinkStatus, out int ShaderHandleStatus);
         if (ShaderHandleStatus == 0)
         {
-            Log.Error("(Shader @ Shader) <{thread}> Shader Linking error: {@error}", Thread.CurrentThread.Name, GL.GetProgramInfoLog(ShaderHandle));
+            Console.WriteLine(string.Format("Shader Linking error: {0}", GL.GetProgramInfoLog(ShaderHandle)));
+            Console.Read();
         }
 
         GL.DetachShader(ShaderHandle, VertexShader);
