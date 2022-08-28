@@ -10,18 +10,12 @@ using PewPewMeshStudio.Renderer;
 using PewPewMeshStudio.UI;
 using PewPewMeshStudio.ExtraUtils;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using Serilog;
-using static OpenTK.Graphics.OpenGL.GL;
-using OpenTK.Compute.OpenCL;
-using PewPewMeshStudio.LuaAPI;
-using System.Threading;
-using System.IO;
 
 namespace PewPewMeshStudio.Core;
 
 public class Window : GameWindow
-{
+{   
     private const int WINDOW_WIDTH = 800;
     private const int WINDOW_HEIGHT = 600;
 
@@ -32,7 +26,7 @@ public class Window : GameWindow
 
     GCHandle FontPtr = GCHandle.Alloc(Properties.Resources.Font, GCHandleType.Pinned);
 
-    public Renderable Mesh { set; get; }
+    //public Renderable Mesh { set; get; }
     private Thread meshThread;
     
     // Try to find a better solution for importing meshes from LuaAPI
@@ -46,6 +40,7 @@ public class Window : GameWindow
 
     InputSystem track = new InputSystem();
     private bool MouseHeld = false;
+
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
         Size = new Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),
@@ -72,22 +67,19 @@ public class Window : GameWindow
     {
         Mesh = MeshParser.ParseMeshFile("s.lua", 1);
     }
+    
     protected override void OnUnload()
     {
         base.OnUnload();
         editor.FrameUnload();
         FontPtr.Free();
-        Log.Information("(Window @ OnUnload) <{thread}> Closed GUI, closing application...", Thread.CurrentThread.Name);
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
-        
-        Log.Information("(Window @ OnLoad) <{thread}> GUI loaded successfully.", Thread.CurrentThread.Name);
-        Interpreter.Run("plugins\\test.lua");
-        //UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
         editor.FrameLoad();
+        Log.Information("(Window) GUI loaded successfully.");
     }
 
     protected override void OnResize(ResizeEventArgs Event)
@@ -122,10 +114,6 @@ public class Window : GameWindow
         track.Track();
 
         uiHandler.InitUI();
-
-        if (!ImGui.IsAnyItemHovered())
-            CursorSetter.ResetCursor();
-
         UIController.Render();
 
         ImGuiController.CheckGLError("End of frame");
@@ -137,20 +125,6 @@ public class Window : GameWindow
     {
         base.OnTextInput(Event);
         UIController.PressChar((char)Event.Unicode);
-    }
-
-    protected override void OnKeyDown(KeyboardKeyEventArgs Event)
-    {
-        base.OnKeyDown(Event);
-        if (Event.Key == Keys.F11 && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized))
-        {
-            WindowState = WindowState.Fullscreen;
-            VSync = VSyncMode.On;
-        }
-        else if (Event.Key == Keys.F11 && WindowState == WindowState.Fullscreen)
-        {
-            WindowState = WindowState.Normal;
-        }
     }
 
     protected override void OnMouseWheel(MouseWheelEventArgs Event)
@@ -180,7 +154,7 @@ public class Window : GameWindow
         base.OnMouseMove(Event);
         if (MouseHeld && ImGui.GetIO().KeysDown[(char)Keys.LeftShift]) 
         {
-            MeshCamera.PanBy(Event.Delta * 0.75f);
+            MeshCamera.PanBy(Event.Delta * 0.75f); 
             MeshCamera.Update();
         }
         else if (MouseHeld)
@@ -191,23 +165,4 @@ public class Window : GameWindow
 
         editor.mouseDelta = Event.Delta;
     }
-
-    protected override void OnClosing(CancelEventArgs Event)
-    {
-        base.OnClosing(Event);
-        if (!UI.Modals.UnsavedChangesModal.dontShowThisAgain)
-        {
-            Event.Cancel = true;
-            UIHandler.openModals = UIHandler.OpenModals.UnsavedChanges;
-        }
-    }
-
-    protected override void OnFileDrop(FileDropEventArgs Event)
-    {
-        base.OnFileDrop(Event);
-
-        Mesh = MeshParser.ParseMeshFile(Event.FileNames[0], 1);
-        Log.Verbose("(Window @ OnFileDrop) <{Thread}> Drag & Dropped following files (1st file tried to import):\n{@file_names}", Thread.CurrentThread.Name, Event.FileNames);
-    }
-
 }

@@ -20,9 +20,7 @@ public class UIHandler
         Error,
         FileDialog,
         Preferences,
-        UnsavedChanges,
-        SplashScreen,
-        Custom
+        UnsavedChanges
     }
     public static OpenModals openModals = OpenModals.None;
 
@@ -31,8 +29,6 @@ public class UIHandler
     FileDialogModal fileDialogModal = new FileDialogModal();
     PreferencesModal preferencesModal = new PreferencesModal();
     UnsavedChangesModal unsavedChangesModal = new UnsavedChangesModal();
-    SplashScreen splashScreenModal = new SplashScreen();
-    CustomizableModal customizableModal = new CustomizableModal();
 
     // Popups
     ContextMenu contextMenu = new ContextMenu();
@@ -72,30 +68,11 @@ public class UIHandler
 
         globalMenu.Initialize();
 
-        switch (openModals)
-        {
-            case OpenModals.About:
-                aboutModal.Initialize();
-                break;
-            case OpenModals.Error:
-                errorModal.Initialize();
-                break;
-            case OpenModals.FileDialog:
-                fileDialogModal.Initialize(globalMenu.fileDialogType);
-                break;
-            case OpenModals.Preferences:
-                preferencesModal.Initialize();
-                break;
-            case OpenModals.UnsavedChanges:
-                unsavedChangesModal.Initialize();
-                break;
-            case OpenModals.SplashScreen:
-                splashScreenModal.Initialize();
-                break;
-            case OpenModals.Custom:
-                customizableModal.Initialize();
-                break;
-        }
+        if (openModals == OpenModals.About) aboutModal.Initialize();
+        else if (openModals == OpenModals.Error) errorModal.Initialize();
+        else if (openModals == OpenModals.FileDialog)  fileDialogModal.Initialize(globalMenu.fileDialogType);
+        else if (openModals == OpenModals.Preferences) preferencesModal.Initialize();
+        else if (openModals == OpenModals.UnsavedChanges) unsavedChangesModal.Initialize(); 
 
         contextMenu.Initialize();
 

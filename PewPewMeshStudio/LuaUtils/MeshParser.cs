@@ -1,27 +1,23 @@
 ﻿using NLua;
-using PewPewMeshStudio.ExtraUtils;
-using PewPewMeshStudio.Renderer;
-using PewPewMeshStudio.UI;
-using Serilog;
 using System.Numerics;
+using PewPewMeshStudio.Renderer;
+using PewPewMeshStudio.ExtraUtils;
+using Serilog;
 
 namespace PewPewMeshStudio.LuaUtils;
 
-public static class MeshParser
+public class MeshParser
 {
-    /// <summary>
-    /// Parses a Lua mesh file and converts Lua tables to a Renderable class.
-    /// </summary>
-    /// <param name="FilePath">A string containing a path.</param>
-    /// <param name="MeshIndex">A meshes table index.</param>
-    /// <returns>Renderable class for rendering the mesh.</returns>
-    /// <exception cref="ParserExceptions.NoVertexTable"></exception>
-    /// <exception cref="ParserExceptions.InvalidColorCount"></exception>
-    /// <exception cref="ParserExceptions.InvalidVertexCoordCount"></exception>
-    /// <exception cref="ParserExceptions.NoSegmentTable"></exception>
-    /// <exception cref="ParserExceptions.InvalidVertexIndexInSegment"></exception>
-    /// <exception cref="ParserExceptions.InvalidSegmentIndexCount"></exception>
-    /// <exception cref="ParserExceptions.InvalidMeshIndex"></exception>
+    public static Vector4 LongToVector4(long Color)
+    {
+        return new Vector4(
+            (Color >> 24) & 255,
+            (Color >> 16) & 255,
+            (Color >> 8) & 255,
+             Color & 255
+        );
+    }
+
     public static Renderable ParseMeshFile(string FilePath, int MeshIndex)
     {
         try
@@ -66,8 +62,8 @@ public static class MeshParser
                     if (Position.Count != 3)
                         throw new ParserExceptions.InvalidVertexCoordCount(FilePath, MeshIndex);
 
-                    Vector4 Color = ColorsDict.Count == 0 ? ColorUtil.Vec4ByteToFloat(ColorUtil.LongToVector4(0xffffffff)) :
-                                                            ColorUtil.Vec4ByteToFloat(ColorUtil.LongToVector4(Convert.ToInt64(ColorsDict[VertexItem.Key])));
+                    Vector4 Color = ColorsDict.Count == 0 ? ColorUtil.Vec4ByteToFloat(LongToVector4(0xffffffff)) : 
+                                                            ColorUtil.Vec4ByteToFloat(LongToVector4(Convert.ToInt64(ColorsDict[VertexItem.Key])));
 
                     VertexData.Add(new MeshVertex(new OpenTK.Mathematics.Vector3(Position[0], Position[1], Position[2]),
                                                   new OpenTK.Mathematics.Vector4(Color.X, Color.Y, Color.Z, Color.W)));
@@ -89,11 +85,11 @@ public static class MeshParser
                         int Index = Convert.ToInt32(VertexIndex.Value);
                         if (Index < VertexesDict.Count && Index >= 0)
                             Segment.Add(Convert.ToUInt32(Index));
-                        else
+                        else 
                             throw new ParserExceptions.InvalidVertexIndexInSegment(FilePath, Index, MeshIndex, VertexesDict.Count);
                     }
 
-                    if (Segment.Count < 2)
+                    if (Segment.Count < 2) 
                         throw new ParserExceptions.InvalidSegmentIndexCount(FilePath, MeshIndex);
 
                     Segments.Add(Segment.ToArray());
@@ -108,15 +104,11 @@ public static class MeshParser
             lua.Dispose();
             lua.Close();
 
-            Log.Information("(MeshParser @ ParseMeshFile) <{thread}> Mesh parsed successfully.", Thread.CurrentThread.Name);
-
             return new Renderable(VertexData.ToArray(), Segments.ToArray());
         }
         catch (Exception Ex)
         {
-            Log.Error(Ex, "(MeshParser @ ParseMeshFile) <{thread}> Failed to parse mesh file! Returning empty mesh object.", Thread.CurrentThread.Name);
-            UI.Modals.ErrorModal.errorMessage = Ex.Message;
-            UIHandler.openModals = UIHandler.OpenModals.Error;
+            Log.Error(Ex, "(MeshParser) Failed to parse mesh file! Returning empty mesh object.");
             return new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
         }
     }
