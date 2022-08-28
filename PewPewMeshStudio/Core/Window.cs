@@ -40,7 +40,6 @@ public class Window : GameWindow
     public static string requestedMeshPath { set; private get; }
     public static int requestedMeshIndex { set; private get; }
 
-    Camera MeshCamera = new Camera();
     public static Camera MeshCamera = new Camera();
     public static Vector2 windowSize = new Vector2i();
     public static Editor.EditingMesh editor { get; private set; } = new Editor.EditingMesh();
@@ -61,13 +60,13 @@ public class Window : GameWindow
         //WindowState = WindowState.Maximized;
 
         Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
-    }
+
 
         //Mesh = MeshParser.ParseMeshFile("s.lua", 1);
         meshThread = new Thread(new ThreadStart(RunMesh));
         meshThread.Name = "MeshThread";
 
-        //meshThread.Start();
+        //meshThread.Start
     }
     private void RunMesh()
     {
@@ -118,7 +117,7 @@ public class Window : GameWindow
             isMeshChangeRequest = false;
         }*/
 
-        Mesh.Render((Vector2)ClientSize, MeshCamera);
+        //Mesh.Render((Vector2)ClientSize, MeshCamera);
 
         track.Track();
 
