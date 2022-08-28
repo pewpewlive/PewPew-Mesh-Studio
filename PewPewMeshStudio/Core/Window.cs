@@ -41,6 +41,10 @@ public class Window : GameWindow
     public static int requestedMeshIndex { set; private get; }
 
     Camera MeshCamera = new Camera();
+    public static Camera MeshCamera = new Camera();
+    public static Vector2 windowSize = new Vector2i();
+    public static Editor.EditingMesh editor { get; private set; } = new Editor.EditingMesh();
+
     InputSystem track = new InputSystem();
     private bool MouseHeld = false;
     public Window() : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -57,6 +61,7 @@ public class Window : GameWindow
         //WindowState = WindowState.Maximized;
 
         Mesh = new Renderable(Array.Empty<MeshVertex>(), Array.Empty<uint[]>());
+    }
 
         //Mesh = MeshParser.ParseMeshFile("s.lua", 1);
         meshThread = new Thread(new ThreadStart(RunMesh));
@@ -71,7 +76,7 @@ public class Window : GameWindow
     protected override void OnUnload()
     {
         base.OnUnload();
-        Mesh.Destroy();
+        editor.FrameUnload();
         FontPtr.Free();
         Log.Information("(Window @ OnUnload) <{thread}> Closed GUI, closing application...", Thread.CurrentThread.Name);
     }
@@ -83,11 +88,13 @@ public class Window : GameWindow
         Log.Information("(Window @ OnLoad) <{thread}> GUI loaded successfully.", Thread.CurrentThread.Name);
         Interpreter.Run("plugins\\test.lua");
         //UIHandler.openModals = UIHandler.OpenModals.SplashScreen;
+        editor.FrameLoad();
     }
 
     protected override void OnResize(ResizeEventArgs Event)
     {
         base.OnResize(Event);
+        windowSize = (Vector2)ClientSize;
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         UIController.WindowResized(ClientSize.X, ClientSize.Y);
     }
@@ -100,17 +107,19 @@ public class Window : GameWindow
 
         GL.ClearColor(new Color4(0, 0, 0, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        editor.FrameUpdate();
 
         //RangeAccessor<System.Numerics.Vector4> colors = style.Colors;
         //colors[0] = ColorUtil.Vec4IntToFloat(new System.Numerics.Vector4(255, 0, 255, 255));
 
-        if (isMeshChangeRequest)
+        /*if (isMeshChangeRequest)
         {
             Mesh = MeshParser.ParseMeshFile(requestedMeshPath, requestedMeshIndex);
             isMeshChangeRequest = false;
-        }
+        }*/
 
         Mesh.Render((Vector2)ClientSize, MeshCamera);
+
         track.Track();
 
         uiHandler.InitUI();
@@ -180,6 +189,8 @@ public class Window : GameWindow
             MeshCamera.RotateBy(Event.Delta * 0.25f); 
             MeshCamera.Update();
         }
+
+        editor.mouseDelta = Event.Delta;
     }
 
     protected override void OnClosing(CancelEventArgs Event)
