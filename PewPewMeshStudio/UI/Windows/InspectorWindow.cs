@@ -31,6 +31,8 @@ public class InspectorWindow
         ImGui.Text(I18n.c.GetString("Object: {0}", "mesh.lua"));
         if (ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos, 0.5f))
             OnObjectPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(objectPos.X, objectPos.Y, objectPos.Z));
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         InitMeshListChild();
         
@@ -43,10 +45,14 @@ public class InspectorWindow
 
         ImGui.Text(I18n.c.GetString("Vertex"));
         ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos);
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         ImGui.NewLine();
 
         ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.HResize);
 
         ImGui.End();
     }

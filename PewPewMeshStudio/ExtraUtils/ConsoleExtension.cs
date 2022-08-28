@@ -2,7 +2,7 @@
 
 namespace PewPewMeshStudio.ExtraUtils;
 
-static class ConsoleExtension
+public static class ConsoleExtension
 {
     const int SW_HIDE = 0;
     const int SW_SHOW = 5;

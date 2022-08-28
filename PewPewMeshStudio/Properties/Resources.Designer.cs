@@ -22,7 +22,7 @@ namespace PewPewMeshStudio.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace PewPewMeshStudio.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PewPewMeshStudio.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace PewPewMeshStudio.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace PewPewMeshStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Font {
+        public static byte[] Font {
             get {
                 object obj = ResourceManager.GetObject("Font", resourceCulture);
                 return ((byte[])(obj));
@@ -73,37 +73,50 @@ namespace PewPewMeshStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to #version 410 core
         ///
-        ///out vec4 FragColor;
         ///in vec4 VertexColor;
+        ///
+        ///out vec4 FragColor;
         ///
         ///void main()
         ///{
         ///    FragColor = VertexColor;
         ///}.
         /// </summary>
-        internal static string FragShader {
+        public static string FragShader {
             get {
                 return ResourceManager.GetString("FragShader", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to #version 410 core
         ///
-        ///layout (location = 0) in vec3 lPos;
-        ///layout (location = 1) in vec4 lCol; 
+        ///layout (location = 0) in vec3 lCurrPos;
+        ///layout (location = 1) in vec4 lVertCol; 
         ///  
         ///out vec4 VertexColor;
         ///
         ///uniform mat4 uMVP;
+        ///uniform vec2 uScreenSize;
         ///
         ///void main()
         ///{
-        ///    gl_Position = vec4(lPos, 1.0) * uMVP;
-        ///    VertexColor = lCol;
+        ///    vec4 CurrPosProj = vec4(lCurrPos, 1.0) * uMVP;
+        ///    gl_Position = CurrPosProj;
+        ///    VertexColor = lVertCol;
         ///}.
         /// </summary>
-        internal static string VertShader {
+        public static string VertShader {
             get {
                 return ResourceManager.GetString("VertShader", resourceCulture);
             }

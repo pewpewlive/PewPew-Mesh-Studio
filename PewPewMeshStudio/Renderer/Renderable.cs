@@ -7,7 +7,7 @@ public class Renderable
     private int VertexArray;
     private List<Tuple<int, int>> ElementBuffers = new List<Tuple<int, int>>();
 
-    private Shader RenderableShader = new Shader();
+    private Shader RenderableShader = new Shader(); // FIXME: prints gl shader errors
 
     private MeshVertex[] VertexData;
 
@@ -58,7 +58,7 @@ public class Renderable
         foreach (Tuple<int, int> ElementBuffer in ElementBuffers)
         {
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ElementBuffer.Item1);
-            GL.DrawElements(PrimitiveType.LineStrip, ElementBuffer.Item2, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(PrimitiveType.LineStrip, ElementBuffer.Item2, DrawElementsType.UnsignedInt, 0); // FIXME: offending line of code
         }
         GL.Disable(EnableCap.Blend);
         GL.Enable(EnableCap.DepthTest);
