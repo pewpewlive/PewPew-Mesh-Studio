@@ -1,10 +1,9 @@
 ﻿using System.Diagnostics;
-using PewPewMeshStudio.UI;
 using Serilog;
 
 namespace PewPewMeshStudio.ExtraUtils;
 
-public static class UrlUtils
+public class UrlUtils
 {
     public static void OpenUrl(string url)
     {
@@ -18,9 +17,7 @@ public static class UrlUtils
         }
         catch (Exception e)
         {
-            Log.Error(e, "(UrlUtils @ OpenUrl) <{thread}> Error encountered", Thread.CurrentThread.Name);
-            UI.Modals.ErrorModal.errorMessage = e.Message;
-            UIHandler.openModals = UIHandler.OpenModals.Error;
+            Log.Error("(UrlUtils) {0}", e.Message);
         }
     }
 }

@@ -87,33 +87,21 @@ public class FileDialogModal
             UIHandler.openModals = UIHandler.OpenModals.None;
             return;
         }
-        if (ImGui.IsItemHovered())
-            CursorSetter.ResetCursor();
 
         UpdateContextButtons();
 
         ImGui.SameLine();
         ImGui.Button(I18n.c.GetString("New Folder"));
-        if (ImGui.IsItemHovered())
-            CursorSetter.ResetCursor();
 
         ImGui.SameLine();
 
         ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 300f);
 
         if (FDType == (FileDialogType.NewProject & FileDialogType.SaveProjectAs & FileDialogType.ExportMesh))
-        {
             ImGui.InputTextWithHint(".ppmp", I18n.c.GetString("File name"), ref fileName, 100);
-            if (ImGui.IsItemHovered())
-                CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.IBeam);
-        }
 
         else if (FDType == (FileDialogType.OpenProject & FileDialogType.ImportMesh))
-        {
             ImGui.InputTextWithHint(".ppmp", I18n.c.GetString("File name"), ref fileName, 100, ImGuiInputTextFlags.ReadOnly);
-            if (ImGui.IsItemHovered())
-                CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.IBeam);
-        }
 
         ImGui.EndPopup();
     }
@@ -124,9 +112,6 @@ public class FileDialogModal
         ImGui.SetNextItemWidth(ImGui.GetWindowWidth() - 185f);
 
         bool dirChanged = ImGui.InputTextWithHint("", I18n.c.GetString("Enter path here"), ref inputDir, 1000, ImGuiInputTextFlags.EnterReturnsTrue);
-
-        if (ImGui.IsItemHovered())
-            CursorSetter.SetCursor(OpenTK.Windowing.GraphicsLibraryFramework.CursorShape.IBeam);
 
         if (refreshDirectory)
             inputDir = pwd;
@@ -191,12 +176,11 @@ public class FileDialogModal
 
                 //Console.WriteLine(pwd);
             }
-            if (ImGui.IsItemHovered())
-                CursorSetter.ResetCursor();
         }
 
         if (Files.Length != 0)
             ImGui.Separator();
+
         foreach (string file in Files)
         {
             //Path.GetExtension(file)
@@ -205,8 +189,6 @@ public class FileDialogModal
                 loadFileName = Path.GetFileName(file);
                 fileName = Path.GetFileNameWithoutExtension(file);
             }
-            if (ImGui.IsItemHovered())
-                CursorSetter.ResetCursor();
         }
     }
 
@@ -229,8 +211,6 @@ public class FileDialogModal
                 inDrivesList = false;
                 refreshDirectory = true;
             }
-            if (ImGui.IsItemHovered())
-                CursorSetter.ResetCursor();
         }
     }
 
@@ -246,6 +226,7 @@ public class FileDialogModal
                 if (ImGui.Button(I18n.c.GetString("Create")))
                 {
                 }
+
                 ImGui.EndDisabled();
                 return;
             case FileDialogType.OpenProject: // OpenProject
@@ -259,6 +240,7 @@ public class FileDialogModal
                 if (ImGui.Button(I18n.c.GetString("Save")))
                 {
                 }
+
                 ImGui.EndDisabled();
                 return;
             case FileDialogType.ImportMesh: // ImportMesh
@@ -274,6 +256,7 @@ public class FileDialogModal
                 if (ImGui.Button(I18n.c.GetString("Export")))
                 {
                 }
+
                 ImGui.EndDisabled();
                 return;
 
