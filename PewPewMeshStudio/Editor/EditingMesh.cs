@@ -41,24 +41,43 @@ public class EditingMesh // i will change the name
         OnMeshDestroy?.Invoke();
     }
 
-    public void SetMeshUpdate()
-    {
-        foreach (Mesh mesh in meshes)
-            mesh.RemoveUpdate();
-
-        meshes[selectedMesh].SetUpdate();
-    }
-
     public void SetEditingMesh(int i) 
     {
         selectedMesh = i;
 
         foreach (Mesh mesh in meshes)
             mesh.selected = false;
-        meshes[i].selected = true;
+        meshes[selectedMesh].selected = true;
 
         SetMeshUpdate();
+        OnMeshSelect();
     }
+    private void SetMeshUpdate()
+    {
+        foreach (Mesh mesh in meshes)
+        {
+            mesh.RemoveVertexUpdates();
+            mesh.RemoveMeshPosUpdate();
+        }
+
+        meshes[selectedMesh].SetVertexUpdates();
+        meshes[selectedMesh].SetMeshPosUpdate();
+    }
+    private void OnMeshSelect()
+    {
+        Random rand = new Random();
+
+        meshes[selectedMesh].selectedVertsI.Clear();
+        //meshes[selectedMesh].selectedVerts.Clear();
+        for (int i = 0; i < 3; i++)
+        {
+            int rngIndex = rand.Next(0, meshes[selectedMesh].vertices.Count);
+
+            meshes[selectedMesh].selectedVertsI.Add(rngIndex);
+            //meshes[selectedMesh].selectedVerts.Add(meshes[selectedMesh].vertices[rngIndex]);
+        }
+    }
+
     public void SetMeshState(bool state, int i) => meshes[i].hidden = state;
 
     public void LoadMesh(string loadMeshPath)

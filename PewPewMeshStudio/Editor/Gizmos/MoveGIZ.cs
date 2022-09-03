@@ -1,9 +1,9 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace PewPewMeshStudio.Editor.Tools;
+namespace PewPewMeshStudio.Editor.Gizmos;
 
-public class MoveGIZ
+public class MoveGIZ : Gizmos
 {
     public bool enabled;
 
@@ -14,5 +14,9 @@ public class MoveGIZ
         //Vector3 move;
 
         return new Vector3();
+    }
+    public override void ToolAction()
+    {
+        throw new NotImplementedException();
     }
 }

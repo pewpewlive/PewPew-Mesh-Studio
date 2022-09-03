@@ -11,22 +11,34 @@ public class InspectorWindow
     Vector3 objectPos = new Vector3();
     Vector3 meshPos = new Vector3();
 
-    Vector3 vertexPos = new Vector3(2, 15, 63);
+    Vector3 vertexPos = new Vector3();
     Vector4 vertexCol = ColorUtil.Vec4ByteToFloat(new Vector4(2, 15, 63, 255));
 
     int meshIndex = 0;
     int vertexesIndex = 0;
 
     public static Action<OpenTK.Mathematics.Vector3> OnObjectPositionUpdate;
-    public static Action<OpenTK.Mathematics.Vector3> OnMeshPositionUpdate;
-    //public static Action<OpenTK.Mathematics.Vector3> OnVertexPositionUpdate;
 
-    bool openPopup = false; //cringe
+    public static Action<OpenTK.Mathematics.Vector3> OnMeshPositionUpdate;
+
+    public static Action<OpenTK.Mathematics.Vector3> OnVertexPositionUpdate;
+    public static Action<OpenTK.Mathematics.Vector4> OnVertexColorUpdate;
+
+    bool openContextMenu = false; //cringe
     int hoveredMesh = 0;
 
     public void Initialize()
     {
         ImGui.Begin(I18n.c.GetString("Inspector"));
+
+        InitChildMeshList();
+
+        if (openContextMenu)
+        {
+            openContextMenu = false;
+            ImGui.OpenPopup("MeshCxtPopup");
+        }
+        MeshContextMenuPopup();
 
         ImGui.Text(I18n.c.GetString("Object: {0}", "mesh.lua"));
         if (ImGui.DragFloat3(I18n.c.GetString("Object Position"), ref objectPos, 0.5f))
@@ -34,30 +46,28 @@ public class InspectorWindow
         if (ImGui.IsItemHovered())
             CursorSetter.SetCursor(CursorShape.HResize);
 
-        InitMeshListChild();
-        
-        if (openPopup)
-        {
-            openPopup = false;
-            ImGui.OpenPopup("MeshCxtPopup");
-        }
-        MeshContextMenuPopup();
-
-        ImGui.Text(I18n.c.GetString("Vertex"));
-        ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos);
+        if (ImGui.DragFloat3(I18n.c.GetString("Mesh Position"), ref meshPos))
+            OnMeshPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(meshPos.X, meshPos.Y, meshPos.Z));
         if (ImGui.IsItemHovered())
             CursorSetter.SetCursor(CursorShape.HResize);
 
-        ImGui.NewLine();
+        ImGui.Separator();
 
-        ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview);
+        ImGui.Text(I18n.c.GetString("Vertex"));
+        if (ImGui.DragFloat3(I18n.c.GetString("Position"), ref vertexPos, 0.5f))
+            OnVertexPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(vertexPos.X, vertexPos.Y, vertexPos.Z));
+        if (ImGui.IsItemHovered())
+            CursorSetter.SetCursor(CursorShape.HResize);
+
+        if (ImGui.ColorEdit4(I18n.c.GetString("Color"), ref vertexCol, ImGuiColorEditFlags.AlphaPreview))
+            OnVertexColorUpdate?.Invoke(new OpenTK.Mathematics.Vector4(vertexCol.X, vertexCol.Y, vertexCol.Z, vertexCol.W));
         if (ImGui.IsItemHovered())
             CursorSetter.SetCursor(CursorShape.HResize);
 
         ImGui.End();
     }
 
-    private void InitMeshListChild()
+    private void InitChildMeshList()
     {
         ImGui.Text(I18n.c.GetString("Meshes"));
         ImGui.BeginChild("meshList", new Vector2(0f, 125f), true, ImGuiWindowFlags.HorizontalScrollbar);
@@ -71,10 +81,13 @@ public class InspectorWindow
                 Core.Window.editor.SetEditingMesh(i);
                 OpenTK.Mathematics.Vector3 newMeshPos = Core.Window.editor.meshes[i].position;
                 meshPos = new Vector3(newMeshPos.X, newMeshPos.Y, newMeshPos.Z);
+
+                OpenTK.Mathematics.Vector3 newVerticesCenterPos = Core.Window.editor.meshes[i].GetVerticesCenterPosition();
+                vertexPos = new Vector3(newVerticesCenterPos.X, newVerticesCenterPos.Y, newVerticesCenterPos.Z);
             }
             if (ImGui.IsItemHovered() && InputSystem.KeyPressed(Keys.Q))
             {
-                openPopup = true;
+                openContextMenu = true;
                 hoveredMesh = i;
             }
 
@@ -84,11 +97,6 @@ public class InspectorWindow
         }
         ImGui.EndChild();
         ImGui.Separator();
-
-        if (ImGui.DragFloat3(I18n.c.GetString("Mesh Position"), ref meshPos))
-            OnMeshPositionUpdate?.Invoke(new OpenTK.Mathematics.Vector3(meshPos.X, meshPos.Y, meshPos.Z));
-        if (ImGui.IsItemHovered())
-            CursorSetter.SetCursor(CursorShape.HResize);
     }
 
     private void MeshContextMenuPopup()

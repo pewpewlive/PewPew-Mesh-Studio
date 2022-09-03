@@ -8,9 +8,10 @@ public class Mesh
 {
     private Renderable mesh;
     public List<MeshVertex> vertices = new List<MeshVertex>();
-    public List<int> selectedVerts = new List<int>();
-    //private List<MeshVertex> vertsWorldPos = new List<MeshVertex>();
 
+    public List<int> selectedVertsI = new List<int>();
+    //public List<MeshVertex> selectedVerts = new List<MeshVertex>();
+    
     public bool selected = false;
     public bool hidden = false;
     public Vector3 position;
@@ -47,6 +48,7 @@ public class Mesh
         this.position = position;
     }
 
+
     private void UpdateMesh()
     {
         if (hidden == false)
@@ -70,12 +72,14 @@ public class Mesh
         mesh.SetVertexesData(vertices.ToArray());
     }
 
-    public void ShiftVertexPosition(Vector3 newPos)
+    public void UpdateVertexPosition(Vector3 newPos)
     {
-        foreach (int selected in selectedVerts)
+        Vector3 center = GetVerticesCenterPosition();
+
+        foreach (int selected in selectedVertsI)
         {
             MeshVertex vert = vertices[selected];
-            vert.Position -= position;
+            vert.Position -= center;
             vertices[selected] = vert;
 
             vert = vertices[selected];
@@ -85,12 +89,50 @@ public class Mesh
 
         mesh.SetVertexesData(vertices.ToArray());
     }
+    public Vector3 GetVerticesCenterPosition()
+    {
+        List<Vector3> vertPositions = new List<Vector3>();
 
-    public void SetUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate += UpdateMeshPosition;
-    public void RemoveUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate -= UpdateMeshPosition;
+        foreach (int selectedVert in selectedVertsI)
+            vertPositions.Add(vertices[selectedVert].Position);
+
+        return ExtraUtils.VectorUtils.CenterOfVectors(vertPositions);
+    }
+
+    public void UpdateVertexColor(Vector4 newColor)
+    {
+        foreach (int selected in selectedVertsI)
+        {
+            MeshVertex vert = vertices[selected];
+            vert.Color = newColor;
+            vertices[selected] = vert;
+
+            vert = vertices[selected];
+            vert.Color += newColor;
+            vertices[selected] = vert;
+        }
+
+        mesh.SetVertexesData(vertices.ToArray());
+    }
+
+    public void SetMeshPosUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate += UpdateMeshPosition;
+    public void RemoveMeshPosUpdate() => UI.Windows.InspectorWindow.OnMeshPositionUpdate -= UpdateMeshPosition;
+
+    public void SetVertexUpdates()
+    {
+        UI.Windows.InspectorWindow.OnVertexPositionUpdate += UpdateVertexPosition;
+        UI.Windows.InspectorWindow.OnVertexColorUpdate += UpdateVertexColor;
+    }
+    public void RemoveVertexUpdates()
+    {
+        UI.Windows.InspectorWindow.OnVertexPositionUpdate -= UpdateVertexPosition;
+        UI.Windows.InspectorWindow.OnVertexColorUpdate -= UpdateVertexColor;
+    }
 
     public void DestroyMesh()
     {
+        RemoveVertexUpdates();
+        RemoveMeshPosUpdate();
         EditingMesh.OnMeshDestroy -= DestroyMesh;
         EditingMesh.OnMeshUpdate -= UpdateMesh;
         mesh.Destroy();
